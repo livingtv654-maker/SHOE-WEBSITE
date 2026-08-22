@@ -1,8 +1,10 @@
 /*
-  Ported 1:1 from the "Yellow Product Section" Figma frame (1672x941 canvas), read back from the
-  user's own hand-edited final state. Yellow is always index 1 (last state) in the Red->Yellow
-  sequence (see ProductSequence.tsx) — it only ever enters, driven by --entrance-1 (0 = hidden,
-  1 = fully shown); there's no state after it so no --exit-1 handling is needed.
+  Ported 1:1 from the "Yellow Product Section" Figma frame, but with every structural anchor
+  (headline, paragraph, CTA, shoe box, vertical text, shadow) unified to match ProductSectionRed
+  exactly — the two frames had drifted slightly apart in Figma; this file intentionally reuses Red's
+  numbers rather than Yellow's original ones so the two colors line up perfectly during the crossfade.
+  Yellow is always index 1 (last state) in the Red->Yellow sequence — it only ever enters, driven by
+  --entrance-1 (0 = hidden, 1 = fully shown); there's no state after it so no --exit-1 handling needed.
 */
 
 .wrap {
@@ -30,141 +32,69 @@
   z-index: 1;
 }
 
-/* Grows in from small as --entrance-1 -> 1. */
+.shadow {
+  position: absolute;
+  left: 33.792%;
+  top: 66.949%;
+  width: 32.177%;
+  height: 6.376%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. */
 .shoe {
   position: absolute;
-  left: 33.913%;
-  top: 17.216%;
+  left: 32.152%;
+  top: 15.941%;
   width: 43.062%;
-  height: 54.199%;
+  height: 56.909%;
   object-fit: contain;
   z-index: 2;
-  transform-origin: center;
-  transform: rotate(-8deg) scale(calc(0.5 + var(--entrance-1, 0) * 0.5));
+  transform-origin: top left;
+  transform: rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3))) scale(calc(0.6 + var(--entrance-1, 0) * 0.4));
 }
 
-.navbar {
+.headlineBlock {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 8.395%;
-  background: #111111;
-  z-index: 5;
+  left: 10.347%;
+  top: 13.072%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0px, 0.3cqw, 6px);
 }
 
-.logo {
-  position: absolute;
-  left: 4.486%;
-  top: 2.125%;
-  z-index: 6;
-  font-family: var(--font-inter), Inter, sans-serif;
-  font-weight: 400;
-  font-size: clamp(18px, 1.914cqw, 32px);
-  color: #ffffff;
-}
-
-.star {
-  position: absolute;
-  left: 10.526%;
-  top: 2.763%;
-  z-index: 6;
-  font-family: var(--font-poppins), Poppins, sans-serif;
+.headlineBlock p {
+  margin: 0;
+  font-family: var(--font-antonio), Antonio, sans-serif;
   font-weight: 700;
-  font-size: clamp(10px, 1.077cqw, 18px);
-  color: #ffffff;
-  line-height: 1;
-}
-
-.nav {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-}
-
-.navItem {
-  position: absolute;
-  top: 2.976%;
-  font-size: clamp(9px, 0.957cqw, 16px);
-  color: #ffffff;
   white-space: nowrap;
-}
-
-.navHome {
-  left: 33.373%;
-  font-weight: 400;
-}
-
-.navProducts {
-  left: 41.866%;
-  font-weight: 700;
-}
-
-.navJournal {
-  left: 51.555%;
-  font-weight: 400;
-}
-
-.navAbout {
-  left: 59.809%;
-  font-weight: 400;
-}
-
-.navUnderline {
-  position: absolute;
-  left: 41.866%;
-  top: 5.739%;
-  width: 7.057%;
-  height: 0.213%;
-  background: #f2c10d;
 }
 
 .builtTo {
-  position: absolute;
-  margin: 0;
-  left: 7.716%;
-  top: 12.859%;
-  z-index: 4;
-  font-family: var(--font-antonio), Antonio, sans-serif;
-  font-weight: 400;
   font-size: clamp(20px, 2.632cqw, 44px);
+  line-height: 1.1;
   color: #111111;
-  white-space: nowrap;
 }
 
 .stand,
 .out {
-  position: absolute;
-  margin: 0;
-  z-index: 4;
-  font-family: var(--font-antonio), Antonio, sans-serif;
-  font-weight: 700;
   font-size: clamp(90px, 11.962cqw, 200px);
   letter-spacing: clamp(-1.4px, -0.179cqw, -3px);
-  line-height: 1;
+  line-height: 0.85;
   color: #ffffff;
-  white-space: nowrap;
-}
-
-.stand {
-  left: 6.818%;
-  top: 14.134%;
-}
-
-.out {
-  left: 7.117%;
-  top: 34.325%;
 }
 
 .airLabel {
   position: absolute;
   margin: 0;
-  left: 8.194%;
-  top: 59.724%;
+  left: 9.569%;
+  top: 60.149%;
   z-index: 4;
   font-family: var(--font-antonio), Antonio, sans-serif;
   font-weight: 700;
-  font-size: clamp(17px, 1.794cqw, 30px);
+  font-size: clamp(12px, 1.316cqw, 22px);
   color: #ffffff;
   white-space: nowrap;
 }
@@ -190,10 +120,10 @@
 
 .cta {
   position: absolute;
-  left: 9.39%;
-  top: 75.345%;
-  width: 20.275%;
-  height: 8.502%;
+  left: 9.569%;
+  top: 75.771%;
+  width: 19.079%;
+  height: 8.395%;
   z-index: 4;
   display: flex;
   align-items: center;
@@ -211,8 +141,8 @@
 
 .ctaText {
   position: absolute;
-  left: 14.454%;
-  top: 36.25%;
+  left: 13.166%;
+  top: 44.304%;
   z-index: 1;
   font-weight: 700;
   font-size: clamp(11px, 1.196cqw, 20px);
@@ -220,10 +150,24 @@
   white-space: nowrap;
 }
 
+.ctaArrow {
+  position: absolute;
+  right: 6%;
+  top: 37%;
+  z-index: 1;
+  width: clamp(20px, 1.914cqw, 32px);
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(6px);
+}
+
 .vlineTop {
   position: absolute;
-  left: 2.572%;
-  top: 21.679%;
+  left: 2.691%;
+  top: 21.891%;
   width: 1.256%;
   height: 12.646%;
   object-fit: contain;
@@ -233,7 +177,7 @@
 .vlineBottom {
   position: absolute;
   left: 2.392%;
-  top: 64.825%;
+  top: 64.081%;
   width: 1.256%;
   height: 14.665%;
   object-fit: contain;
@@ -242,162 +186,18 @@
 
 .verticalText {
   position: absolute;
-  left: 1.795%;
-  top: 62.487%;
-  width: 14.775%;
-  height: 2.763%;
+  left: 1.854%;
+  top: 61.637%;
+  width: 14.056%;
+  height: 2.657%;
   transform-origin: top left;
   transform: rotate(-90deg);
   display: flex;
   align-items: center;
   z-index: 4;
   font-weight: 400;
-  font-size: clamp(12px, 1.196cqw, 20px);
+  font-size: clamp(11px, 1.136cqw, 19px);
   letter-spacing: clamp(0.5px, 0.06cqw, 1px);
   color: #ffffff;
-  white-space: nowrap;
-}
-
-.arc {
-  position: absolute;
-  left: 8.971%;
-  top: 82.891%;
-  width: 84.593%;
-  height: 12.539%;
-  object-fit: contain;
-  z-index: 3;
-}
-
-.triangle {
-  position: absolute;
-  left: 49.282%;
-  top: 74.069%;
-  width: 2.392%;
-  height: 6.376%;
-  object-fit: contain;
-  z-index: 4;
-  filter: brightness(0.55);
-}
-
-.circleBig {
-  position: absolute;
-  left: 47.01%;
-  top: 78.746%;
-  width: 5.981%;
-  height: 8.395%;
-  object-fit: contain;
-  z-index: 4;
-}
-
-.circleBigNum {
-  position: absolute;
-  left: 49.043%;
-  top: 81.19%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(14px, 1.495cqw, 25px);
-  color: #ffffff;
-}
-
-.circleBigLabel {
-  position: absolute;
-  left: 47.249%;
-  top: 87.036%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(16px, 1.675cqw, 28px);
-  color: #ffffff;
-  white-space: nowrap;
-}
-
-.circle01,
-.circle03,
-.circle04 {
-  position: absolute;
-  object-fit: contain;
-  z-index: 4;
-}
-
-.circle01 {
-  left: 72.368%;
-  top: 83.847%;
-  width: 4.785%;
-  height: 6.376%;
-}
-
-.circle01Num {
-  position: absolute;
-  left: 74.342%;
-  top: 85.122%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  color: #ffffff;
-}
-
-.circle01Label {
-  position: absolute;
-  left: 74.103%;
-  top: 89.585%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  color: #111111;
-  white-space: nowrap;
-}
-
-.circle03 {
-  left: 31.1%;
-  top: 83.528%;
-  width: 3.649%;
-  height: 6.271%;
-}
-
-.circle03Num {
-  position: absolute;
-  left: 32.117%;
-  top: 85.654%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  color: #ffffff;
-}
-
-.circle03Label {
-  position: absolute;
-  left: 29.605%;
-  top: 90.223%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  color: #111111;
-  white-space: nowrap;
-}
-
-.circle04 {
-  left: 17.823%;
-  top: 85.759%;
-  width: 3.649%;
-  height: 6.271%;
-}
-
-.circle04Num {
-  position: absolute;
-  left: 19.079%;
-  top: 87.992%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(10px, 1.077cqw, 18px);
-  color: #ffffff;
-}
-
-.circle04Label {
-  position: absolute;
-  left: 18.182%;
-  top: 92.348%;
-  z-index: 5;
-  font-weight: 700;
-  font-size: clamp(10px, 1.077cqw, 18px);
-  color: #111111;
   white-space: nowrap;
 }
