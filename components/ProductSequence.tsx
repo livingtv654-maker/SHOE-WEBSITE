@@ -10,69 +10,9 @@ type Props = {
   scrubViewportsPerTransition?: number;
 };
 
-const COLORS = [
-  { id: "red", label: "RED" },
-  { id: "yellow", label: "YELLOW" },
-  { id: "lime", label: "LIME GREEN" },
-  { id: "beige", label: "BEIGE" },
-];
-
-// The arc has exactly 4 physical slots (leftmost, center-left, active/center, rightmost), fixed in
-// screen space. As scrolling advances, every color's *occupied slot* shifts by one position — this
-// is a conveyor, not a rotating ring: a color enters from beyond the leftmost slot (off-canvas,
-// enlarging in) and exits beyond the rightmost slot (off-canvas, shrinking out). `offset` is each
-// color's position relative to whichever color is currently active (0 = active/center, positive =
-// slots to the left, negative = slots to the right). The two extra anchors at offset 3 and -2 are
-// virtual off-canvas rest points (opacity 0) that entering/exiting colors interpolate from/to, so
-// motion is always a smooth slide through adjacent anchors — never a jump across the whole arc,
-// which was the original "magically teleports to the other side" bug.
-const SLOT_ANCHORS = [
-  { offset: 3, left: 5.4, top: 87.2, width: 3.649, height: 6.271, opacity: 0 }, // off-canvas, not yet entered
-  { offset: 2, left: 18.24, top: 85.548, width: 3.649, height: 6.271, opacity: 1 }, // leftmost
-  { offset: 1, left: 31.1, top: 83.528, width: 3.589, height: 6.271, opacity: 1 }, // center-left
-  { offset: 0, left: 47.01, top: 78.746, width: 5.981, height: 10.521, opacity: 1 }, // active/center
-  { offset: -1, left: 72.368, top: 83.847, width: 4.845, height: 6.376, opacity: 1 }, // rightmost
-  { offset: -2, left: 97.7, top: 87.4, width: 4.845, height: 6.376, opacity: 0 }, // off-canvas, already exited
-];
-
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-
-// Linearly interpolates every numeric field of SLOT_ANCHORS at a continuous `offset` by finding
-// the two bracketing anchors (anchors are sorted high-to-low) and blending between them.
-function anchorAt(offset: number) {
-  const clamped = Math.min(3, Math.max(-2, offset));
-  for (let i = 0; i < SLOT_ANCHORS.length - 1; i++) {
-    const a = SLOT_ANCHORS[i];
-    const b = SLOT_ANCHORS[i + 1];
-    if (clamped <= a.offset && clamped >= b.offset) {
-      const t = a.offset === b.offset ? 0 : (a.offset - clamped) / (a.offset - b.offset);
-      return {
-        left: lerp(a.left, b.left, t),
-        top: lerp(a.top, b.top, t),
-        width: lerp(a.width, b.width, t),
-        height: lerp(a.height, b.height, t),
-        opacity: lerp(a.opacity, b.opacity, t),
-      };
-    }
-  }
-  return SLOT_ANCHORS[SLOT_ANCHORS.length - 1];
-}
-
-function wrapOffset(raw: number) {
-  // Wraps into (-2, 2] on a period of 4 (4 colors cycling through 4 identities of slot).
-  let o = raw % 4;
-  if (o > 2) o -= 4;
-  if (o <= -2) o += 4;
-  return o;
-}
-
 export default function ProductSequence({ states, scrubViewportsPerTransition = 0.5 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const labelRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const lastTargetIndex = useRef(-1);
   const stateCount = states.length;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -98,38 +38,21 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
       const rawProgress = normalized * (stateCount - 1);
 
       const targetIndex = Math.round(rawProgress);
-      if (targetIndex !== lastTargetIndex.current) {
-        lastTargetIndex.current = targetIndex;
-        setActiveIndex(targetIndex);
-        for (let i = 0; i < stateCount; i++) {
-          const entrance = targetIndex >= i ? 1 : 0;
-          const exit = targetIndex >= i + 1 ? 1 : 0;
-          sticky.style.setProperty(`--entrance-${i}`, String(entrance));
-          sticky.style.setProperty(`--exit-${i}`, String(exit));
-          document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
-          document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
-        }
-      }
+      if (targetIndex === lastTargetIndex.current) return;
+      lastTargetIndex.current = targetIndex;
+      setActiveIndex(targetIndex);
 
-      // Continuous (not step-quantized) position drives the arc so it slides smoothly between
-      // scroll ticks instead of snapping only at the rounded target index.
-      COLORS.forEach((_, i) => {
-        const offset = wrapOffset(i - rawProgress);
-        const a = anchorAt(offset);
-        const slot = slotRefs.current[i];
-        if (slot) {
-          slot.style.left = `${a.left}%`;
-          slot.style.top = `${a.top}%`;
-          slot.style.width = `${a.width}%`;
-          slot.style.height = `${a.height}%`;
-          slot.style.opacity = String(a.opacity);
-        }
-        const label = labelRefs.current[i];
-        if (label) {
-          const proximity = Math.max(0, 1 - Math.abs(offset));
-          label.style.color = `color-mix(in srgb, #111111 ${(1 - proximity) * 100}%, #ffffff ${proximity * 100}%)`;
-        }
-      });
+      for (let i = 0; i < stateCount; i++) {
+        const entrance = targetIndex >= i ? 1 : 0;
+        const exit = targetIndex >= i + 1 ? 1 : 0;
+        sticky.style.setProperty(`--entrance-${i}`, String(entrance));
+        sticky.style.setProperty(`--exit-${i}`, String(exit));
+        // Also published on <html> so the page-level, always-fixed <Navbar /> (which lives
+        // outside this component and isn't a descendant of `.sticky`) can read --entrance-1 too,
+        // for its Red -> Yellow underline color blend.
+        document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
+        document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
+      }
     }
 
     function onScrollOrResize() {
@@ -154,51 +77,52 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
       <div ref={stickyRef} className={styles.sticky} data-active-index={activeIndex}>
         {states}
 
-        {/* Shared arc: the curved line and pointer never move — the pointer always sits above the
-            active/center slot, and which color occupies each of the 4 slots is what animates. */}
+        {/* ---- Shared horizontal color carousel: the arc background never changes, and each of the
+            four color dots slides between its two fixed slot positions (only Red and Yellow actually
+            move between "active/center" and a side slot; Lime Green and Beige just shift one slot
+            over) driven by the same --entrance-1 progress — so scrolling reads as Red sliding right
+            while Yellow slides into center, left-to-right, not a page-style up/down swap. ---- */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
         <Image src="/product-red/triangle.png" alt="" width={40} height={60} priority className={styles.triangle} />
 
-        {COLORS.map((color, i) => {
-          // Rendered (and SSR'd) with the rest-state position already correct, so there's no
-          // flash of stacked/unstyled circles before the scroll handler's first frame runs — the
-          // effect above then takes over via the refs on every subsequent frame.
-          const restAnchor = anchorAt(wrapOffset(i));
-          return (
-            <div
-              key={color.id}
-              ref={(el) => {
-                slotRefs.current[i] = el;
-              }}
-              className={styles.slot}
-              style={{
-                left: `${restAnchor.left}%`,
-                top: `${restAnchor.top}%`,
-                width: `${restAnchor.width}%`,
-                height: `${restAnchor.height}%`,
-                opacity: restAnchor.opacity,
-              }}
-            >
-              <Image
-                src="/product-red/circle-small-b.png"
-                alt=""
-                fill
-                priority
-                sizes="80px"
-                className={styles.slotCircleImg}
-              />
-              <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
-              <span
-                ref={(el) => {
-                  labelRefs.current[i] = el;
-                }}
-                className={styles.label}
-              >
-                {color.label}
-              </span>
-            </div>
-          );
-        })}
+        {/* Each circle + its number now share one positioned box (.itemXSlot) so the number is
+            centered with `inset: 0` + flex instead of being separately hand-placed — the previous
+            independent left/top coordinates on the number span drifted from the circle's actual
+            visual center once real font metrics were applied. */}
+        <div className={styles.itemRedSlot}>
+          <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemRedNum}>01</span>
+        </div>
+        <span className={styles.itemRedLabel}>RED</span>
+
+        <div className={styles.itemYellowSlot}>
+          <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemYellowNum}>02</span>
+        </div>
+        <span className={styles.itemYellowLabel}>YELLOW</span>
+
+        <div className={styles.itemLimeSlot}>
+          <Image src="/product-red/circle-small-b.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemLimeNum}>03</span>
+        </div>
+        <span className={styles.itemLimeLabel}>LIME GREEN</span>
+
+        {/* Beige never slides across the whole arc anymore (that was the "magically teleports to
+            the other side" bug) — it only ever occupies the two extreme slots (rightmost while Red
+            is active, leftmost once Yellow takes over), so it's rendered as two independent,
+            non-moving instances that simply crossfade: the rightmost copy fades out, the leftmost
+            copy fades in. Neither one travels. */}
+        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotExit}`}>
+          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemBeigeNum}>04</span>
+        </div>
+        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelExit}`}>BEIGE</span>
+
+        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotEnter}`}>
+          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemBeigeNum}>04</span>
+        </div>
+        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelEnter}`}>BEIGE</span>
       </div>
     </div>
   );

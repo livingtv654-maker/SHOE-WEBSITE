@@ -2,11 +2,11 @@
   Ported from the SONIC headphone site's ProductSequence.module.css — same sticky-pin + snap-to-state
   + CSS-custom-property crossfade technique. See that file's original comments for the full rationale.
 
-  Each color section (ProductSectionRed/Yellow/Lime/Beige) reads its own --entrance-N/--exit-N pair
-  to crossfade itself in/out, driven by ProductSequence.tsx's scroll handler. The arc/circle-picker
-  below is driven by that same scroll handler too, but computed continuously in JS (not CSS calc())
-  since 4 real colors cycling through 4 slots needs actual interpolation logic, not just blending
-  between two hardcoded endpoints — see ProductSequence.tsx's SLOT_ANCHORS/anchorAt for the math.
+  This version also owns two elements that used to be duplicated per color state: the top navbar and
+  the arc/circle color-picker. Both read `--entrance-1` directly (0 at Red, 1 at Yellow) to blend
+  between two hardcoded endpoints with `calc(t0 * (1 - p) + t1 * p)` — since --entrance-1 is itself a
+  smoothly-animated @property, every value derived from it (position, size, even color via
+  color-mix()) animates in lockstep with the shoe crossfade, no extra JS or transitions needed.
 */
 
 @property --entrance-0 {
@@ -15,16 +15,6 @@
   initial-value: 1;
 }
 @property --entrance-1 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --entrance-2 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --entrance-3 {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
@@ -39,20 +29,10 @@
   inherits: true;
   initial-value: 0;
 }
-@property --exit-2 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --exit-3 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
 
 .wrapper {
   position: relative;
-  height: 250dvh;
+  height: 150dvh;
 }
 
 .sticky {
@@ -63,12 +43,12 @@
   container-type: inline-size;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
   transition: --entrance-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --entrance-1 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    --entrance-2 0.7s cubic-bezier(0.65, 0, 0.35, 1), --entrance-3 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    --exit-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    --exit-2 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-3 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+    --exit-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ---- Shared arc + color carousel ---- */
+/* The navbar previously lived here too (duplicating the one in HeroSection); it's now a single
+   page-level `position: fixed` component — see Navbar.tsx / Navbar.module.css. */
 
 .arc {
   position: absolute;
@@ -93,23 +73,32 @@
   filter: brightness(0.55);
 }
 
-/* One generic slot per color, positioned imperatively (left/top/width/height/opacity set directly
-   in JS every frame — see ProductSequence.tsx) instead of hand-written CSS calc() blends, since
-   with 4 real colors cycling through 4 slots the position is genuinely a function of continuous
-   scroll progress, not a blend between exactly two states. Each slot is its own container-query
-   context so the number inside is sized as a percentage of THAT circle's own current width
-   (`cqw`), scaling with it automatically instead of a hand-picked px value. */
-.slot {
+/* Every circle image + its number now share one positioned "slot" box (instead of the number
+   having its own separately hand-measured left/top) — the number is centered with `inset: 0` +
+   flex, so it's exactly centered on the circle regardless of font metrics. This was the "numbers
+   aren't centered in the circles" bug. */
+.slotCircleImg {
+  object-fit: contain;
+}
+
+/* Each slot is its own container-query context, so the number inside is sized as a percentage of
+   THAT circle's own current width (container-relative `cqw`) instead of a hand-picked px value —
+   as the circle grows/shrinks (Red/Yellow animate between two sizes; Lime/Beige are just naturally
+   smaller than Red/Yellow to begin with), the number scales with it automatically, staying
+   proportional instead of overflowing a small circle or looking tiny in a big one. */
+.itemRedSlot,
+.itemYellowSlot,
+.itemLimeSlot,
+.itemBeigeSlot {
   position: absolute;
   z-index: 9;
   container-type: inline-size;
 }
 
-.slotCircleImg {
-  object-fit: contain;
-}
-
-.num {
+.itemRedNum,
+.itemYellowNum,
+.itemLimeNum,
+.itemBeigeNum {
   position: absolute;
   inset: 0;
   display: flex;
@@ -118,18 +107,123 @@
   font-weight: 700;
   line-height: 1;
   font-size: 34cqw;
+}
+
+/* Red: starts at the active/center slot (t=0), slides right into the rightmost slot as Yellow takes
+   over (t=1). */
+.itemRedSlot {
+  left: calc(47.01% * (1 - var(--entrance-1, 0)) + 72.368% * var(--entrance-1, 0));
+  top: calc(78.746% * (1 - var(--entrance-1, 0)) + 83.847% * var(--entrance-1, 0));
+  width: calc(5.981% * (1 - var(--entrance-1, 0)) + 4.785% * var(--entrance-1, 0));
+  height: calc(10.521% * (1 - var(--entrance-1, 0)) + 6.376% * var(--entrance-1, 0));
+}
+
+.itemRedNum {
   color: #ffffff;
 }
 
-/* Positioned as a child of .slot (not given its own separate anchor table) so it's always
-   automatically centered directly below its own circle, and its size scales with the same
-   container query as the number — no matter how the circle above it grows/shrinks/moves. */
-.label {
+.itemRedLabel {
   position: absolute;
-  top: 118%;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 9;
+  left: calc(48.684% * (1 - var(--entrance-1, 0)) + 74.103% * var(--entrance-1, 0));
+  top: calc(88.417% * (1 - var(--entrance-1, 0)) + 89.585% * var(--entrance-1, 0));
   font-weight: 700;
-  font-size: 40cqw;
+  font-size: calc(30px * (1 - var(--entrance-1, 0)) + 20px * var(--entrance-1, 0));
+  color: color-mix(in srgb, #ffffff calc((1 - var(--entrance-1, 0)) * 100%), #111111 calc(var(--entrance-1, 0) * 100%));
   white-space: nowrap;
+}
+
+/* Yellow: starts one slot left of center (t=0), slides into the active/center slot as it takes over
+   (t=1) — the mirror image of Red's move. */
+.itemYellowSlot {
+  left: calc(31.1% * (1 - var(--entrance-1, 0)) + 47.01% * var(--entrance-1, 0));
+  top: calc(83.528% * (1 - var(--entrance-1, 0)) + 78.746% * var(--entrance-1, 0));
+  width: calc(3.589% * (1 - var(--entrance-1, 0)) + 5.981% * var(--entrance-1, 0));
+  height: calc(6.271% * (1 - var(--entrance-1, 0)) + 8.395% * var(--entrance-1, 0));
+}
+
+.itemYellowNum {
+  color: #ffffff;
+}
+
+.itemYellowLabel {
+  position: absolute;
+  z-index: 9;
+  left: calc(30.861% * (1 - var(--entrance-1, 0)) + 47.249% * var(--entrance-1, 0));
+  top: calc(90.329% * (1 - var(--entrance-1, 0)) + 87.036% * var(--entrance-1, 0));
+  font-weight: 700;
+  font-size: calc(20px * (1 - var(--entrance-1, 0)) + 28px * var(--entrance-1, 0));
+  color: color-mix(in srgb, #111111 calc((1 - var(--entrance-1, 0)) * 100%), #ffffff calc(var(--entrance-1, 0) * 100%));
+  white-space: nowrap;
+}
+
+/* Lime Green is a display-only placeholder (no product built yet) — it never becomes the
+   active/center slot, it just shifts one slot over like everything else in the rotation. */
+.itemLimeSlot {
+  left: calc(18.24% * (1 - var(--entrance-1, 0)) + 31.1% * var(--entrance-1, 0));
+  top: calc(85.548% * (1 - var(--entrance-1, 0)) + 83.528% * var(--entrance-1, 0));
+  width: 3.649%;
+  height: 6.271%;
+}
+
+.itemLimeNum {
+  color: #ffffff;
+}
+
+.itemLimeLabel {
+  position: absolute;
+  z-index: 9;
+  left: calc(17.823% * (1 - var(--entrance-1, 0)) + 29.605% * var(--entrance-1, 0));
+  top: calc(92.986% * (1 - var(--entrance-1, 0)) + 90.223% * var(--entrance-1, 0));
+  font-weight: 700;
+  font-size: calc(18px * (1 - var(--entrance-1, 0)) + 20px * var(--entrance-1, 0));
+  color: #111111;
+  white-space: nowrap;
+}
+
+/* Beige is also a display-only placeholder, but unlike Lime it sits at an *extreme* slot (rightmost
+   while Red is active, leftmost once Yellow takes over) — the slot one further out than either
+   neighbour has room to slide into. Sliding it the whole way across read as "magically teleporting
+   to the other side"; instead it's two independent, non-moving instances that simply crossfade in
+   place: the rightmost copy (Exit) fades out, the leftmost copy (Enter) fades in. Neither travels. */
+.itemBeigeSlot {
+  width: 4.845%;
+  height: 6.376%;
+}
+
+.itemBeigeSlotExit {
+  left: 72.368%;
+  top: 83.847%;
+  opacity: calc(1 - var(--entrance-1, 0));
+}
+
+.itemBeigeSlotEnter {
+  left: 17.823%;
+  top: 85.759%;
+  opacity: var(--entrance-1, 0);
+}
+
+.itemBeigeNum {
+  color: #ffffff;
+}
+
+.itemBeigeLabel {
+  position: absolute;
+  z-index: 9;
+  font-weight: 700;
+  font-size: 20px;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.itemBeigeLabelExit {
+  left: 72.967%;
+  top: 90.011%;
+  opacity: calc(1 - var(--entrance-1, 0));
+}
+
+.itemBeigeLabelEnter {
+  left: 18.182%;
+  top: 92.348%;
+  opacity: var(--entrance-1, 0);
 }

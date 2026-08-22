@@ -3,9 +3,8 @@
   (headline, paragraph, CTA, shoe box, vertical text, shadow) unified to match ProductSectionRed
   exactly — the two frames had drifted slightly apart in Figma; this file intentionally reuses Red's
   numbers rather than Yellow's original ones so the two colors line up perfectly during the crossfade.
-  Yellow is index 1 of 4 in the Red -> Yellow -> Lime -> Beige sequence — it's no longer the last
-  state, so unlike before it now needs both --entrance-1 (arriving from Red) AND --exit-1 (leaving
-  for Lime) handling.
+  Yellow is always index 1 (last state) in the Red->Yellow sequence — it only ever enters, driven by
+  --entrance-1 (0 = hidden, 1 = fully shown); there's no state after it so no --exit-1 handling needed.
 */
 
 .wrap {
@@ -15,7 +14,7 @@
   overflow: hidden;
   background: #e8b400;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  opacity: calc(var(--entrance-1, 0) * (1 - var(--exit-1, 0)));
+  opacity: calc(var(--entrance-1, 0));
 }
 
 .bg {
@@ -43,10 +42,9 @@
   z-index: 1;
 }
 
-/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. Same
-   general enter/exit formula as ProductSectionRed.module.css's .shoe, just reading index 1's own
-   --entrance-1/--exit-1: arrives sliding in from bottom-right (enlarging) as Red hands off, then
-   later exits toward the CTA (bottom-left, shrinking) as Lime takes over. */
+/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. Mirrors
+   Red's exit: Yellow's shoe starts small and off to the right (as if arriving from off-screen) and
+   enlarges into its full final position as --entrance-1 goes 0 -> 1. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -56,11 +54,8 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  --enter: calc(1 - var(--entrance-1, 0));
-  --exit: var(--exit-1, 0);
-  transform: rotate(calc(8deg * (1 - var(--exit) * 0.3 - var(--enter) * 0.3)))
-    translate(calc(var(--enter) * 70% - var(--exit) * 70%), calc((var(--enter) + var(--exit)) * 70%))
-    scale(calc(1 - var(--enter) * 0.45 - var(--exit) * 0.55));
+  transform: translate(calc((1 - var(--entrance-1, 0)) * 70%), calc((1 - var(--entrance-1, 0)) * 70%))
+    rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3))) scale(calc(0.55 + var(--entrance-1, 0) * 0.45));
 }
 
 .headlineBlock {
@@ -126,8 +121,8 @@
   white-space: nowrap;
 }
 
-/* See ProductSectionRed.module.css's .cta comment — same fix: .ctaText/.ctaArrow are real flex
-   children, grouped and centered as a unit instead of spread to the two edges. */
+/* See ProductSectionRed.module.css's .cta comment — same fix: .ctaText/.ctaArrow are now real flex
+   children instead of independently absolute-positioned, so they're always correctly centered. */
 .cta {
   position: absolute;
   left: 9.569%;
@@ -137,7 +132,10 @@
   z-index: 4;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  /* See ProductSectionRed.module.css's .cta comment: percentage padding resolves against the
+     containing block (the section), not this button's own width — container-type fixes that for
+     the cqw margins below. */
   container-type: inline-size;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -152,9 +150,9 @@
 }
 
 .ctaText {
-  margin-right: 8cqw;
   position: relative;
   z-index: 1;
+  margin-left: 13.166cqw;
   font-weight: 700;
   font-size: clamp(11px, 5.5cqw, 20px);
   color: #111111;
@@ -165,9 +163,9 @@
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  width: clamp(28px, 15cqw, 48px);
+  margin-right: 6cqw;
+  width: clamp(20px, 9cqw, 32px);
   height: auto;
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4));
   transition: transform 0.3s ease;
 }
 
