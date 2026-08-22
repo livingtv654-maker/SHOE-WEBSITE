@@ -1,14 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 
 // This is the hero's original navbar (transparent, dark text, red logo/underline-on-hover),
-// promoted to a single page-level, `position: fixed` instance. It used to be duplicated: once
-// here in its correct style (but scrolling away with the hero), and a second time inside
-// ProductSequence in a completely different style (solid black bar, white text) for the product
-// sections — that second one was the unnecessary duplicate and has been removed. This is the only
-// navbar now, and it keeps the hero's look everywhere.
+// promoted to a single page-level, `position: fixed` instance that stays visible for the whole
+// page. Once the hero has scrolled past and the colored product sections are behind it, dark text
+// stops being legible — so it switches to white (and inverts to black on hover) once we're past
+// one viewport height, the same "scrolled" threshold pattern the SONIC site's SiteHeader used.
 export default function Navbar() {
+  const [inProductSection, setInProductSection] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setInProductSection(window.scrollY > window.innerHeight - 100);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className={styles.navbar}>
+    <div className={`${styles.navbar} ${inProductSection ? styles.inProductSection : ""}`}>
       <span className={styles.logo}>RED</span>
       <span className={styles.star} aria-hidden="true">
         &#9733;

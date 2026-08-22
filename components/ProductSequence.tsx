@@ -82,8 +82,16 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
             slot during its own turn) driven by the --entrance-N progress values above — so scrolling
             reads as a genuine left-to-right carousel, not a page-style up/down swap. Each item uses
             only its own "circle-big" image (a plain filled circle), scaled down via the slot's own
-            interpolated width/height when inactive rather than swapping to a separate small asset —
-            see ProductSequence.module.css for the 4-point position/size blend math. */}
+            interpolated width/height when inactive rather than swapping to a separate small asset.
+
+            Red, Yellow, and Beige each cross the arc's right-to-left wrap boundary once within this
+            4-state sequence — rather than sliding all the way across (which read as "flying to the
+            other side"), each renders as two instances: one that's fixed at the rightmost slot and
+            shrinks/fades out, and a second that appears already-small at the leftmost slot and
+            grows/fades in — a real corner circle disappearing off one edge while a new one grows in
+            from the other, never traveling the distance between. Lime's path never crosses that
+            boundary within these 4 states, so it stays a single sliding instance. See
+            ProductSequence.module.css for the exact per-item blend math. */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
         <Image src="/product-red/triangle.png" alt="" width={40} height={60} priority className={styles.triangle} />
 
@@ -94,12 +102,22 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
           <span className={styles.itemRedNum}>01</span>
         </div>
         <span className={styles.itemRedLabel}>RED</span>
+        <div className={styles.itemRedSlotWrapped}>
+          <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemRedNum}>01</span>
+        </div>
+        <span className={styles.itemRedLabelWrapped}>RED</span>
 
         <div className={styles.itemYellowSlot}>
           <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
           <span className={styles.itemYellowNum}>02</span>
         </div>
         <span className={styles.itemYellowLabel}>YELLOW</span>
+        <div className={styles.itemYellowSlotWrapped}>
+          <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemYellowNum}>02</span>
+        </div>
+        <span className={styles.itemYellowLabelWrapped}>YELLOW</span>
 
         <div className={styles.itemLimeSlot}>
           <Image src="/product-lime/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
@@ -112,6 +130,11 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
           <span className={styles.itemBeigeNum}>04</span>
         </div>
         <span className={styles.itemBeigeLabel}>BEIGE</span>
+        <div className={styles.itemBeigeSlotWrapped}>
+          <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemBeigeNum}>04</span>
+        </div>
+        <span className={styles.itemBeigeLabelWrapped}>BEIGE</span>
       </div>
     </div>
   );
