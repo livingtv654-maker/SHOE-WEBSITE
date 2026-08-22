@@ -52,14 +52,13 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  transform: rotate(calc(8deg * (1 - var(--exit-0, 0) * 0.3)))
-    translate(calc(var(--exit-0, 0) * -58%), calc(var(--exit-0, 0) * 48%))
-    scale(calc(1 - var(--exit-0, 0) * 0.55));
+  transform: translate(calc(var(--exit-0, 0) * -70%), calc(var(--exit-0, 0) * 70%))
+    rotate(calc(8deg * (1 - var(--exit-0, 0) * 0.3))) scale(calc(1 - var(--exit-0, 0) * 0.55));
 }
 
 .headlineBlock {
   position: absolute;
-  left: 10.347%;
+  left: 9.569%;
   top: 13.072%;
   z-index: 4;
   display: flex;
@@ -120,6 +119,12 @@
   white-space: nowrap;
 }
 
+/* .ctaText and .ctaArrow used to be independently absolute-positioned with hand-picked left/top
+   percentages (relative to .cta's own small box), which is why the label drifted off-center and
+   the arrow was easy to lose — a couple of percent of error compounds fast on a button this
+   small. They're now real flex children of .cta, vertically centered by `align-items: center`
+   and spread with `justify-content: space-between`, so both are always correctly placed no matter
+   how the button itself gets repositioned or resized. */
 .cta {
   position: absolute;
   left: 9.569%;
@@ -129,6 +134,12 @@
   z-index: 4;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  /* container-type here so the cqw margins below are relative to THIS button's own width, not
+     the whole product section (percentage padding/margin on an absolutely-positioned box always
+     resolves against its containing block's width — the section — which is what blew the old
+     `padding: 0 6% 0 13.166%` out to consume the entire button and push the arrow off-screen). */
+  container-type: inline-size;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -142,22 +153,21 @@
 }
 
 .ctaText {
-  position: absolute;
-  left: 13.166%;
-  top: 44.304%;
+  position: relative;
   z-index: 1;
+  margin-left: 13.166cqw;
   font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
+  font-size: clamp(11px, 5.5cqw, 20px);
   color: #111111;
   white-space: nowrap;
 }
 
 .ctaArrow {
-  position: absolute;
-  right: 6%;
-  top: 37%;
+  position: relative;
   z-index: 1;
-  width: clamp(20px, 1.914cqw, 32px);
+  flex-shrink: 0;
+  margin-right: 6cqw;
+  width: clamp(20px, 9cqw, 32px);
   height: auto;
   transition: transform 0.3s ease;
 }

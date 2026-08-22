@@ -54,13 +54,13 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  transform: rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3)))
-    translateX(calc((1 - var(--entrance-1, 0)) * 34%)) scale(calc(0.55 + var(--entrance-1, 0) * 0.45));
+  transform: translate(calc((1 - var(--entrance-1, 0)) * 70%), calc((1 - var(--entrance-1, 0)) * 70%))
+    rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3))) scale(calc(0.55 + var(--entrance-1, 0) * 0.45));
 }
 
 .headlineBlock {
   position: absolute;
-  left: 10.347%;
+  left: 9.569%;
   top: 13.072%;
   z-index: 4;
   display: flex;
@@ -121,6 +121,8 @@
   white-space: nowrap;
 }
 
+/* See ProductSectionRed.module.css's .cta comment — same fix: .ctaText/.ctaArrow are now real flex
+   children instead of independently absolute-positioned, so they're always correctly centered. */
 .cta {
   position: absolute;
   left: 9.569%;
@@ -130,6 +132,11 @@
   z-index: 4;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  /* See ProductSectionRed.module.css's .cta comment: percentage padding resolves against the
+     containing block (the section), not this button's own width — container-type fixes that for
+     the cqw margins below. */
+  container-type: inline-size;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -143,22 +150,21 @@
 }
 
 .ctaText {
-  position: absolute;
-  left: 13.166%;
-  top: 44.304%;
+  position: relative;
   z-index: 1;
+  margin-left: 13.166cqw;
   font-weight: 700;
-  font-size: clamp(11px, 1.196cqw, 20px);
+  font-size: clamp(11px, 5.5cqw, 20px);
   color: #111111;
   white-space: nowrap;
 }
 
 .ctaArrow {
-  position: absolute;
-  right: 6%;
-  top: 37%;
+  position: relative;
   z-index: 1;
-  width: clamp(20px, 1.914cqw, 32px);
+  flex-shrink: 0;
+  margin-right: 6cqw;
+  width: clamp(20px, 9cqw, 32px);
   height: auto;
   transition: transform 0.3s ease;
 }

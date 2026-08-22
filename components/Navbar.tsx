@@ -1,26 +1,28 @@
 import styles from "./Navbar.module.css";
 
-// Single instance for the whole page, `position: fixed` — previously this markup was duplicated
-// once inside HeroSection (scrolled away with the hero) and again inside ProductSequence (pinned
-// only while scrolling through the product states), which read as a janky navbar swap/flicker as
-// you crossed from one section into the next. Now there is exactly one navbar and it genuinely
-// follows the user for the whole page. The underline color still tracks the shared `--entrance-1`
-// scroll-progress custom property (set on <html> by ProductSequence) so it blends red -> yellow in
-// step with the product crossfade, same as before.
+// This is the hero's original navbar (transparent, dark text, red logo/underline-on-hover),
+// promoted to a single page-level, `position: fixed` instance. It used to be duplicated: once
+// here in its correct style (but scrolling away with the hero), and a second time inside
+// ProductSequence in a completely different style (solid black bar, white text) for the product
+// sections — that second one was the unnecessary duplicate and has been removed. This is the only
+// navbar now, and it keeps the hero's look everywhere.
 export default function Navbar() {
   return (
-    <header className={styles.navbar}>
+    <div className={styles.navbar}>
       <span className={styles.logo}>RED</span>
       <span className={styles.star} aria-hidden="true">
         &#9733;
       </span>
       <nav className={styles.nav} aria-label="Primary">
-        <span className={`${styles.navItem} ${styles.navHome}`}>HOME</span>
-        <span className={`${styles.navItem} ${styles.navProducts}`}>PRODUCTS</span>
-        <span className={styles.navUnderline} aria-hidden="true" />
+        <a href="#home" className={`${styles.navItem} ${styles.navHome}`}>
+          HOME
+        </a>
+        <a href="#products" className={`${styles.navItem} ${styles.navProducts}`}>
+          PRODUCTS
+        </a>
         <span className={`${styles.navItem} ${styles.navJournal}`}>JOURNAL</span>
         <span className={`${styles.navItem} ${styles.navAbout}`}>ABOUT</span>
       </nav>
-    </header>
+    </div>
   );
 }

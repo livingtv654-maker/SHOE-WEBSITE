@@ -1,80 +1,103 @@
 /*
-  Single page-level navbar, extracted from what used to be duplicated in HeroSection AND
-  ProductSequence (one instance scrolling away with the hero, a second one pinning inside the
-  product sequence's sticky container) — that duplication was the "crowded/janky navbar" bug.
-  Now there's exactly one instance, `position: fixed` to the viewport, so it genuinely follows
-  the user down the whole page instead of being re-created per section.
+  This is the ORIGINAL hero navbar (transparent, dark text, red logo/star, hover-underline nav
+  items) — ported 1:1 from what used to live only inside HeroSection.module.css. It's now the
+  single page-level navbar (`position: fixed`) instead of being duplicated: once here (which
+  scrolled away with the hero) and once more, in a completely different visual style (solid black
+  bar, white text), inside ProductSequence for the product-color sections. There is exactly one
+  navbar now, and it's this one.
 */
 
 .navbar {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 8.395dvh;
-  background: #111111;
+  inset: 0;
+  height: 100dvh;
   z-index: 100;
+  pointer-events: none;
 }
 
 .logo {
   position: absolute;
   left: 4.486%;
-  top: 25.3%;
-  font-family: var(--font-inter), Inter, sans-serif;
-  font-weight: 400;
-  font-size: clamp(18px, 1.914cqw, 32px);
-  color: #ffffff;
+  top: 3.507%;
+  z-index: 5;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(20px, 2.99cqw, 50px);
+  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
+  color: #e31e24;
+  pointer-events: auto;
 }
 
 .star {
   position: absolute;
   left: 10.526%;
-  top: 33%;
+  top: 4.251%;
+  z-index: 5;
   font-family: var(--font-poppins), Poppins, sans-serif;
   font-weight: 700;
-  font-size: clamp(10px, 1.077cqw, 18px);
-  color: #ffffff;
+  font-size: clamp(14px, 1.675cqw, 28px);
+  color: #e31e24;
   line-height: 1;
+  pointer-events: none;
 }
 
 .nav {
   position: absolute;
   inset: 0;
+  z-index: 5;
 }
 
 .navItem {
   position: absolute;
-  top: 35.4%;
-  font-size: clamp(9px, 0.957cqw, 16px);
-  color: #ffffff;
+  top: 4.038%;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: clamp(12px, 1.495cqw, 25px);
+  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
+  color: #191b1f;
   white-space: nowrap;
+  pointer-events: auto;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.navItem::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 2px;
+  background: #e31e24;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.navItem:hover {
+  color: #e31e24;
+  transform: translateY(-1px);
+}
+
+.navItem:hover::after {
+  transform: scaleX(1);
 }
 
 .navHome {
-  left: 33.373%;
-  font-weight: 400;
-}
-
-.navProducts {
-  left: 41.866%;
+  left: 30.681%;
   font-weight: 700;
 }
 
+.navProducts {
+  left: 38.935%;
+  font-weight: 400;
+}
+
 .navJournal {
-  left: 51.555%;
+  left: 50.718%;
   font-weight: 400;
 }
 
 .navAbout {
-  left: 59.809%;
+  left: 61.244%;
   font-weight: 400;
-}
-
-.navUnderline {
-  position: absolute;
-  left: 41.866%;
-  top: 68.3%;
-  width: 7.057%;
-  height: 2px;
-  background: color-mix(in srgb, #e31e24 calc((1 - var(--entrance-1, 0)) * 100%), #f2c10d calc(var(--entrance-1, 0) * 100%));
 }
