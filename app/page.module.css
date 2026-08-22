@@ -1,0 +1,5 @@
+.heroSlot {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+}

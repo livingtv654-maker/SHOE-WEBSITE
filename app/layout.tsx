@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Jomhuria, Inter } from "next/font/google";
+import { Poppins, Jomhuria, Inter, Antonio, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -24,6 +24,20 @@ const inter = Inter({
   display: "swap",
 });
 
+const antonio = Antonio({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-antonio",
+  display: "swap",
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "RED — Fearless. Feel.",
   description: "From the streets to the top, we move different.",
@@ -31,7 +45,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${jomhuria.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${poppins.variable} ${jomhuria.variable} ${inter.variable} ${antonio.variable} ${robotoMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

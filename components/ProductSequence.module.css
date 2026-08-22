@@ -1,0 +1,54 @@
+/*
+  Ported from the SONIC headphone site's ProductSequence.module.css — same technique, just two states
+  (Red -> Yellow) instead of four. See that file's original comments for the full rationale; the short
+  version: one continuous sticky-pinned scroll zone for the whole "2nd section", JS snaps to whichever
+  state's zone the scroll position falls in (flat 0/1, not a continuous scrub), and it's the `transition`
+  declared here on `.sticky` that turns that flip into a smooth, fixed-duration crossfade regardless of
+  how much or how little was scrolled to trigger it.
+*/
+
+@property --entrance-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --entrance-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --entrance-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.wrapper {
+  position: relative;
+  height: 150dvh; /* fallback before JS measures window.innerHeight */
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  transition: --entrance-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --entrance-1 0.7s cubic-bezier(0.65, 0, 0.35, 1),
+    --entrance-2 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.7s
+      cubic-bezier(0.65, 0, 0.35, 1), --exit-2 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
