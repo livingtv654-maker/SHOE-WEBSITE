@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/_assets/(.*)", "destination": "https://463y54ydgeht.my.canva.site/_assets/$1" },
+    { "source": "/_footer", "destination": "https://463y54ydgeht.my.canva.site/_footer" },
+    { "source": "/_api/(.*)", "destination": "https://463y54ydgeht.my.canva.site/_api/$1" }
+  ]
+}

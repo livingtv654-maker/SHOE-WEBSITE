@@ -74,9 +74,11 @@ if __name__ == "__main__":
         except ValueError:
             pass
 
+    # Use ThreadingHTTPServer so that connection aborts/resets in one request 
+    # don't crash the server process.
     server_address = ('', PORT)
-    httpd = http.server.HTTPServer(server_address, CanvaProxyHandler)
-    print(f"Serving Canva website with proxy on http://localhost:{PORT}")
+    httpd = http.server.ThreadingHTTPServer(server_address, CanvaProxyHandler)
+    print(f"Serving Canva website with robust threading proxy on http://localhost:{PORT}")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
