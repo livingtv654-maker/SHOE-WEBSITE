@@ -1,11 +1,8 @@
 /*
-  Ported 1:1 from the "Yellow Product Section" Figma frame, but with every structural anchor
-  (headline, paragraph, CTA, shoe box, vertical text, shadow) unified to match ProductSectionRed
-  exactly — the two frames had drifted slightly apart in Figma; this file intentionally reuses Red's
-  numbers rather than Yellow's original ones so the two colors line up perfectly during the crossfade.
-  Yellow is index 1, now a MIDDLE state in the Red->Yellow->Lime->Beige sequence (it used to be the
-  last state, reading --entrance-1 only) — it both enters (Red exiting) and exits (Lime taking over),
-  so its opacity and shoe transform now read --exit-1 too, mirroring ProductSectionLime's pattern.
+  Ported from the "Beige Product Section" Figma frame, with every structural anchor unified to match
+  the rest of the sequence exactly. Beige is index 3, the last state — it only ever enters, driven by
+  --entrance-3 (0 = hidden, 1 = fully shown); there's no state after it so no exit handling is needed,
+  same as Yellow used to be the sole terminal state before this sequence grew to four colors.
 */
 
 .wrap {
@@ -13,24 +10,14 @@
   inset: 0;
   container-type: inline-size;
   overflow: hidden;
-  background: #e8b400;
+  background: #d9c6a3;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  opacity: calc(var(--entrance-1, 0) * (1 - var(--exit-1, 0)));
+  opacity: calc(var(--entrance-3, 0));
 }
 
 .bg {
   object-fit: cover;
   z-index: 0;
-}
-
-.streak {
-  position: absolute;
-  left: 33.254%;
-  top: 0%;
-  width: 66.746%;
-  height: 77.259%;
-  object-fit: contain;
-  z-index: 1;
 }
 
 .shadow {
@@ -43,9 +30,8 @@
   z-index: 1;
 }
 
-/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. Enters
-   the same way it always did (small, shifted, as --entrance-1 goes 0 -> 1), and now also exits
-   toward the CTA the same way Red does, as --exit-1 goes 0 -> 1 when Lime takes over. */
+/* Same top-left-pivot rotation fix as every other color section. Enters from off-screen the same way
+   Yellow/Lime do — no exit transform needed since Beige is the terminal state. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -55,12 +41,8 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  transform: translate(
-      calc((1 - var(--entrance-1, 0)) * 70% - var(--exit-1, 0) * 70%),
-      calc((1 - var(--entrance-1, 0)) * 70% + var(--exit-1, 0) * 70%)
-    )
-    rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3 - var(--exit-1, 0) * 0.3)))
-    scale(calc(0.55 + var(--entrance-1, 0) * 0.45 - var(--exit-1, 0) * 0.55));
+  transform: translate(calc((1 - var(--entrance-3, 0)) * 70%), calc((1 - var(--entrance-3, 0)) * 70%))
+    rotate(calc(8deg * (0.7 + var(--entrance-3, 0) * 0.3))) scale(calc(0.55 + var(--entrance-3, 0) * 0.45));
 }
 
 .headlineBlock {
@@ -103,7 +85,7 @@
   font-family: var(--font-antonio), Antonio, sans-serif;
   font-weight: 700;
   font-size: clamp(12px, 1.316cqw, 22px);
-  color: #ffffff;
+  color: #111111;
   white-space: nowrap;
 }
 
@@ -126,8 +108,6 @@
   white-space: nowrap;
 }
 
-/* See ProductSectionRed.module.css's .cta comment — same fix: .ctaText/.ctaArrow are now real flex
-   children instead of independently absolute-positioned, so they're always correctly centered. */
 .cta {
   position: absolute;
   left: 9.569%;
@@ -138,9 +118,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* See ProductSectionRed.module.css's .cta comment: percentage padding resolves against the
-     containing block (the section), not this button's own width — container-type fixes that for
-     the cqw margins below. */
   container-type: inline-size;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -212,6 +189,6 @@
   font-weight: 400;
   font-size: clamp(11px, 1.136cqw, 19px);
   letter-spacing: clamp(0.5px, 0.06cqw, 1px);
-  color: #ffffff;
+  color: #111111;
   white-space: nowrap;
 }

@@ -48,8 +48,8 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
         // Also published on <html> so the page-level, always-fixed <Navbar /> (which lives
-        // outside this component and isn't a descendant of `.sticky`) can read --entrance-1 too,
-        // for its Red -> Yellow underline color blend.
+        // outside this component and isn't a descendant of `.sticky`) can read these too, for its
+        // color-blended underline as the sequence advances through all four colors.
         document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
         document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
       }
@@ -77,18 +77,18 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
       <div ref={stickyRef} className={styles.sticky} data-active-index={activeIndex}>
         {states}
 
-        {/* ---- Shared horizontal color carousel: the arc background never changes, and each of the
-            four color dots slides between its two fixed slot positions (only Red and Yellow actually
-            move between "active/center" and a side slot; Lime Green and Beige just shift one slot
-            over) driven by the same --entrance-1 progress — so scrolling reads as Red sliding right
-            while Yellow slides into center, left-to-right, not a page-style up/down swap. ---- */}
+        {/* ---- Shared horizontal color carousel: the arc background never changes, and all four
+            color dots cycle through the same 4 fixed slots (each arriving at the big/active center
+            slot during its own turn) driven by the --entrance-N progress values above — so scrolling
+            reads as a genuine left-to-right carousel, not a page-style up/down swap. Each item uses
+            only its own "circle-big" image (a plain filled circle), scaled down via the slot's own
+            interpolated width/height when inactive rather than swapping to a separate small asset —
+            see ProductSequence.module.css for the 4-point position/size blend math. */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
         <Image src="/product-red/triangle.png" alt="" width={40} height={60} priority className={styles.triangle} />
 
-        {/* Each circle + its number now share one positioned box (.itemXSlot) so the number is
-            centered with `inset: 0` + flex instead of being separately hand-placed — the previous
-            independent left/top coordinates on the number span drifted from the circle's actual
-            visual center once real font metrics were applied. */}
+        {/* Each circle + its number share one positioned box (.itemXSlot) so the number is centered
+            with `inset: 0` + flex instead of being separately hand-placed. */}
         <div className={styles.itemRedSlot}>
           <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
           <span className={styles.itemRedNum}>01</span>
@@ -102,27 +102,16 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
         <span className={styles.itemYellowLabel}>YELLOW</span>
 
         <div className={styles.itemLimeSlot}>
-          <Image src="/product-red/circle-small-b.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <Image src="/product-lime/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
           <span className={styles.itemLimeNum}>03</span>
         </div>
         <span className={styles.itemLimeLabel}>LIME GREEN</span>
 
-        {/* Beige never slides across the whole arc anymore (that was the "magically teleports to
-            the other side" bug) — it only ever occupies the two extreme slots (rightmost while Red
-            is active, leftmost once Yellow takes over), so it's rendered as two independent,
-            non-moving instances that simply crossfade: the rightmost copy fades out, the leftmost
-            copy fades in. Neither one travels. */}
-        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotExit}`}>
-          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+        <div className={styles.itemBeigeSlot}>
+          <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
           <span className={styles.itemBeigeNum}>04</span>
         </div>
-        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelExit}`}>BEIGE</span>
-
-        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotEnter}`}>
-          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemBeigeNum}>04</span>
-        </div>
-        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelEnter}`}>BEIGE</span>
+        <span className={styles.itemBeigeLabel}>BEIGE</span>
       </div>
     </div>
   );
