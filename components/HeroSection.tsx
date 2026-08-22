@@ -20,7 +20,6 @@ export default function HeroSection() {
 
       <nav className={styles.nav} aria-label="Primary">
         <span className={`${styles.navItem} ${styles.navHome}`}>HOME</span>
-        <span className={styles.navUnderline} aria-hidden="true" />
         <span className={`${styles.navItem} ${styles.navProducts}`}>PRODUCTS</span>
         <span className={`${styles.navItem} ${styles.navJournal}`}>JOURNAL</span>
         <span className={`${styles.navItem} ${styles.navAbout}`}>ABOUT</span>
