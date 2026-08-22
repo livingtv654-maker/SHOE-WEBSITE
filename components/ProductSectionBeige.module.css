@@ -1,10 +1,8 @@
 /*
-  Ported 1:1 from the "Red Product Section" Figma frame (1672x941 canvas). Red is index 0 of 4 in
-  the Red -> Yellow -> Lime -> Beige sequence (see ProductSequence.tsx) — it's always entered
-  (--entrance-0 is permanently 1, nothing comes before it) and only ever exits, driven by --exit-0.
-  Navbar and arc/color-picker live in the shared ProductSequence component; layout anchors below
-  follow the same pattern in ProductSectionYellow/Lime/Beige (only background, shoe photo, and copy
-  differ between the four).
+  Beige is index 3 of 4 (the last state) in the Red -> Yellow -> Lime -> Beige sequence — it only
+  ever enters, driven by --entrance-3 (0 = hidden, 1 = fully shown); there's no state after it so
+  --exit-3 is never set to 1. Layout anchors are shared 1:1 with ProductSectionRed/Yellow/Lime
+  (only background, shoe photo, and copy differ between the four).
 */
 
 .wrap {
@@ -12,12 +10,9 @@
   inset: 0;
   container-type: inline-size;
   overflow: hidden;
-  background: #c21a1f;
+  background: #b7a488;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  /* General form (same on every color's .wrap): visible only in the window between this state
-     having fully entered and before it starts exiting. Red's --entrance-0 is always 1 (nothing
-     comes before it), so this reduces to the original `1 - exit`. */
-  opacity: calc(var(--entrance-0, 1) * (1 - var(--exit-0, 0)));
+  opacity: calc(var(--entrance-3, 0) * (1 - var(--exit-3, 0)));
 }
 
 .bg {
@@ -35,21 +30,6 @@
   z-index: 1;
 }
 
-/*
-  This Figma bridge rotates every node (text, image, rectangle alike) around its own LOCAL TOP-LEFT
-  corner, never the center — verified by reproducing the shoe's exact reported absoluteBoundingBox
-  from its local (unrotated) box: pivoting at top-left with `rotate(+8deg)` (CSS angle = -1 * Figma's
-  -8deg rotation, same sign-flip established for the hero's rotated wordmarks) lands the four rotated
-  corners at precisely Figma's own numbers. Rotating around `center` instead (the first attempt) swings
-  the box along a different arc, exposing a sliver of the source photo's transparent-but-not-quite
-  bounding box at the heel — the "white patch at the bottom" bug.
-*/
-/* General form (identical on every color's .shoe, just plugging in that color's own index N):
-   `enter` is 1 while this state still needs to arrive (slides in from bottom-right, enlarging)
-   and `exit` is 0->1 once the next state takes over (shrinks away toward the CTA button, bottom-
-   left). The two never overlap in time (exit-N only starts once entrance-N has already reached 1),
-   so they can just be added. Rotation stays first in the transform list — reordering it after
-   translate was what visibly disturbed Red's rest-state rotation in an earlier pass. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -59,8 +39,8 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  --enter: calc(1 - var(--entrance-0, 1));
-  --exit: var(--exit-0, 0);
+  --enter: calc(1 - var(--entrance-3, 0));
+  --exit: var(--exit-3, 0);
   transform: rotate(calc(8deg * (1 - var(--exit) * 0.3 - var(--enter) * 0.3)))
     translate(calc(var(--enter) * 70% - var(--exit) * 70%), calc((var(--enter) + var(--exit)) * 70%))
     scale(calc(1 - var(--enter) * 0.45 - var(--exit) * 0.55));
@@ -129,10 +109,6 @@
   white-space: nowrap;
 }
 
-/* .ctaText and .ctaArrow are real flex children of .cta (not independently absolute-positioned —
-   that's what let the label drift and the arrow disappear off the edge before), grouped and
-   centered as a unit with `justify-content: center` + `gap` rather than spread to the two edges,
-   so "EXPLORE THIS COLOR ->" reads as one centered label inside the button. */
 .cta {
   position: absolute;
   left: 9.569%;
@@ -143,10 +119,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* container-type here so the cqw sizing below is relative to THIS button's own width, not the
-     whole product section (percentage padding/margin on an absolutely-positioned box always
-     resolves against its containing block's width — the section — which is what previously blew
-     `padding: 0 6% 0 13.166%` out to consume the entire button and push the arrow off-screen). */
   container-type: inline-size;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -174,8 +146,6 @@
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  /* Bigger and given real weight (drop-shadow) so it doesn't disappear against the button
-     background — it was clamped far too small (max 32px) before. */
   width: clamp(28px, 15cqw, 48px);
   height: auto;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4));

@@ -1,11 +1,9 @@
 /*
-  Ported 1:1 from the "Yellow Product Section" Figma frame, but with every structural anchor
-  (headline, paragraph, CTA, shoe box, vertical text, shadow) unified to match ProductSectionRed
-  exactly — the two frames had drifted slightly apart in Figma; this file intentionally reuses Red's
-  numbers rather than Yellow's original ones so the two colors line up perfectly during the crossfade.
-  Yellow is index 1 of 4 in the Red -> Yellow -> Lime -> Beige sequence — it's no longer the last
-  state, so unlike before it now needs both --entrance-1 (arriving from Red) AND --exit-1 (leaving
-  for Lime) handling.
+  Lime is index 2 of 4 in the Red -> Yellow -> Lime -> Beige sequence — it reads both --entrance-2
+  (arriving from Yellow) and --exit-2 (leaving for Beige). Core layout anchors are shared 1:1 with
+  the other three colors; unlike them it has no paragraph, and carries a few pieces of extra chrome
+  (compass coordinates, a vertical tick scale, "scroll to explore", the "///" mark) lifted from its
+  own reference mockup, which the other three colors' mockups didn't show.
 */
 
 .wrap {
@@ -13,24 +11,14 @@
   inset: 0;
   container-type: inline-size;
   overflow: hidden;
-  background: #e8b400;
+  background: #d6ec8f;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  opacity: calc(var(--entrance-1, 0) * (1 - var(--exit-1, 0)));
+  opacity: calc(var(--entrance-2, 0) * (1 - var(--exit-2, 0)));
 }
 
 .bg {
   object-fit: cover;
   z-index: 0;
-}
-
-.streak {
-  position: absolute;
-  left: 33.254%;
-  top: 0%;
-  width: 66.746%;
-  height: 77.259%;
-  object-fit: contain;
-  z-index: 1;
 }
 
 .shadow {
@@ -43,10 +31,6 @@
   z-index: 1;
 }
 
-/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. Same
-   general enter/exit formula as ProductSectionRed.module.css's .shoe, just reading index 1's own
-   --entrance-1/--exit-1: arrives sliding in from bottom-right (enlarging) as Red hands off, then
-   later exits toward the CTA (bottom-left, shrinking) as Lime takes over. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -56,8 +40,8 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  --enter: calc(1 - var(--entrance-1, 0));
-  --exit: var(--exit-1, 0);
+  --enter: calc(1 - var(--entrance-2, 0));
+  --exit: var(--exit-2, 0);
   transform: rotate(calc(8deg * (1 - var(--exit) * 0.3 - var(--enter) * 0.3)))
     translate(calc(var(--enter) * 70% - var(--exit) * 70%), calc((var(--enter) + var(--exit)) * 70%))
     scale(calc(1 - var(--enter) * 0.45 - var(--exit) * 0.55));
@@ -107,31 +91,10 @@
   white-space: nowrap;
 }
 
-.paragraph {
-  position: absolute;
-  left: 9.569%;
-  top: 66.3%;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1px, 0.32cqw, 5.6px);
-}
-
-.paragraph p {
-  margin: 0;
-  font-weight: 400;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  line-height: 1.4;
-  color: #111111;
-  white-space: nowrap;
-}
-
-/* See ProductSectionRed.module.css's .cta comment — same fix: .ctaText/.ctaArrow are real flex
-   children, grouped and centered as a unit instead of spread to the two edges. */
 .cta {
   position: absolute;
   left: 9.569%;
-  top: 77%;
+  top: 66.3%;
   width: 19.079%;
   height: 8.395%;
   z-index: 4;
@@ -211,4 +174,79 @@
   letter-spacing: clamp(0.5px, 0.06cqw, 1px);
   color: #ffffff;
   white-space: nowrap;
+}
+
+/* ---- Extra chrome unique to Lime's reference mockup ---- */
+
+.coords {
+  position: absolute;
+  right: 6%;
+  top: 20%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1px, 0.2cqw, 4px);
+  text-align: right;
+  font-size: clamp(10px, 1cqw, 16px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #111111;
+}
+
+.tickScale {
+  position: absolute;
+  right: 3.5%;
+  top: 28%;
+  bottom: 32%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: clamp(11px, 1.1cqw, 18px);
+  color: #111111;
+}
+
+.tickDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #111111;
+}
+
+.tickLine {
+  flex: 1;
+  width: 2px;
+  background: repeating-linear-gradient(#111111 0 4px, transparent 4px 9px);
+}
+
+.tickLabelTop,
+.tickLabelBottom {
+  line-height: 1;
+}
+
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  margin: 0;
+  z-index: 4;
+  text-align: center;
+  font-size: clamp(10px, 1.1cqw, 18px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #111111;
+  line-height: 1.6;
+}
+
+.slashMark {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  z-index: 4;
+  font-size: clamp(18px, 2cqw, 32px);
+  font-weight: 700;
+  color: #111111;
 }
