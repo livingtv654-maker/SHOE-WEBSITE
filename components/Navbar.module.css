@@ -1,0 +1,80 @@
+/*
+  Single page-level navbar, extracted from what used to be duplicated in HeroSection AND
+  ProductSequence (one instance scrolling away with the hero, a second one pinning inside the
+  product sequence's sticky container) — that duplication was the "crowded/janky navbar" bug.
+  Now there's exactly one instance, `position: fixed` to the viewport, so it genuinely follows
+  the user down the whole page instead of being re-created per section.
+*/
+
+.navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 8.395dvh;
+  background: #111111;
+  z-index: 100;
+}
+
+.logo {
+  position: absolute;
+  left: 4.486%;
+  top: 25.3%;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-weight: 400;
+  font-size: clamp(18px, 1.914cqw, 32px);
+  color: #ffffff;
+}
+
+.star {
+  position: absolute;
+  left: 10.526%;
+  top: 33%;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.077cqw, 18px);
+  color: #ffffff;
+  line-height: 1;
+}
+
+.nav {
+  position: absolute;
+  inset: 0;
+}
+
+.navItem {
+  position: absolute;
+  top: 35.4%;
+  font-size: clamp(9px, 0.957cqw, 16px);
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.navHome {
+  left: 33.373%;
+  font-weight: 400;
+}
+
+.navProducts {
+  left: 41.866%;
+  font-weight: 700;
+}
+
+.navJournal {
+  left: 51.555%;
+  font-weight: 400;
+}
+
+.navAbout {
+  left: 59.809%;
+  font-weight: 400;
+}
+
+.navUnderline {
+  position: absolute;
+  left: 41.866%;
+  top: 68.3%;
+  width: 7.057%;
+  height: 2px;
+  background: color-mix(in srgb, #e31e24 calc((1 - var(--entrance-1, 0)) * 100%), #f2c10d calc(var(--entrance-1, 0) * 100%));
+}

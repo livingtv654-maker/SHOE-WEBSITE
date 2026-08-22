@@ -47,6 +47,11 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
         const exit = targetIndex >= i + 1 ? 1 : 0;
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
+        // Also published on <html> so the page-level, always-fixed <Navbar /> (which lives
+        // outside this component and isn't a descendant of `.sticky`) can read --entrance-1 too,
+        // for its Red -> Yellow underline color blend.
+        document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
+        document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
       }
     }
 
@@ -72,23 +77,6 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
       <div ref={stickyRef} className={styles.sticky} data-active-index={activeIndex}>
         {states}
 
-        {/* ---- Shared navbar: one instance for the whole Red<->Yellow sequence instead of a
-            per-color copy, so it never flickers/duplicates as the crossfade plays. The PRODUCTS
-            underline colour slides between the two brand colours via the same --entrance-1 progress
-            that drives everything else. ---- */}
-        <div className={styles.navbar} aria-hidden="true" />
-        <span className={styles.logo}>RED</span>
-        <span className={styles.star} aria-hidden="true">
-          &#9733;
-        </span>
-        <nav className={styles.nav} aria-label="Primary">
-          <span className={`${styles.navItem} ${styles.navHome}`}>HOME</span>
-          <span className={`${styles.navItem} ${styles.navProducts}`}>PRODUCTS</span>
-          <span className={styles.navUnderline} aria-hidden="true" />
-          <span className={`${styles.navItem} ${styles.navJournal}`}>JOURNAL</span>
-          <span className={`${styles.navItem} ${styles.navAbout}`}>ABOUT</span>
-        </nav>
-
         {/* ---- Shared horizontal color carousel: the arc background never changes, and each of the
             four color dots slides between its two fixed slot positions (only Red and Yellow actually
             move between "active/center" and a side slot; Lime Green and Beige just shift one slot
@@ -97,42 +85,44 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
         <Image src="/product-red/triangle.png" alt="" width={40} height={60} priority className={styles.triangle} />
 
-        <Image src="/product-red/circle-big.png" alt="" width={100} height={99} priority className={styles.itemRedCircle} />
-        <span className={styles.itemRedNum}>01</span>
+        {/* Each circle + its number now share one positioned box (.itemXSlot) so the number is
+            centered with `inset: 0` + flex instead of being separately hand-placed — the previous
+            independent left/top coordinates on the number span drifted from the circle's actual
+            visual center once real font metrics were applied. */}
+        <div className={styles.itemRedSlot}>
+          <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemRedNum}>01</span>
+        </div>
         <span className={styles.itemRedLabel}>RED</span>
 
-        <Image
-          src="/product-yellow/circle-big.png"
-          alt=""
-          width={100}
-          height={79}
-          priority
-          className={styles.itemYellowCircle}
-        />
-        <span className={styles.itemYellowNum}>02</span>
+        <div className={styles.itemYellowSlot}>
+          <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemYellowNum}>02</span>
+        </div>
         <span className={styles.itemYellowLabel}>YELLOW</span>
 
-        <Image
-          src="/product-red/circle-small-b.png"
-          alt=""
-          width={61}
-          height={59}
-          priority
-          className={styles.itemLimeCircle}
-        />
-        <span className={styles.itemLimeNum}>03</span>
+        <div className={styles.itemLimeSlot}>
+          <Image src="/product-red/circle-small-b.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemLimeNum}>03</span>
+        </div>
         <span className={styles.itemLimeLabel}>LIME GREEN</span>
 
-        <Image
-          src="/product-red/circle-small-c.png"
-          alt=""
-          width={81}
-          height={60}
-          priority
-          className={styles.itemBeigeCircle}
-        />
-        <span className={styles.itemBeigeNum}>04</span>
-        <span className={styles.itemBeigeLabel}>BEIGE</span>
+        {/* Beige never slides across the whole arc anymore (that was the "magically teleports to
+            the other side" bug) — it only ever occupies the two extreme slots (rightmost while Red
+            is active, leftmost once Yellow takes over), so it's rendered as two independent,
+            non-moving instances that simply crossfade: the rightmost copy fades out, the leftmost
+            copy fades in. Neither one travels. */}
+        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotExit}`}>
+          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemBeigeNum}>04</span>
+        </div>
+        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelExit}`}>BEIGE</span>
+
+        <div className={`${styles.itemBeigeSlot} ${styles.itemBeigeSlotEnter}`}>
+          <Image src="/product-red/circle-small-c.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
+          <span className={styles.itemBeigeNum}>04</span>
+        </div>
+        <span className={`${styles.itemBeigeLabel} ${styles.itemBeigeLabelEnter}`}>BEIGE</span>
       </div>
     </div>
   );

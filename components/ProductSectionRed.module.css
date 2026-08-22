@@ -40,6 +40,9 @@
   the box along a different arc, exposing a sliver of the source photo's transparent-but-not-quite
   bounding box at the heel — the "white patch at the bottom" bug.
 */
+/* On exit the shoe shrinks and travels toward the CTA button — just above and to the right of
+   "Explore this color" — rather than just floating straight up, so it reads as tucking itself away
+   near the action the user is about to take instead of drifting off arbitrarily. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -49,8 +52,9 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  transform: rotate(calc(8deg * (1 - var(--exit-0, 0) * 0.3))) translateY(calc(var(--exit-0, 0) * -40%))
-    scale(calc(1 - var(--exit-0, 0) * 0.4));
+  transform: rotate(calc(8deg * (1 - var(--exit-0, 0) * 0.3)))
+    translate(calc(var(--exit-0, 0) * -58%), calc(var(--exit-0, 0) * 48%))
+    scale(calc(1 - var(--exit-0, 0) * 0.55));
 }
 
 .headlineBlock {
@@ -60,7 +64,7 @@
   z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: clamp(0px, 0.3cqw, 6px);
+  gap: clamp(2px, 0.6cqw, 10px);
 }
 
 .headlineBlock p {
@@ -88,7 +92,7 @@
   position: absolute;
   margin: 0;
   left: 9.569%;
-  top: 60.149%;
+  top: 61.8%;
   z-index: 4;
   font-family: var(--font-antonio), Antonio, sans-serif;
   font-weight: 700;
@@ -100,7 +104,7 @@
 .paragraph {
   position: absolute;
   left: 9.569%;
-  top: 64.825%;
+  top: 66.3%;
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -119,7 +123,7 @@
 .cta {
   position: absolute;
   left: 9.569%;
-  top: 75.771%;
+  top: 77%;
   width: 19.079%;
   height: 8.395%;
   z-index: 4;

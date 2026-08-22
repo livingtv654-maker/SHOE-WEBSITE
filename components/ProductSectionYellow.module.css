@@ -42,7 +42,9 @@
   z-index: 1;
 }
 
-/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. */
+/* Same top-left-pivot rotation fix as ProductSectionRed — see that file's comment for why. Mirrors
+   Red's exit: Yellow's shoe starts small and off to the right (as if arriving from off-screen) and
+   enlarges into its full final position as --entrance-1 goes 0 -> 1. */
 .shoe {
   position: absolute;
   left: 32.152%;
@@ -52,7 +54,8 @@
   object-fit: contain;
   z-index: 2;
   transform-origin: top left;
-  transform: rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3))) scale(calc(0.6 + var(--entrance-1, 0) * 0.4));
+  transform: rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3)))
+    translateX(calc((1 - var(--entrance-1, 0)) * 34%)) scale(calc(0.55 + var(--entrance-1, 0) * 0.45));
 }
 
 .headlineBlock {
@@ -62,7 +65,7 @@
   z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: clamp(0px, 0.3cqw, 6px);
+  gap: clamp(2px, 0.6cqw, 10px);
 }
 
 .headlineBlock p {
@@ -90,7 +93,7 @@
   position: absolute;
   margin: 0;
   left: 9.569%;
-  top: 60.149%;
+  top: 61.8%;
   z-index: 4;
   font-family: var(--font-antonio), Antonio, sans-serif;
   font-weight: 700;
@@ -102,7 +105,7 @@
 .paragraph {
   position: absolute;
   left: 9.569%;
-  top: 64.825%;
+  top: 66.3%;
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -121,7 +124,7 @@
 .cta {
   position: absolute;
   left: 9.569%;
-  top: 75.771%;
+  top: 77%;
   width: 19.079%;
   height: 8.395%;
   z-index: 4;

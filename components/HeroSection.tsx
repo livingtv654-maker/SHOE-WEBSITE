@@ -13,17 +13,8 @@ export default function HeroSection() {
       <Image src="/hero/shoe-1.png" alt="Shoe" width={1314} height={1696} priority className={styles.shoeLeft} />
       <Image src="/hero/shoe-2.png" alt="Shoe" width={1488} height={2020} priority className={styles.shoeRight} />
 
-      <span className={styles.logo}>RED</span>
-      <span className={styles.star} aria-hidden="true">
-        &#9733;
-      </span>
-
-      <nav className={styles.nav} aria-label="Primary">
-        <span className={`${styles.navItem} ${styles.navHome}`}>HOME</span>
-        <span className={`${styles.navItem} ${styles.navProducts}`}>PRODUCTS</span>
-        <span className={`${styles.navItem} ${styles.navJournal}`}>JOURNAL</span>
-        <span className={`${styles.navItem} ${styles.navAbout}`}>ABOUT</span>
-      </nav>
+      {/* Navbar now lives once, page-level, in <Navbar /> (position: fixed) — it used to be
+          duplicated here and again in ProductSequence, which read as a flicker/swap on scroll. */}
 
       <Image src="/hero/plus-dark.png" alt="" width={24} height={24} priority className={styles.plusDark} />
 
