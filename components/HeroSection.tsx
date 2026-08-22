@@ -10,8 +10,8 @@ export default function HeroSection() {
       <Image src="/hero/grid.png" alt="" width={260} height={238} priority className={styles.grid} />
       <Image src="/hero/shadow-1.png" alt="" width={210} height={84} priority className={styles.shadow1} />
       <Image src="/hero/shadow-2.png" alt="" width={340} height={99} priority className={styles.shadow2} />
-      <Image src="/hero/shoe-1.png" alt="Shoe" width={329} height={424} priority className={styles.shoeLeft} />
-      <Image src="/hero/shoe-2.png" alt="Shoe" width={372} height={505} priority className={styles.shoeRight} />
+      <Image src="/hero/shoe-1.png" alt="Shoe" width={1314} height={1696} priority className={styles.shoeLeft} />
+      <Image src="/hero/shoe-2.png" alt="Shoe" width={1488} height={2020} priority className={styles.shoeRight} />
 
       <span className={styles.logo}>RED</span>
       <span className={styles.star} aria-hidden="true">
@@ -35,9 +35,7 @@ export default function HeroSection() {
 
       <Image src="/hero/plus-red-1.png" alt="" width={24} height={24} priority className={styles.plusRed1} />
 
-      <span className={styles.fearless} aria-hidden="true">
-        FEARLESS
-      </span>
+      <Image src="/hero/fearless.png" alt="Fearless" width={326} height={1754} priority className={styles.fearless} />
 
       <div className={styles.headline}>
         <p>FROM THE STREETS</p>
@@ -55,8 +53,13 @@ export default function HeroSection() {
       </div>
 
       <a href="#" className={styles.cta}>
-        <Image src="/hero/cta-button.png" alt="" width={316} height={60} priority className={styles.ctaBg} />
+        <span className={styles.ctaBracketTL} aria-hidden="true" />
+        <span className={styles.ctaBracketBR} aria-hidden="true" />
+        <span className={styles.ctaBg} aria-hidden="true" />
         <span className={styles.ctaText}>EXPLORE COLLECTION</span>
+        <svg className={styles.ctaArrow} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 12h15.5M14 5.5 21 12l-7 6.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </a>
 
       <span className={styles.feel} aria-hidden="true">
