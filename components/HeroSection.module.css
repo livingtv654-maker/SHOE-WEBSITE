@@ -1,0 +1,384 @@
+/*
+  Ported directly from the live Figma file "Red Shoes Hero" (1672x941 canvas), read back from the
+  user's own hand-edited final state via the Figma plugin bridge. Every position/size below is the
+  exact absoluteBoundingBox from that readback, expressed as a percentage of the 1672x941 canvas.
+
+  `.wrap` locks aspect-ratio to 1672/941 and is a CSS container (`container-type: inline-size`), so
+  every element below scales together as one unit (like a poster) using left/top/width/height
+  percentages (correct because % of width and % of height stay proportional under a locked aspect
+  ratio) and `cqw` for font-size/letter-spacing (1cqw = 1% of the container's own width = 16.72px at
+  the canvas's native 1672px width).
+*/
+
+.wrap {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.bg {
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* ---- Decorative art (background layer) ---- */
+
+.circle {
+  left: 37.5%;
+  top: 11.052%;
+  width: 38.876%;
+  height: 68.863%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.grid {
+  left: 63.278%;
+  top: 8.714%;
+  width: 15.55%;
+  height: 25.293%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.shadow1 {
+  left: 37.141%;
+  top: 79.043%;
+  width: 12.56%;
+  height: 8.926%;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.shadow2 {
+  left: 64.296%;
+  top: 80.766%;
+  width: 20.335%;
+  height: 10.521%;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.circle,
+.grid,
+.shadow1,
+.shadow2,
+.shoeLeft,
+.shoeRight,
+.plusDark,
+.plusRed1,
+.plusRed2,
+.dashes,
+.ctaBg,
+.barcode {
+  position: absolute;
+}
+
+.shoeLeft {
+  left: 31.983%;
+  top: 16.738%;
+  width: 19.988%;
+  height: 45.653%;
+  object-fit: contain;
+  z-index: 3;
+}
+
+.shoeRight {
+  left: 64.229%;
+  top: 21.264%;
+  width: 22.249%;
+  height: 53.666%;
+  object-fit: contain;
+  z-index: 4;
+}
+
+/* ---- Logo ---- */
+
+.logo {
+  position: absolute;
+  left: 4.486%;
+  top: 3.507%;
+  z-index: 5;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(20px, 2.99cqw, 50px);
+  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
+  color: #e31e24;
+}
+
+.star {
+  position: absolute;
+  left: 10.526%;
+  top: 4.251%;
+  z-index: 5;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-size: clamp(14px, 1.675cqw, 28px);
+  color: #e31e24;
+  line-height: 1;
+}
+
+/* ---- Nav ---- */
+
+.nav {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.navItem {
+  position: absolute;
+  top: 4.038%;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: clamp(12px, 1.495cqw, 25px);
+  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
+  color: #191b1f;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+
+.navHome {
+  left: 30.681%;
+  font-weight: 700;
+}
+
+.navProducts {
+  left: 38.935%;
+  font-weight: 400;
+}
+
+.navJournal {
+  left: 50.718%;
+  font-weight: 400;
+}
+
+.navAbout {
+  left: 61.244%;
+  font-weight: 400;
+}
+
+.navUnderline {
+  position: absolute;
+  left: 30.919%;
+  top: 8.076%;
+  width: 3.469%;
+  height: 0.213%;
+  background: #191b1f;
+}
+
+.plusDark {
+  left: 88.397%;
+  top: 5.313%;
+  width: 1.435%;
+  height: 2.55%;
+  object-fit: contain;
+  z-index: 5;
+}
+
+.coords {
+  position: absolute;
+  left: 93.182%;
+  top: 8.714%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(1px, 0.213cqw, 3.5px);
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 500;
+  font-size: clamp(9px, 0.837cqw, 14px);
+  color: #4b4f58;
+  white-space: nowrap;
+}
+
+.plusRed1 {
+  left: 95.694%;
+  top: 15.196%;
+  width: 1.435%;
+  height: 2.55%;
+  object-fit: contain;
+  z-index: 5;
+}
+
+/* ---- Rotated wordmarks ----
+   Positioned at their LOCAL (pre-rotation) box, then rotated around the top-left corner — this
+   Figma schema's rotation is CCW-positive around (x,y), so a 90deg node's rendered absolute box is
+   derived from the local box; reproducing it in CSS means placing the unrotated box first, then
+   `transform-origin: top left; transform: rotate(-90deg)`. */
+
+.fearless {
+  position: absolute;
+  left: 0.359%;
+  top: 82.359%;
+  width: 54.306%;
+  height: 18.066%;
+  transform-origin: top left;
+  transform: rotate(-90deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-jomhuria), "Jomhuria", serif;
+  font-weight: 400;
+  font-size: clamp(60px, 16.148cqw, 270px);
+  letter-spacing: clamp(-0.4px, -0.06cqw, -1px);
+  color: #e31e24;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 4;
+}
+
+.feel {
+  position: absolute;
+  left: 78.828%;
+  top: 83.528%;
+  width: 22.488%;
+  height: 32.943%;
+  transform-origin: top left;
+  transform: rotate(-90deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-jomhuria), "Jomhuria", serif;
+  font-weight: 400;
+  font-size: clamp(60px, 17.943cqw, 300px);
+  letter-spacing: clamp(-0.4px, -0.06cqw, -1px);
+  color: #191b1f;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 4;
+}
+
+/* ---- Headline ---- */
+
+.headline {
+  position: absolute;
+  left: 14.833%;
+  top: 40.064%;
+  width: 22.727%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1px, 0.213cqw, 4px);
+}
+
+.headline p {
+  margin: 0;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-size: clamp(16px, 2.093cqw, 35px);
+  line-height: 1.32;
+  color: #191b1f;
+  white-space: nowrap;
+}
+
+.headlineRed {
+  font-family: var(--font-inter), Inter, sans-serif !important;
+  color: #e31e24 !important;
+}
+
+.dashes {
+  left: 14.653%;
+  top: 56.216%;
+  width: 6.459%;
+  height: 2.869%;
+  object-fit: contain;
+  z-index: 5;
+}
+
+/* ---- Paragraph ---- */
+
+.paragraph {
+  position: absolute;
+  left: 14.833%;
+  top: 62.912%;
+  width: 20%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1px, 0.319cqw, 5.5px);
+}
+
+.paragraph p {
+  margin: 0;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 400;
+  font-size: clamp(10px, 1.017cqw, 17px);
+  line-height: 1.53;
+  color: #2b2e33;
+  white-space: nowrap;
+}
+
+/* ---- CTA ---- */
+
+.cta {
+  position: absolute;
+  left: 13.098%;
+  top: 78.958%;
+  width: 18.9%;
+  height: 6.376%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+}
+
+.ctaBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.ctaText {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.017cqw, 17px);
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.barcode {
+  left: 77.153%;
+  top: 89.054%;
+  width: 8.254%;
+  height: 5.42%;
+  object-fit: contain;
+  z-index: 5;
+}
+
+.rbd {
+  position: absolute;
+  left: 87.321%;
+  top: 91.18%;
+  z-index: 5;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-weight: 500;
+  font-size: clamp(9px, 0.897cqw, 15px);
+  color: #4b4f58;
+  white-space: nowrap;
+}
+
+.plusRed2 {
+  left: 95.455%;
+  top: 90.86%;
+  width: 1.435%;
+  height: 2.55%;
+  object-fit: contain;
+  z-index: 5;
+}
