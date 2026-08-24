@@ -68,8 +68,15 @@
   font-weight: 900;
   font-size: clamp(160px, 22cqw, 420px);
   letter-spacing: clamp(-2px, -0.01em, 0.01em);
-  line-height: 0.82;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.15) 100%);
+  line-height: 1;
+  padding-bottom: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.7) 40%,
+    rgba(255, 255, 255, 0.2) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
