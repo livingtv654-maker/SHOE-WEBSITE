@@ -46,13 +46,19 @@ export default function ProductSequence({
         setActiveIndex(targetIndex);
       }
 
+      const p01 = Math.min(Math.max(rawProgress, 0), 1);
+      const p12 = Math.min(Math.max(rawProgress - 1, 0), 1);
+      const p23 = Math.min(Math.max(rawProgress - 2, 0), 1);
+
+      sticky.style.setProperty("--p01", String(p01));
+      sticky.style.setProperty("--p12", String(p12));
+      sticky.style.setProperty("--p23", String(p23));
+
       for (let i = 0; i < stateCount; i++) {
         const entrance = targetIndex >= i ? 1 : 0;
         const exit = targetIndex >= i + 1 ? 1 : 0;
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
-        document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
-        document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
       }
     }
 
