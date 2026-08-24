@@ -36,55 +36,63 @@ export default function ProductCard({
 
   return (
     <div className={styles.card} style={cardStyle}>
-      {/* Luxury Glassmorphic Size Selector Bar */}
-      <div className={styles.sizePod}>
-        {sizes.map((size) => (
-          <button
-            key={size}
-            type="button"
-            className={`${styles.sizeBtn} ${
-              selectedSize === size ? styles.selectedSize : ""
-            }`}
-            onClick={() => setSelectedSize(size)}
-          >
-            <span className={styles.sizeText}>{size}</span>
-            {selectedSize === size && <div className={styles.activeGlow} />}
-          </button>
-        ))}
-      </div>
-
-      {/* Shimmering Magnetic Add-To-Cart Button */}
-      <button
-        type="button"
-        className={`${styles.addBtn} ${added ? styles.addedBtn : ""}`}
-        onClick={handleAddToCart}
-      >
-        <span className={styles.shimmer} />
-        <span className={styles.btnPrice}>{price}</span>
-        <span className={styles.divider}>—</span>
-        <span className={styles.btnLabel}>
-          {added ? (
-            <span className={styles.addedState}>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={styles.checkIcon}
+      {/* Unified Integrated Super-Pill Bar */}
+      <div className={styles.superPill}>
+        {/* Left Section: Embedded Size Selector */}
+        <div className={styles.sizeSection}>
+          <span className={styles.sizeLabel}>SIZE</span>
+          <div className={styles.sizeList}>
+            {sizes.map((size) => (
+              <button
+                key={size}
+                type="button"
+                className={`${styles.sizeBtn} ${
+                  selectedSize === size ? styles.selectedSize : ""
+                }`}
+                onClick={() => setSelectedSize(size)}
               >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              ADDED TO CART
-            </span>
-          ) : (
-            "ADD TO CART"
-          )}
-        </span>
-      </button>
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Elegant Vertical Divider */}
+        <div className={styles.dividerLine} />
+
+        {/* Right Section: Add to Cart CTA */}
+        <button
+          type="button"
+          className={`${styles.addBtn} ${added ? styles.addedBtn : ""}`}
+          onClick={handleAddToCart}
+        >
+          <span className={styles.shimmer} />
+          <span className={styles.btnPrice}>{price}</span>
+          <span className={styles.dash}>—</span>
+          <span className={styles.btnLabel}>
+            {added ? (
+              <span className={styles.addedState}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={styles.checkIcon}
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                ADDED
+              </span>
+            ) : (
+              "ADD TO CART"
+            )}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
