@@ -1,3 +1,44 @@
+@property --entrance-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --entrance-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --entrance-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --entrance-3 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-3 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 .wrapper {
   position: relative;
   height: 300dvh;
@@ -10,116 +51,223 @@
   overflow: hidden;
   container-type: inline-size;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
+  transition: --entrance-0 0.6s cubic-bezier(0.16, 1, 0.3, 1), --entrance-1 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    --entrance-2 0.6s cubic-bezier(0.16, 1, 0.3, 1), --entrance-3 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    --exit-0 0.6s cubic-bezier(0.16, 1, 0.3, 1), --exit-1 0.6s cubic-bezier(0.16, 1, 0.3, 1), --exit-2 0.6s
+      cubic-bezier(0.16, 1, 0.3, 1), --exit-3 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.laserArcDock {
+/* ---- Shared Clean Black Arc Line ---- */
+.arc {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  left: 8.971%;
+  top: 82.891%;
+  width: 84.593%;
+  height: 12.539%;
+  object-fit: contain;
   z-index: 8;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
 }
 
-.svgTrack {
+.slotCircleImg {
+  object-fit: contain;
+}
+
+.itemRedSlot,
+.itemYellowSlot,
+.itemLimeSlot,
+.itemBeigeSlot,
+.itemRedSlotWrapped,
+.itemYellowSlotWrapped,
+.itemBeigeSlotWrapped {
   position: absolute;
-  left: 5%;
-  top: 72%;
-  width: 90%;
-  height: 22%;
-  overflow: visible;
-}
-
-.activeLaserLine {
-  transition: stroke-dashoffset 0.1s linear;
-}
-
-.nodeBox {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  pointer-events: auto;
-  cursor: pointer;
   z-index: 9;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  container-type: inline-size;
 }
 
-.nodeCircle {
-  width: clamp(32px, 2.4cqw, 42px);
-  height: clamp(32px, 2.4cqw, 42px);
-  border-radius: 50%;
-  background: rgba(14, 15, 18, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.nodeNum {
-  font-weight: 800;
-  font-size: clamp(10px, 0.8cqw, 13px);
-  color: rgba(255, 255, 255, 0.7);
-  transition: color 0.35s ease;
-}
-
-.nodeLabel {
-  font-weight: 700;
-  font-size: clamp(10px, 0.75cqw, 12px);
-  letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.5);
-  white-space: nowrap;
-  transition: all 0.35s ease;
-}
-
-.nodeBox:hover .nodeCircle {
-  border-color: #ffffff;
-  transform: scale(1.1);
-}
-
-.activeNode .nodeCircle {
-  background: var(--node-color, #e31e24);
-  border-color: var(--node-color, #e31e24);
-  transform: scale(1.22);
-  box-shadow: 0 0 25px var(--node-color, #e31e24), 0 0 50px rgba(var(--node-rgb, 227, 30, 36), 0.5);
-}
-
-.activeNode .nodeNum {
-  color: #0b0c0e;
-}
-
-.activeNode .nodeLabel {
-  color: #ffffff;
-  font-weight: 900;
-  text-shadow: 0 0 12px var(--node-color, #e31e24);
-  transform: translateY(2px);
-}
-
-.glowingBead {
+.itemRedNum,
+.itemYellowNum,
+.itemLimeNum,
+.itemBeigeNum {
   position: absolute;
-  width: clamp(18px, 1.4cqw, 26px);
-  height: clamp(18px, 1.4cqw, 26px);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  pointer-events: none;
-  transition: left 0.15s linear, top 0.15s linear, background 0.35s ease, box-shadow 0.35s ease;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 800;
+  line-height: 1;
+  font-size: 34cqw;
+  color: #ffffff;
 }
 
-.beadCore {
-  width: 40%;
-  height: 40%;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 10px #ffffff;
+.itemRedLabel,
+.itemYellowLabel,
+.itemLimeLabel,
+.itemBeigeLabel,
+.itemRedLabelWrapped,
+.itemYellowLabelWrapped,
+.itemBeigeLabelWrapped {
+  position: absolute;
+  z-index: 9;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+/* ============================= RED ============================= */
+/* Travels across the full black line arc.
+   Exits at far right tip (88%), shrinking scale(0.3) -> 0; wraps in from far left tip (5.5%). */
+
+.itemRedSlot {
+  left: calc(56.5% * (1 - var(--entrance-1, 0)) + 79.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 88% * var(--entrance-2, 0));
+  top: calc(79.5% * (1 - var(--entrance-1, 0)) + 86.8% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 90% * var(--entrance-2, 0));
+  width: calc(6.5% * (1 - var(--entrance-1, 0)) + 4.8% * var(--entrance-1, 0));
+  height: calc(11.0% * (1 - var(--entrance-1, 0)) + 6.4% * var(--entrance-1, 0));
+  transform: scale(calc(1 - var(--entrance-2, 0) * 0.7));
+  opacity: calc(1 - var(--entrance-2, 0));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemRedLabel {
+  left: calc(59.5% * (1 - var(--entrance-1, 0)) + 81.8% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 90% * var(--entrance-2, 0));
+  top: calc(89.2% * (1 - var(--entrance-1, 0)) + 92.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 95% * var(--entrance-2, 0));
+  font-size: calc(28px * (1 - var(--entrance-1, 0)) + 18px * var(--entrance-1, 0));
+  color: color-mix(in srgb, #ffffff calc((1 - var(--entrance-1, 0)) * 100%), #111111 calc(var(--entrance-1, 0) * 100%));
+  opacity: calc(1 - var(--entrance-2, 0));
+}
+
+.itemRedSlotWrapped {
+  left: calc((5.5% * (1 - var(--entrance-2, 0)) + 10.5% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 33.5% * var(--entrance-3, 0));
+  top: calc((90% * (1 - var(--entrance-2, 0)) + 86.8% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 81.2% * var(--entrance-3, 0));
+  width: 4.8%;
+  height: 6.4%;
+  transform: scale(calc(0.3 + var(--entrance-2, 0) * 0.7));
+  opacity: var(--entrance-2, 0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemRedLabelWrapped {
+  left: calc((7.5% * (1 - var(--entrance-2, 0)) + 12.8% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 35.8% * var(--entrance-3, 0));
+  top: calc((95% * (1 - var(--entrance-2, 0)) + 92.5% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 89.2% * var(--entrance-3, 0));
+  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 20px * var(--entrance-3, 0));
+  color: #111111;
+  opacity: var(--entrance-2, 0);
+}
+
+/* ============================= YELLOW ============================= */
+/* Starts at B (33.5%), glides to active C (56.5%), then D (79.5%), and flies off tip to wrap A. */
+
+.itemYellowSlot {
+  left: calc(33.5% * (1 - var(--entrance-1, 0)) + 56.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 79.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 88% * var(--entrance-3, 0));
+  top: calc(81.2% * (1 - var(--entrance-1, 0)) + 79.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 86.8% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 90% * var(--entrance-3, 0));
+  width: calc(3.6% * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 6.5% *
+        (var(--entrance-1, 0) - var(--entrance-2, 0)));
+  height: calc(6.3% * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 11.0% *
+        (var(--entrance-1, 0) - var(--entrance-2, 0)));
+  transform: scale(calc(1 - var(--entrance-3, 0) * 0.7));
+  opacity: calc(1 - var(--entrance-3, 0));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemYellowLabel {
+  left: calc(35.8% * (1 - var(--entrance-1, 0)) + 59.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 81.8% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 90% * var(--entrance-3, 0));
+  top: calc(89.2% * (1 - var(--entrance-1, 0)) + 89.2% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 92.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 95% * var(--entrance-3, 0));
+  font-size: calc(18px * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 28px *
+        (var(--entrance-1, 0) - var(--entrance-2, 0)));
+  color: color-mix(
+    in srgb,
+    #111111 calc((1 - var(--entrance-1, 0) + var(--entrance-2, 0)) * 100%),
+    #ffffff calc((var(--entrance-1, 0) - var(--entrance-2, 0)) * 100%)
+  );
+  opacity: calc(1 - var(--entrance-3, 0));
+}
+
+.itemYellowSlotWrapped {
+  left: calc(5.5% * (1 - var(--entrance-3, 0)) + 10.5% * var(--entrance-3, 0));
+  top: calc(90% * (1 - var(--entrance-3, 0)) + 86.8% * var(--entrance-3, 0));
+  width: 3.6%;
+  height: 6.3%;
+  transform: scale(calc(0.3 + var(--entrance-3, 0) * 0.7));
+  opacity: var(--entrance-3, 0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemYellowLabelWrapped {
+  left: calc(7.5% * (1 - var(--entrance-3, 0)) + 12.8% * var(--entrance-3, 0));
+  top: calc(95% * (1 - var(--entrance-3, 0)) + 92.5% * var(--entrance-3, 0));
+  font-size: 18px;
+  color: #111111;
+  opacity: var(--entrance-3, 0);
+}
+
+/* ============================= LIME ============================= */
+/* Starts at A (10.5%), glides to B (33.5%), then active C (56.5%), and D (79.5%) along full line. */
+
+.itemLimeSlot {
+  left: calc(10.5% * (1 - var(--entrance-1, 0)) + 33.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 56.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 79.5% * var(--entrance-3, 0));
+  top: calc(86.8% * (1 - var(--entrance-1, 0)) + 81.2% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 79.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 86.8% * var(--entrance-3, 0));
+  width: calc(3.6% * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 6.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)));
+  height: calc(6.3% * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 11.0% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)));
+}
+
+.itemLimeLabel {
+  left: calc(12.8% * (1 - var(--entrance-1, 0)) + 35.8% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 59.5% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 81.8% * var(--entrance-3, 0));
+  top: calc(92.5% * (1 - var(--entrance-1, 0)) + 89.2% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 89.2% *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 92.5% * var(--entrance-3, 0));
+  font-size: calc(18px * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 28px *
+        (var(--entrance-2, 0) - var(--entrance-3, 0)));
+  color: color-mix(
+    in srgb,
+    #111111 calc((1 - var(--entrance-2, 0) + var(--entrance-3, 0)) * 100%),
+    #ffffff calc((var(--entrance-2, 0) - var(--entrance-3, 0)) * 100%)
+  );
+}
+
+/* ============================= BEIGE ============================= */
+/* Starts at D (79.5%), flies off right tip, and wraps to A (10.5%) -> B (33.5%) -> active C (56.5%). */
+
+.itemBeigeSlot {
+  left: calc(79.5% * (1 - var(--entrance-1, 0)) + 88% * var(--entrance-1, 0));
+  top: calc(86.8% * (1 - var(--entrance-1, 0)) + 90% * var(--entrance-1, 0));
+  width: 4.8%;
+  height: 6.4%;
+  transform: scale(calc(1 - var(--entrance-1, 0) * 0.7));
+  opacity: calc(1 - var(--entrance-1, 0));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemBeigeLabel {
+  left: calc(81.8% * (1 - var(--entrance-1, 0)) + 90% * var(--entrance-1, 0));
+  top: calc(92.5% * (1 - var(--entrance-1, 0)) + 95% * var(--entrance-1, 0));
+  font-size: 18px;
+  color: #111111;
+  opacity: calc(1 - var(--entrance-1, 0));
+}
+
+.itemBeigeSlotWrapped {
+  left: calc((5.5% * (1 - var(--entrance-1, 0)) + 10.5% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 33.5% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 56.5% * var(--entrance-3, 0));
+  top: calc((90% * (1 - var(--entrance-1, 0)) + 86.8% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 81.2% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 79.5% * var(--entrance-3, 0));
+  width: calc(4.8% * (1 - var(--entrance-3, 0)) + 6.5% * var(--entrance-3, 0));
+  height: calc(6.4% * (1 - var(--entrance-3, 0)) + 11.0% * var(--entrance-3, 0));
+  transform: scale(calc(0.3 + var(--entrance-1, 0) * 0.7));
+  opacity: var(--entrance-1, 0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.itemBeigeLabelWrapped {
+  left: calc((7.5% * (1 - var(--entrance-1, 0)) + 12.8% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 35.8% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 59.5% * var(--entrance-3, 0));
+  top: calc((95% * (1 - var(--entrance-1, 0)) + 92.5% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 89.2% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 89.2% * var(--entrance-3, 0));
+  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 28px * var(--entrance-3, 0));
+  color: color-mix(in srgb, #111111 calc((1 - var(--entrance-3, 0)) * 100%), #ffffff calc(var(--entrance-3, 0) * 100%));
+  opacity: var(--entrance-1, 0);
 }
