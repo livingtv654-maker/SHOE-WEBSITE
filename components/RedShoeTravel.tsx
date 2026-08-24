@@ -12,27 +12,17 @@ export default function RedShoeTravel({ isLoaded = true }: RedShoeTravelProps) {
   const shoeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let ticking = false;
-
-    function update() {
-      ticking = false;
+    function onScroll() {
       if (!shoeRef.current) return;
       const viewportH = window.innerHeight;
       if (viewportH <= 0) return;
 
-      // Real-time 1:1 continuous scroll progress between Hero (0) and Carousel (1)
+      // Scroll progress from top of page (0) to start of carousel (1)
       const heroProgress = Math.min(Math.max(window.scrollY / viewportH, 0), 1);
       shoeRef.current.style.setProperty("--hero-travel", String(heroProgress));
     }
 
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    }
-
-    update();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

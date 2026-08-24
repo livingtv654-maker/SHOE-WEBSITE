@@ -5,7 +5,7 @@
   pointer-events: none;
 
   /*
-    Seamless 1:1 continuous coordinate interpolation from Hero Section → Carousel:
+    Seamless coordinate interpolation from Hero Section → Product Sequence Carousel:
     Hero:     left 64.229%, top 21.264%, width 22.249%, height 53.666%
     Carousel: left 32.152%, top 15.941%, width 43.062%, height 56.909%
   */
@@ -14,18 +14,13 @@
   width: calc(22.249vw * (1 - var(--hero-travel, 0)) + 43.062vw * var(--hero-travel, 0));
   height: calc(53.666vh * (1 - var(--hero-travel, 0)) + 56.909vh * var(--hero-travel, 0));
 
-  /* 
-    Direct 1:1 scroll-linked tilt:
-    At scroll 0% (Hero) -> -22deg
-    At scroll 50% -> -7deg
-    At scroll 100% (Carousel) -> +8deg
-  */
+  /* Tilted in Hero (-22deg) and smoothly transitions into Carousel pose (+8deg) */
   transform-origin: center center;
   transform: translate(calc(var(--exit-0, 0) * -70%), calc(var(--exit-0, 0) * 70%))
     rotate(calc((-22deg + var(--hero-travel, 0) * 30deg) * (1 - var(--exit-0, 0) * 0.3)))
     scale(calc(1 - var(--exit-0, 0) * 0.55));
   opacity: calc(1 - var(--exit-0, 0));
-  transition: opacity 0.3s ease;
+  transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.65s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: left, top, width, height, transform, opacity;
 }
 
@@ -36,9 +31,9 @@
   opacity: 0;
 }
 
-/* Hero reveal animation & idle floating when page loads */
+/* Single clean hero intro reveal animation (no continuous bobbing/floating) */
 .loaded .shoeInner {
-  animation: shoeRightReveal 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both, floatRight 6.5s ease-in-out infinite 1.47s;
+  animation: shoeRightReveal 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
 }
 
 .shoeImg {
@@ -59,14 +54,5 @@
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-  }
-}
-
-@keyframes floatRight {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-8px) rotate(1.5deg);
   }
 }
