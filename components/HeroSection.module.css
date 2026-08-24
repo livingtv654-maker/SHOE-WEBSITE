@@ -81,15 +81,14 @@
 
 .shoeRight {
   position: absolute;
-  left: calc(64.229% * (1 - var(--hero-scroll, 0)) + 32.152% * var(--hero-scroll, 0));
-  top: calc(21.264% * (1 - var(--hero-scroll, 0)) + 15.941% * var(--hero-scroll, 0));
-  width: calc(22.249% * (1 - var(--hero-scroll, 0)) + 43.062% * var(--hero-scroll, 0));
-  height: calc(53.666% * (1 - var(--hero-scroll, 0)) + 56.909% * var(--hero-scroll, 0));
+  left: 64.229%;
+  top: 21.264%;
+  width: 22.249%;
+  height: 53.666%;
   object-fit: contain;
   z-index: 4;
-  transform: rotate(calc(var(--hero-scroll, 0) * 8deg));
-  opacity: calc(1 - var(--hero-scroll, 0) * 0.99);
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  /* Use filter:opacity because the reveal animation controls the opacity property */
+  filter: opacity(calc((1 - var(--hero-scroll, 0) * 6) * 100%));
 }
 
 .plusDark {

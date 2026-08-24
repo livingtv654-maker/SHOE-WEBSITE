@@ -64,8 +64,9 @@
   transform-origin: top left;
   transform: translate(calc(var(--exit-0, 0) * -70%), calc(var(--exit-0, 0) * 70%))
     rotate(calc(8deg * (1 - var(--exit-0, 0) * 0.3))) scale(calc(1 - var(--exit-0, 0) * 0.55));
-  opacity: calc(var(--hero-scroll, 0) * (1 - var(--exit-0, 0)));
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  /* Fade in during last 30% of hero scroll (0.7→1.0), then fade out on exit */
+  opacity: calc(clamp(0, (var(--hero-scroll, 0) - 0.7) * 3.33, 1) * (1 - var(--exit-0, 0)));
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
 }
 
 .bgShoeName {

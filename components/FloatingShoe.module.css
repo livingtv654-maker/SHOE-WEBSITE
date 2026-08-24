@@ -1,0 +1,21 @@
+/* Fixed-position shoe that travels from hero → carousel on scroll */
+.floatingShoe {
+  position: fixed;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+
+  /* Interpolate from hero position → carousel position using --travel (0→1) */
+  left:   calc(64.229vw * (1 - var(--travel, 0)) + 32.152vw * var(--travel, 0));
+  top:    calc(21.264vh * (1 - var(--travel, 0)) + 15.941vh * var(--travel, 0));
+  width:  calc(22.249vw * (1 - var(--travel, 0)) + 43.062vw * var(--travel, 0));
+  height: calc(53.666vh * (1 - var(--travel, 0)) + 56.909vh * var(--travel, 0));
+
+  /* Gentle rotation as it travels */
+  transform: rotate(calc(var(--travel, 0) * 8deg));
+  will-change: left, top, width, height, opacity, transform;
+}
+
+.img {
+  object-fit: contain;
+}
