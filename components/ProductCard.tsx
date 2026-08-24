@@ -4,12 +4,12 @@ import { useState } from "react";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
-  edition: string;
-  name: string;
+  edition?: string;
+  name?: string;
   price: string;
   rating?: string;
   reviews?: string;
-  description: string;
+  description?: string;
   accentColor?: string;
   accentRgb?: string;
 }
@@ -26,7 +26,7 @@ export default function ProductCard({
 
   const handleAddToCart = () => {
     setAdded(true);
-    setTimeout(() => setAdded(false), 1800);
+    setTimeout(() => setAdded(false), 2200);
   };
 
   const cardStyle = {
@@ -36,8 +36,8 @@ export default function ProductCard({
 
   return (
     <div className={styles.card} style={cardStyle}>
-      {/* Sleek Horizontal Size Selector */}
-      <div className={styles.sizeRow}>
+      {/* Luxury Glassmorphic Size Selector Bar */}
+      <div className={styles.sizePod}>
         {sizes.map((size) => (
           <button
             key={size}
@@ -47,20 +47,43 @@ export default function ProductCard({
             }`}
             onClick={() => setSelectedSize(size)}
           >
-            {size}
+            <span className={styles.sizeText}>{size}</span>
+            {selectedSize === size && <div className={styles.activeGlow} />}
           </button>
         ))}
       </div>
 
-      {/* Dynamic CTA Pill */}
+      {/* Shimmering Magnetic Add-To-Cart Button */}
       <button
         type="button"
         className={`${styles.addBtn} ${added ? styles.addedBtn : ""}`}
         onClick={handleAddToCart}
       >
+        <span className={styles.shimmer} />
         <span className={styles.btnPrice}>{price}</span>
         <span className={styles.divider}>—</span>
-        <span>{added ? "ADDED TO CART!" : "ADD TO CART"}</span>
+        <span className={styles.btnLabel}>
+          {added ? (
+            <span className={styles.addedState}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={styles.checkIcon}
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              ADDED TO CART
+            </span>
+          ) : (
+            "ADD TO CART"
+          )}
+        </span>
       </button>
     </div>
   );

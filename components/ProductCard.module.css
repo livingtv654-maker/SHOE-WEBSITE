@@ -1,93 +1,180 @@
 .card {
   position: absolute;
   right: 5%;
-  bottom: 14%;
+  bottom: 12%;
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 14px;
   color: #ffffff;
   pointer-events: auto;
 }
 
-.sizeRow {
+/* Frosted Glass Floating Pod */
+.sizePod {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  padding: 6px;
+  background: rgba(18, 18, 20, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
 }
 
 .sizeBtn {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.7);
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(11px, 0.85cqw, 14px);
+  font-size: clamp(12px, 0.9cqw, 15px);
   font-weight: 700;
-  width: clamp(34px, 2.5cqw, 42px);
-  height: clamp(34px, 2.5cqw, 42px);
+  width: clamp(38px, 2.7cqw, 46px);
+  height: clamp(38px, 2.7cqw, 46px);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.sizeText {
+  position: relative;
+  z-index: 2;
 }
 
 .sizeBtn:hover {
-  border-color: var(--accent, #ffffff);
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
 .selectedSize {
   background: var(--accent, #ffffff) !important;
-  border-color: var(--accent, #ffffff) !important;
   color: #0b0c0e !important;
   font-weight: 900 !important;
-  box-shadow: 0 0 16px rgba(var(--accent-rgb, 227, 30, 36), 0.5);
-  transform: translateY(-2px);
+  border-color: var(--accent, #ffffff) !important;
+  box-shadow: 0 4px 20px rgba(var(--accent-rgb, 227, 30, 36), 0.55);
+  transform: translateY(-2px) scale(1.05);
 }
 
+.activeGlow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(0.9); opacity: 0.25; }
+  50% { transform: scale(1.1); opacity: 0.5; }
+}
+
+/* Shimmering Magnetic CTA Button */
 .addBtn {
-  padding: clamp(12px, 0.95cqw, 16px) clamp(22px, 1.8cqw, 32px);
-  background: var(--accent, #e31e24);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(14px, 1.05cqw, 18px) clamp(26px, 2.2cqw, 38px);
+  background: linear-gradient(135deg, var(--accent, #e31e24) 0%, rgba(var(--accent-rgb, 227, 30, 36), 0.9) 100%);
   color: #0b0c0e;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   font-family: var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-size: clamp(12px, 0.95cqw, 15px);
+  font-size: clamp(13px, 1cqw, 16px);
   letter-spacing: 1.5px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 10px 30px rgba(var(--accent-rgb, 227, 30, 36), 0.45);
-  transition: transform 0.25s ease, filter 0.25s ease, background 0.4s ease, box-shadow 0.4s ease;
+  gap: 12px;
+  box-shadow: 0 12px 35px rgba(var(--accent-rgb, 227, 30, 36), 0.45);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.4s ease;
   white-space: nowrap;
+}
+
+.shimmer {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%) rotate(25deg);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.addBtn:hover .shimmer {
+  transform: translateX(100%) rotate(25deg);
+}
+
+.addBtn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 16px 42px rgba(var(--accent-rgb, 227, 30, 36), 0.65);
+}
+
+.addBtn:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .btnPrice {
   font-family: var(--font-poppins), sans-serif;
   font-weight: 900;
+  letter-spacing: 0.5px;
 }
 
 .divider {
-  opacity: 0.6;
+  opacity: 0.5;
   font-weight: 400;
 }
 
-.addBtn:hover {
-  transform: translateY(-3px) scale(1.03);
-  filter: brightness(1.15);
-  box-shadow: 0 14px 35px rgba(var(--accent-rgb, 227, 30, 36), 0.65);
+.btnLabel {
+  display: inline-flex;
+  align-items: center;
+}
+
+.addedState {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0b0c0e;
+  animation: checkPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkIcon {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 0;
+  animation: strokeDraw 0.4s ease forwards;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes strokeDraw {
+  0% { stroke-dashoffset: 50; }
+  100% { stroke-dashoffset: 0; }
 }
 
 .addedBtn {
-  background: #00e676 !important;
+  background: linear-gradient(135deg, #00e676 0%, #00c853 100%) !important;
   color: #0b0c0e !important;
-  box-shadow: 0 10px 30px rgba(0, 230, 118, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 35px rgba(0, 230, 118, 0.5) !important;
 }
