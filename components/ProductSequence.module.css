@@ -107,7 +107,7 @@
 
 /* ============================= RED ============================= */
 /* Dead-Center Midpoints on Black Line Arc Curve:
-   Slot A (Far-Left): 18.24%, 88.6%
+   Slot A (Far-Left): 18.24%, 92.2%
    Slot B (Mid-Left): 31.1%, 86.6%
    Slot C (Active Center): 47.01%, 84.0%
    Slot D (Right): 72.368%, 87.0% */
@@ -128,7 +128,7 @@
 
 .itemRedSlotWrapped {
   left: calc(18.24% * (1 - var(--entrance-3, 0)) + 31.1% * var(--entrance-3, 0));
-  top: calc(88.6% * (1 - var(--entrance-3, 0)) + 86.6% * var(--entrance-3, 0));
+  top: calc(92.2% * (1 - var(--entrance-3, 0)) + 86.6% * var(--entrance-3, 0));
   width: 4.785%;
   height: 6.376%;
   opacity: var(--entrance-2, 0);
@@ -141,7 +141,7 @@
 }
 
 /* ============================= YELLOW ============================= */
-/* Path: Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) -> Slot D (72.368%, 87.0%) -> [wrap] Slot A (18.24%, 88.6%) */
+/* Path: Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) -> Slot D (72.368%, 87.0%) -> [wrap] Slot A (18.24%, 92.2%) */
 
 .itemYellowSlot {
   left: calc(31.1% * (1 - var(--entrance-1, 0)) + 47.01% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 72.368% *
@@ -163,7 +163,7 @@
 
 .itemYellowSlotWrapped {
   left: 18.24%;
-  top: 88.6%;
+  top: 92.2%;
   width: 3.589%;
   height: 6.271%;
   opacity: var(--entrance-3, 0);
@@ -176,12 +176,12 @@
 }
 
 /* ============================= LIME ============================= */
-/* Path: Slot A (18.24%, 88.6%) -> Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) -> Slot D (72.368%, 87.0%) */
+/* Path: Slot A (18.24%, 92.2%) -> Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) -> Slot D (72.368%, 87.0%) */
 
 .itemLimeSlot {
   left: calc(18.24% * (1 - var(--entrance-1, 0)) + 31.1% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 47.01% *
         (var(--entrance-2, 0) - var(--entrance-3, 0)) + 72.368% * var(--entrance-3, 0));
-  top: calc(88.6% * (1 - var(--entrance-1, 0)) + 86.6% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 84.0% *
+  top: calc(92.2% * (1 - var(--entrance-1, 0)) + 86.6% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 84.0% *
         (var(--entrance-2, 0) - var(--entrance-3, 0)) + 87.0% * var(--entrance-3, 0));
   width: calc(3.649% * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 5.981% *
         (var(--entrance-2, 0) - var(--entrance-3, 0)));
@@ -196,7 +196,7 @@
 }
 
 /* ============================= BEIGE ============================= */
-/* Path: Slot D (72.368%, 87.0%) -> [wrap] Slot A (18.24%, 88.6%) -> Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) */
+/* Path: Slot D (72.368%, 87.0%) -> [wrap] Slot A (18.24%, 92.2%) -> Slot B (31.1%, 86.6%) -> Slot C (47.01%, 84.0%) */
 
 .itemBeigeSlot {
   left: 72.368%;
@@ -215,7 +215,7 @@
 .itemBeigeSlotWrapped {
   left: calc(18.24% * (1 - var(--entrance-2, 0)) + 31.1% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 47.01% *
         var(--entrance-3, 0));
-  top: calc(88.6% * (1 - var(--entrance-2, 0)) + 86.6% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 84.0% *
+  top: calc(92.2% * (1 - var(--entrance-2, 0)) + 86.6% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 84.0% *
         var(--entrance-3, 0));
   width: calc(4.845% * (1 - var(--entrance-3, 0)) + 5.981% * var(--entrance-3, 0));
   height: calc(6.376% * (1 - var(--entrance-3, 0)) + 10.521% * var(--entrance-3, 0));
