@@ -1,3 +1,44 @@
+@property --entrance-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+@property --entrance-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --entrance-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --entrance-3 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-0 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --exit-3 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 .wrapper {
   position: relative;
   height: 300dvh;
@@ -10,6 +51,10 @@
   overflow: hidden;
   container-type: inline-size;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
+  transition: --entrance-0 0.65s cubic-bezier(0.65, 0, 0.35, 1), --entrance-1 0.65s cubic-bezier(0.65, 0, 0.35, 1),
+    --entrance-2 0.65s cubic-bezier(0.65, 0, 0.35, 1), --entrance-3 0.65s cubic-bezier(0.65, 0, 0.35, 1),
+    --exit-0 0.65s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.65s cubic-bezier(0.65, 0, 0.35, 1), --exit-2 0.65s
+      cubic-bezier(0.65, 0, 0.35, 1), --exit-3 0.65s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ---- Shared Arc Background Line ---- */
@@ -24,7 +69,7 @@
   pointer-events: none;
 }
 
-/* 100% Identical Pure CSS Vector Circle Dot */
+/* 100% Identical Raw Vector Graphic Circle Dot for all slots */
 .blackDot {
   width: 100%;
   height: 100%;
@@ -33,7 +78,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Base Slot Container with smooth curve transitions */
+/* Base Slot Container locked translate(-50%, -50%) */
 .itemRedSlot,
 .itemYellowSlot,
 .itemLimeSlot,
@@ -47,8 +92,7 @@
   z-index: 9;
   container-type: inline-size;
   transform: translate(-50%, -50%);
-  transition: left 0.45s cubic-bezier(0.25, 1, 0.5, 1), top 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
 .itemRedLabel,
@@ -70,32 +114,32 @@
 }
 
 /* =========================================================================
-   3 ANCHOR SLOTS ON BLACK ARC LINE:
-   - Slot A (Left Anchor): 18.2%, 92.4%, scale(0.7)
-   - Slot B (Center Apex - ACTIVE SELECTED): 50.0%, 84.0%, scale(1.25)
-   - Slot C (Right Anchor): 83.5%, 92.0%, scale(0.7)
+   100% IDENTICAL SCALED DOTS:
+   - Slot A (Left Circle): 18.2%, 92.4%, scale(0.7)
+   - Slot B (Center Apex - ACTIVE): 50.0%, 84.0%, scale(1.25)
+   - Slot C (Right Circle): 83.5%, 92.0%, scale(0.7) -> EXACT EQUAL SCALE MATCH!
    ========================================================================= */
 
 /* ============================= RED ============================= */
 
 .itemRedSlot {
-  left: calc(50.0% * (1 - var(--p01, 0)) + 83.5% * (var(--p01, 0) - var(--p12, 0)) + 92.0% * var(--p12, 0));
-  top: calc(84.0% * (1 - var(--p01, 0)) + 92.0% * (var(--p01, 0) - var(--p12, 0)) + 94.5% * var(--p12, 0));
-  transform: translate(-50%, -50%) scale(calc(1.25 * (1 - var(--p01, 0)) + 0.7 * (var(--p01, 0) - var(--p12, 0)) + 0.35 * var(--p12, 0)));
-  opacity: calc(1 - var(--p12, 0));
+  left: calc(50.0% * (1 - var(--entrance-1, 0)) + 83.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 92.0% * var(--entrance-2, 0));
+  top: calc(84.0% * (1 - var(--entrance-1, 0)) + 92.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 94.5% * var(--entrance-2, 0));
+  transform: translate(-50%, -50%) scale(calc(1.25 * (1 - var(--entrance-1, 0)) + 0.7 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.35 * var(--entrance-2, 0)));
+  opacity: calc(1 - var(--entrance-2, 0));
 }
 
 .itemRedLabel {
   left: 50.0%;
   top: 90.0%;
-  opacity: calc(1 - var(--p01, 0));
+  opacity: calc(1 - var(--entrance-1, 0));
 }
 
 .itemRedSlotWrapped {
   left: 18.2%;
   top: 92.4%;
   transform: translate(-50%, -50%) scale(0.7);
-  opacity: var(--p23, 0);
+  opacity: var(--entrance-3, 0);
 }
 
 .itemRedLabelWrapped {
@@ -107,16 +151,16 @@
 /* ============================= YELLOW ============================= */
 
 .itemYellowSlot {
-  left: calc(83.5% * (1 - var(--p01, 0)) + 50.0% * (var(--p01, 0) - var(--p12, 0)) + 18.2% * (var(--p12, 0) - var(--p23, 0)) + 8.0% * var(--p23, 0));
-  top: calc(92.0% * (1 - var(--p01, 0)) + 84.0% * (var(--p01, 0) - var(--p12, 0)) + 92.4% * (var(--p12, 0) - var(--p23, 0)) + 94.5% * var(--p23, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--p01, 0)) + 1.25 * (var(--p01, 0) - var(--p12, 0)) + 0.7 * (var(--p12, 0) - var(--p23, 0)) + 0.35 * var(--p23, 0)));
-  opacity: calc(1 - var(--p23, 0));
+  left: calc(83.5% * (1 - var(--entrance-1, 0)) + 50.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 18.2% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 8.0% * var(--entrance-3, 0));
+  top: calc(92.0% * (1 - var(--entrance-1, 0)) + 84.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 92.4% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 94.5% * var(--entrance-3, 0));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 1.25 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.7 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.35 * var(--entrance-3, 0)));
+  opacity: calc(1 - var(--entrance-3, 0));
 }
 
 .itemYellowLabel {
   left: 50.0%;
   top: 90.0%;
-  opacity: calc(var(--p01, 0) - var(--p12, 0));
+  opacity: calc(var(--entrance-1, 0) - var(--entrance-2, 0));
 }
 
 .itemYellowSlotWrapped {
@@ -135,38 +179,38 @@
 /* ============================= LIME ============================= */
 
 .itemLimeSlot {
-  left: calc(18.2% * (1 - var(--p01, 0)) + 8.0% * (var(--p01, 0) - var(--p12, 0)) + 50.0% * (var(--p12, 0) - var(--p23, 0)) + 83.5% * var(--p23, 0));
-  top: calc(92.4% * (1 - var(--p01, 0)) + 94.5% * (var(--p01, 0) - var(--p12, 0)) + 84.0% * (var(--p12, 0) - var(--p23, 0)) + 92.0% * var(--p23, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--p01, 0)) + 0.35 * (var(--p01, 0) - var(--p12, 0)) + 1.25 * (var(--p12, 0) - var(--p23, 0)) + 0.7 * var(--p23, 0)));
-  opacity: calc((1 - var(--p01, 0)) + var(--p12, 0));
+  left: calc(18.2% * (1 - var(--entrance-1, 0)) + 8.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 50.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 83.5% * var(--entrance-3, 0));
+  top: calc(92.4% * (1 - var(--entrance-1, 0)) + 94.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 84.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 92.0% * var(--entrance-3, 0));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 0.35 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 1.25 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.7 * var(--entrance-3, 0)));
+  opacity: calc((1 - var(--entrance-1, 0)) + var(--entrance-2, 0));
 }
 
 .itemLimeLabel {
   left: 50.0%;
   top: 90.0%;
-  opacity: calc(var(--p12, 0) - var(--p23, 0));
+  opacity: calc(var(--entrance-2, 0) - var(--entrance-3, 0));
 }
 
 /* ============================= BEIGE ============================= */
 
 .itemBeigeSlot {
-  left: calc(83.5% * (1 - var(--p23, 0)) + 50.0% * var(--p23, 0));
-  top: calc(92.0% * (1 - var(--p23, 0)) + 84.0% * var(--p23, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--p23, 0)) + 1.25 * var(--p23, 0)));
-  opacity: var(--p12, 0);
+  left: calc(83.5% * (1 - var(--entrance-3, 0)) + 50.0% * var(--entrance-3, 0));
+  top: calc(92.0% * (1 - var(--entrance-3, 0)) + 84.0% * var(--entrance-3, 0));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-3, 0)) + 1.25 * var(--entrance-3, 0)));
+  opacity: var(--entrance-2, 0);
 }
 
 .itemBeigeLabel {
   left: 50.0%;
   top: 90.0%;
-  opacity: var(--p23, 0);
+  opacity: var(--entrance-3, 0);
 }
 
 .itemBeigeSlotWrapped {
   left: 18.2%;
   top: 92.4%;
   transform: translate(-50%, -50%) scale(0.7);
-  opacity: calc(var(--p01, 0) - var(--p12, 0));
+  opacity: calc(var(--entrance-1, 0) - var(--entrance-2, 0));
 }
 
 .itemBeigeLabelWrapped {

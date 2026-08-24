@@ -14,7 +14,6 @@
   background: #c21a1f;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
   opacity: calc(1 - var(--exit-0, 0));
-  transition: opacity 0.4s ease;
 }
 
 .bg {

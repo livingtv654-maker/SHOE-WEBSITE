@@ -16,7 +16,6 @@
   background: #e8b400;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
   opacity: calc(var(--entrance-1, 0) * (1 - var(--exit-1, 0)));
-  transition: opacity 0.4s ease;
 }
 
 .bg {
@@ -62,7 +61,6 @@
     )
     rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3 - var(--exit-1, 0) * 0.3)))
     scale(calc(0.55 + var(--entrance-1, 0) * 0.45 - var(--exit-1, 0) * 0.55));
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .bgShoeName {
