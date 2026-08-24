@@ -16,6 +16,8 @@ interface ProductCardProps {
   image?: string;
 }
 
+const SIZES = ["UK 7", "UK 8", "UK 9", "UK 10", "UK 11"];
+
 export default function ProductCard({
   edition = "SERIES // 01",
   name = "HERITAGE RED",
@@ -25,12 +27,13 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
+  const [selectedSize, setSelectedSize] = useState("UK 8");
 
   const handleAddToCart = () => {
     setAdded(true);
     addToCart({
-      id: name.toLowerCase().replace(/[^a-z0-9]/g, "-"),
-      name: name,
+      id: `${name.toLowerCase().replace(/[^a-z0-9]/g, "-")}-${selectedSize.toLowerCase().replace(/\s+/g, "")}`,
+      name: `${name} (${selectedSize})`,
       edition: edition,
       price: parseInt(price.replace(/[^0-9]/g, "")) || 4999,
       color: accentColor,
@@ -52,6 +55,25 @@ export default function ProductCard({
 
       <h3 className={styles.shoeTitle}>{name}</h3>
 
+      {/* Interactive Size Selector Row */}
+      <div className={styles.sizeSection}>
+        <span className={styles.sizeHeading}>SELECT SIZE</span>
+        <div className={styles.sizeList}>
+          {SIZES.map((sz) => (
+            <button
+              key={sz}
+              type="button"
+              className={`${styles.sizePill} ${
+                selectedSize === sz ? styles.activeSize : ""
+              }`}
+              onClick={() => setSelectedSize(sz)}
+            >
+              {sz}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Price & Add to Cart Action Row */}
       <div className={styles.actionRow}>
         <div className={styles.priceWrap}>
@@ -63,7 +85,7 @@ export default function ProductCard({
           type="button"
           className={`${styles.cartBtn} ${added ? styles.addedBtn : ""}`}
           onClick={handleAddToCart}
-          aria-label={`Add ${name} to shopping bag`}
+          aria-label={`Add ${name} (${selectedSize}) to shopping bag`}
         >
           {added ? (
             <span className={styles.addedState}>

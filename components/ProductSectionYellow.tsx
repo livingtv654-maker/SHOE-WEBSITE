@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
+import ProductSpecs from "@/components/ProductSpecs";
 import styles from "./ProductSectionYellow.module.css";
 
 export default function ProductSectionYellow() {
@@ -14,6 +15,19 @@ export default function ProductSectionYellow() {
 
       <Image src="/product-yellow/shoe.png" alt="Yellow Shoe" width={720} height={536} priority className={styles.shoe} />
 
+      {/* Left Technical Specifications Card */}
+      <ProductSpecs
+        editionNumber="02 / 04"
+        specs={[
+          { label: "CUSHIONING", value: "NITRO-FOAM RESPONSE" },
+          { label: "UPPER MATERIAL", value: "CARBON-FUSED KNIT" },
+          { label: "NET WEIGHT", value: "370 GRAMS" },
+          { label: "TRACTION SYSTEM", value: "HIGH-SPEED PIVOT" },
+        ]}
+        barcodeId="SNK-VOLT-ED02"
+      />
+
+      {/* Right Product Buy Card */}
       <ProductCard
         edition="THUNDER AIR 01 // ED-02"
         name="VOLT THUNDER"

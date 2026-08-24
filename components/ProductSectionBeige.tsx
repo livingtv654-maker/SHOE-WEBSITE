@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
+import ProductSpecs from "@/components/ProductSpecs";
 import styles from "./ProductSectionBeige.module.css";
 
 export default function ProductSectionBeige() {
@@ -14,6 +15,19 @@ export default function ProductSectionBeige() {
 
       <Image src="/product-beige/shoe.png" alt="Beige Shoe" width={720} height={536} priority className={styles.shoe} />
 
+      {/* Left Technical Specifications Card */}
+      <ProductSpecs
+        editionNumber="04 / 04"
+        specs={[
+          { label: "CUSHIONING", value: "MEMORY-FOAM COLLAR" },
+          { label: "UPPER MATERIAL", value: "ITALIAN NUBUCK SUEDE" },
+          { label: "NET WEIGHT", value: "395 GRAMS" },
+          { label: "TRACTION SYSTEM", value: "HERITAGE GUM RUBBER" },
+        ]}
+        barcodeId="SNK-SAND-ED04"
+      />
+
+      {/* Right Product Buy Card */}
       <ProductCard
         edition="SAND AIR 01 // ED-04"
         name="RAW SAND"

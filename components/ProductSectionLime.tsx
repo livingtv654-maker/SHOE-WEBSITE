@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
+import ProductSpecs from "@/components/ProductSpecs";
 import styles from "./ProductSectionLime.module.css";
 
 export default function ProductSectionLime() {
@@ -14,6 +15,19 @@ export default function ProductSectionLime() {
 
       <Image src="/product-lime/shoe.png" alt="Lime Shoe" width={720} height={536} priority className={styles.shoe} />
 
+      {/* Left Technical Specifications Card */}
+      <ProductSpecs
+        editionNumber="03 / 04"
+        specs={[
+          { label: "CUSHIONING", value: "3D BIO-FOAM CELL" },
+          { label: "UPPER MATERIAL", value: "REFLECTIVE PULSE TRIM" },
+          { label: "NET WEIGHT", value: "365 GRAMS" },
+          { label: "TRACTION SYSTEM", value: "NIGHT-GLOW GRIP" },
+        ]}
+        barcodeId="SNK-PULSE-ED03"
+      />
+
+      {/* Right Product Buy Card */}
       <ProductCard
         edition="PULSE AIR 01 // ED-03"
         name="NEO PULSE"

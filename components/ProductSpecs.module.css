@@ -1,0 +1,114 @@
+/* Technical Specs Card on Left Side */
+.specsWrap {
+  position: absolute;
+  left: 6%;
+  bottom: 18%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: clamp(240px, 20cqw, 310px);
+  padding: clamp(16px, 1.2cqw, 22px);
+  background: rgba(12, 13, 16, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  font-family: var(--font-roboto-mono), monospace;
+  color: #ffffff;
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.specsWrap:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.indexRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.indexBadge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.statusLive {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #00e676;
+  letter-spacing: 1px;
+}
+
+.specGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.specCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.specLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.specValue {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.barcodeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.barcodeLines {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 14px;
+}
+
+.barcodeLines span {
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: inline-block;
+}
+
+.barcodeLines span:nth-child(2),
+.barcodeLines span:nth-child(5) {
+  width: 3.5px;
+}
+
+.barcodeLines span:nth-child(4) {
+  width: 1.5px;
+}
+
+.barcodeCode {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.6);
+}
