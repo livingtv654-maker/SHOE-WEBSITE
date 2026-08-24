@@ -18,9 +18,10 @@ export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
 
       <Image src="/hero/plus-dark.png" alt="" width={24} height={24} priority className={styles.plusDark} />
 
+      {/* Updated to Mumbai coords */}
       <div className={styles.coords}>
-        <span>40.712&deg; N</span>
-        <span>74.060&deg; W</span>
+        <span>18.975&deg; N</span>
+        <span>72.825&deg; E</span>
       </div>
 
       <Image src="/hero/plus-red-1.png" alt="" width={24} height={24} priority className={styles.plusRed1} />
@@ -28,24 +29,28 @@ export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
       <Image src="/hero/fearless.png" alt="Fearless" width={326} height={1754} priority className={styles.fearless} />
 
       <div className={styles.headline}>
-        <span className={styles.tagBadge}>SERIES // 01</span>
-        <p>PRECISION BUILT.</p>
-        <p className={styles.headlineRed}>FEARLESSLY RED.</p>
+        {/* Updated badge */}
+        <span className={styles.tagBadge}>DROP 01 — 2026</span>
+        {/* Updated headline — staggered lines */}
+        <p className={styles.headlineLine1}>BUILT WITHOUT</p>
+        <p className={`${styles.headlineLine2} ${styles.headlineRed}`}>LIMITS.</p>
       </div>
 
       <Image src="/hero/dashes.png" alt="" width={108} height={27} priority className={styles.dashes} />
 
+      {/* Updated sub-copy — tighter, punchier */}
       <div className={styles.paragraph}>
-        <p>Full-grain leather frame.</p>
-        <p>Responsive air cushioning.</p>
-        <p>Street-tested traction.</p>
+        <p className={styles.paraLine1}>Premium leather.</p>
+        <p className={styles.paraLine2}>Nitrogen-cushioned.</p>
+        <p className={styles.paraLine3}>Street-proven.</p>
       </div>
 
+      {/* Updated CTA text */}
       <a href="#products" className={styles.cta}>
         <span className={styles.ctaBracketTL} aria-hidden="true" />
         <span className={styles.ctaBracketBR} aria-hidden="true" />
         <span className={styles.ctaBg} aria-hidden="true" />
-        <span className={styles.ctaText}>DISCOVER THE AIR 01</span>
+        <span className={styles.ctaText}>EXPLORE THE COLLECTION</span>
         <span className={styles.ctaArrowWrap}>
           <svg className={styles.ctaArrow} viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />

@@ -19,7 +19,22 @@
   pointer-events: auto;
   font-family: var(--font-poppins), sans-serif;
   color: #ffffff;
+  /* Slide in from right with 100ms delay after specs card */
+  animation: slideInFromRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(60px, 0, 0);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
 }
 
 .glassCard:hover {

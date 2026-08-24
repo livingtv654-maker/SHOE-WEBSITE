@@ -23,7 +23,7 @@ export default function Footer() {
             <span className={styles.logoStar}>★</span>
           </div>
           <p className={styles.brandTagline}>
-            PRECISION BUILT. FEARLESSLY RED.
+            ENGINEERED FOR THE FEARLESS.
           </p>
         </div>
 
