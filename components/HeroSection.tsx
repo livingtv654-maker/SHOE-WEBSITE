@@ -13,11 +13,13 @@ export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
 
   useEffect(() => {
     function onScroll() {
-      if (!wrapRef.current) return;
       const viewportH = window.innerHeight;
       if (viewportH <= 0) return;
-      const progress = Math.min(Math.max(window.scrollY / (viewportH * 0.85), 0), 1);
-      wrapRef.current.style.setProperty("--hero-scroll", String(progress));
+      const progress = Math.min(Math.max(window.scrollY / viewportH, 0), 1);
+      if (wrapRef.current) {
+        wrapRef.current.style.setProperty("--hero-scroll", String(progress));
+      }
+      document.documentElement.style.setProperty("--hero-scroll", String(progress));
     }
 
     onScroll();
