@@ -12,7 +12,7 @@ type Props = {
 
 export default function ProductSequence({
   states,
-  scrubViewportsPerTransition = 0.5,
+  scrubViewportsPerTransition = 0.25,
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -59,6 +59,8 @@ export default function ProductSequence({
         const exit = targetIndex >= i + 1 ? 1 : 0;
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
+        document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
+        document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
       }
     }
 

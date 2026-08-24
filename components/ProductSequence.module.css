@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-/* 100% Identical Pure CSS Black Circle Dot */
+/* 100% Identical Pure CSS Vector Circle Dot */
 .blackDot {
   width: 100%;
   height: 100%;
@@ -33,7 +33,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Base Slot Container locked translate(-50%, -50%) */
+/* Base Slot Container with smooth curve transitions */
 .itemRedSlot,
 .itemYellowSlot,
 .itemLimeSlot,
@@ -47,6 +47,8 @@
   z-index: 9;
   container-type: inline-size;
   transform: translate(-50%, -50%);
+  transition: left 0.45s cubic-bezier(0.25, 1, 0.5, 1), top 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
 }
 
 .itemRedLabel,
@@ -64,21 +66,17 @@
   color: #ffffff;
   white-space: nowrap;
   transform: translateX(-50%);
-  transition: opacity 0.25s ease;
+  transition: opacity 0.35s ease;
 }
 
 /* =========================================================================
-   REAL-TIME 60FPS CONTINUOUS SCROLL-LINKED CAROUSEL MOTION:
+   3 ANCHOR SLOTS ON BLACK ARC LINE:
    - Slot A (Left Anchor): 18.2%, 92.4%, scale(0.7)
-   - Slot B (Center Apex - ACTIVE): 50.0%, 84.0%, scale(1.25)
+   - Slot B (Center Apex - ACTIVE SELECTED): 50.0%, 84.0%, scale(1.25)
    - Slot C (Right Anchor): 83.5%, 92.0%, scale(0.7)
    ========================================================================= */
 
 /* ============================= RED ============================= */
-/* State 0: Slot B (Center Apex: 50.0%, 84.0%, scale 1.25)
-   State 1: Slot C (Right Anchor: 83.5%, 92.0%, scale 0.7)
-   State 2: Off right tip (92.0%, 94.5%, scale 0.35) & vanishes
-   State 3: Reappears at Slot A (Left: 18.2%, 92.4%) via Wrapped */
 
 .itemRedSlot {
   left: calc(50.0% * (1 - var(--p01, 0)) + 83.5% * (var(--p01, 0) - var(--p12, 0)) + 92.0% * var(--p12, 0));
@@ -107,10 +105,6 @@
 }
 
 /* ============================= YELLOW ============================= */
-/* State 0: Slot C (Right Anchor: 83.5%, 92.0%, scale 0.7)
-   State 1: Slot B (Center Apex: 50.0%, 84.0%, scale 1.25)
-   State 2: Slot A (Left Anchor: 18.2%, 92.4%, scale 0.7)
-   State 3: Off left tip (8.0%, 94.5%, scale 0.35) & vanishes */
 
 .itemYellowSlot {
   left: calc(83.5% * (1 - var(--p01, 0)) + 50.0% * (var(--p01, 0) - var(--p12, 0)) + 18.2% * (var(--p12, 0) - var(--p23, 0)) + 8.0% * var(--p23, 0));
@@ -139,10 +133,6 @@
 }
 
 /* ============================= LIME ============================= */
-/* State 0: Slot A (Left Anchor: 18.2%, 92.4%, scale 0.7)
-   State 1: Off left tip (8.0%, 94.5%, scale 0.35) & vanishes
-   State 2: Reappears at Slot B (Center Apex: 50.0%, 84.0%, scale 1.25)
-   State 3: Slot C (Right Anchor: 83.5%, 92.0%, scale 0.7) */
 
 .itemLimeSlot {
   left: calc(18.2% * (1 - var(--p01, 0)) + 8.0% * (var(--p01, 0) - var(--p12, 0)) + 50.0% * (var(--p12, 0) - var(--p23, 0)) + 83.5% * var(--p23, 0));
@@ -158,10 +148,6 @@
 }
 
 /* ============================= BEIGE ============================= */
-/* State 0: Hidden offscreen
-   State 1: Slot A (Left Anchor: 18.2%, 92.4%, scale 0.7) via Wrapped
-   State 2: Slot C (Right Anchor: 83.5%, 92.0%, scale 0.7)
-   State 3: Slot B (Center Apex: 50.0%, 84.0%, scale 1.25) */
 
 .itemBeigeSlot {
   left: calc(83.5% * (1 - var(--p23, 0)) + 50.0% * var(--p23, 0));
