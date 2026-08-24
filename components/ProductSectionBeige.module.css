@@ -58,17 +58,17 @@
 .bgShoeName {
   position: absolute;
   left: 45%;
-  top: 36%;
-  transform: translate(-50%, -50%) scaleY(1.42);
+  top: 34%;
+  transform: translate(-50%, -50%) scale(1.1, 1.6);
   transform-origin: center center;
   margin: 0;
   z-index: 1;
   font-family: var(--font-antonio), Antonio, var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-size: clamp(140px, 19.5cqw, 320px);
-  letter-spacing: clamp(-2px, -0.2cqw, -8px);
-  line-height: 0.82;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.08) 100%);
+  font-size: clamp(200px, 27cqw, 450px);
+  letter-spacing: clamp(-4px, -0.3cqw, -12px);
+  line-height: 0.8;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.05) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
