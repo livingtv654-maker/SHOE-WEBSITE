@@ -1,8 +1,10 @@
-/* Editorial Product Details & Action Block placed on the bottom-left */
+/* Editorial Product Details & Action Block placed on the right side and elevated */
 .editorialCard {
   position: absolute;
-  left: 6.5%;
-  bottom: 11%;
+  right: 6.5%;
+  bottom: 18%;
+  left: auto;
+  top: auto;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -24,7 +26,7 @@
   font-size: clamp(10px, 0.72cqw, 12px);
   font-weight: 700;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
 }
 
@@ -56,7 +58,7 @@
   font-family: var(--font-roboto-mono), monospace;
   font-size: 10px;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Minimal Solid Button */
@@ -76,7 +78,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
@@ -86,7 +88,7 @@
   color: #ffffff;
   border-color: #0b0c0e;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .addBtn:active {
