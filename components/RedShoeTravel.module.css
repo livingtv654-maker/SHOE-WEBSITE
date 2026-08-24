@@ -14,10 +14,10 @@
   width: calc(22.249vw * (1 - var(--hero-travel, 0)) + 43.062vw * var(--hero-travel, 0));
   height: calc(53.666vh * (1 - var(--hero-travel, 0)) + 56.909vh * var(--hero-travel, 0));
 
-  /* Tilted in Hero (-12deg) and smoothly transitions into Carousel pose (+8deg) */
+  /* Tilted more dynamically in Hero (-22deg) and smoothly transitions into Carousel pose (+8deg) */
   transform-origin: center center;
   transform: translate(calc(var(--exit-0, 0) * -70%), calc(var(--exit-0, 0) * 70%))
-    rotate(calc((-12deg + var(--hero-travel, 0) * 20deg) * (1 - var(--exit-0, 0) * 0.3)))
+    rotate(calc((-22deg + var(--hero-travel, 0) * 30deg) * (1 - var(--exit-0, 0) * 0.3)))
     scale(calc(1 - var(--exit-0, 0) * 0.55));
   opacity: calc(1 - var(--exit-0, 0));
   transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.65s cubic-bezier(0.65, 0, 0.35, 1);
