@@ -9,33 +9,35 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: 340px;
+  max-width: 400px;
   pointer-events: auto;
   font-family: var(--font-poppins), sans-serif;
   color: #ffffff;
+  /* Deep text shadow ensures 100% crystal-clear legibility across Yellow, Lime, Red, Beige */
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .metaRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .editionTag {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(10px, 0.72cqw, 12px);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(12px, 0.85cqw, 15px);
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
 }
 
 .productTitle {
-  margin: 4px 0 6px 0;
-  font-size: clamp(22px, 1.8cqw, 32px);
+  margin: 6px 0 8px 0;
+  font-size: clamp(26px, 2.2cqw, 38px);
   font-weight: 900;
   letter-spacing: -0.5px;
-  line-height: 1.15;
+  line-height: 1.1;
   color: #ffffff;
   text-transform: uppercase;
 }
@@ -43,52 +45,54 @@
 .priceRow {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .priceVal {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(18px, 1.3cqw, 24px);
-  font-weight: 700;
+  font-size: clamp(22px, 1.6cqw, 30px);
+  font-weight: 800;
   color: #ffffff;
 }
 
 .taxNotice {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.75);
 }
 
-/* Minimal Solid Button */
+/* High-Contrast Solid Minimal Button (Larger & More Visible) */
 .addBtn {
   position: relative;
   overflow: hidden;
-  padding: clamp(12px, 0.85cqw, 15px) clamp(24px, 1.8cqw, 32px);
-  background: #ffffff;
-  color: #0b0c0e;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 40px;
+  padding: clamp(14px, 1.05cqw, 18px) clamp(28px, 2.2cqw, 40px);
+  background: #0b0c0e;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
   font-family: var(--font-poppins), sans-serif;
   font-weight: 800;
-  font-size: clamp(12px, 0.85cqw, 14px);
-  letter-spacing: 1.5px;
+  font-size: clamp(13px, 0.95cqw, 16px);
+  letter-spacing: 1.6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  text-shadow: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .addBtn:hover {
-  background: #0b0c0e;
-  color: #ffffff;
-  border-color: #0b0c0e;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  color: #0b0c0e;
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55);
 }
 
 .addBtn:active {
@@ -98,11 +102,13 @@
 .defaultState {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .bagIcon {
   flex-shrink: 0;
+  width: 17px;
+  height: 17px;
   transition: transform 0.2s ease;
 }
 
@@ -113,7 +119,7 @@
 .addedState {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: #ffffff;
   animation: checkPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -127,5 +133,5 @@
   background: #00c853 !important;
   color: #ffffff !important;
   border-color: #00c853 !important;
-  box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4) !important;
+  box-shadow: 0 10px 30px rgba(0, 200, 83, 0.5) !important;
 }

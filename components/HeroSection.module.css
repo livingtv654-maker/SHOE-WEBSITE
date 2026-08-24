@@ -139,17 +139,17 @@
 
 .feel {
   position: absolute;
-  right: 5.5%;
-  bottom: 4.5%;
+  right: 5%;
+  bottom: 3.5%;
   left: auto;
   top: auto;
   transform: none;
   display: flex;
   align-items: center;
   font-family: var(--font-antonio), var(--font-poppins), sans-serif;
-  font-weight: 800;
-  font-size: clamp(16px, 1.8cqw, 30px);
-  letter-spacing: clamp(3px, 0.35cqw, 6px);
+  font-weight: 900;
+  font-size: clamp(32px, 4.5cqw, 72px);
+  letter-spacing: clamp(4px, 0.6cqw, 10px);
   color: #191b1f;
   line-height: 1;
   text-transform: uppercase;
