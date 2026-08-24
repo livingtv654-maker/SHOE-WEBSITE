@@ -87,8 +87,9 @@
   height: 53.666%;
   object-fit: contain;
   z-index: 4;
-  /* Use filter:opacity because the reveal animation controls the opacity property */
-  filter: opacity(calc((1 - var(--hero-scroll, 0) * 6) * 100%));
+  /* Scale up and tilt as you scroll, matching the carousel shoe's pose */
+  transform: scale(calc(1 + var(--hero-scroll, 0) * 0.6)) rotate(calc(var(--hero-scroll, 0) * 8deg));
+  transform-origin: center center;
 }
 
 .plusDark {

@@ -11,7 +11,6 @@ import ProductSectionBeige from "@/components/ProductSectionBeige";
 import LoadingScreen from "@/components/LoadingScreen";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
-import FloatingShoe from "@/components/FloatingShoe";
 import { CartProvider } from "@/context/CartContext";
 import styles from "./page.module.css";
 
@@ -22,7 +21,6 @@ export default function Home() {
     <CartProvider>
       <LoadingScreen onComplete={() => setIsLoaded(true)} />
       <Navbar />
-      <FloatingShoe />
       <main>
         <div id="home" className={styles.heroSlot}>
           <HeroSection isLoaded={isLoaded} />
