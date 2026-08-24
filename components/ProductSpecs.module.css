@@ -1,20 +1,20 @@
-/* Technical Specs Card on Left Side */
+/* Compact Swiss-Grid Technical Specs Card on Left Side */
 .specsWrap {
   position: absolute;
-  left: 6%;
-  bottom: 18%;
+  left: 4.5%;
+  bottom: 15%;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: clamp(240px, 20cqw, 310px);
-  padding: clamp(16px, 1.2cqw, 22px);
-  background: rgba(12, 13, 16, 0.72);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  gap: 8px;
+  width: clamp(190px, 15cqw, 240px);
+  padding: clamp(12px, 0.9cqw, 16px);
+  background: rgba(10, 11, 14, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
   font-family: var(--font-roboto-mono), monospace;
   color: #ffffff;
   pointer-events: auto;
@@ -22,93 +22,93 @@
 }
 
 .specsWrap:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .indexRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .indexBadge {
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .statusLive {
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 700;
   color: #00e676;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 .specGrid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .specCard {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .specLabel {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 1.2px;
-  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
 }
 
 .specValue {
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .barcodeRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .barcodeLines {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 14px;
+  gap: 2px;
+  height: 11px;
 }
 
 .barcodeLines span {
-  width: 2px;
+  width: 1.5px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.6);
   display: inline-block;
 }
 
 .barcodeLines span:nth-child(2),
 .barcodeLines span:nth-child(5) {
-  width: 3.5px;
+  width: 2.5px;
 }
 
 .barcodeLines span:nth-child(4) {
-  width: 1.5px;
+  width: 1px;
 }
 
 .barcodeCode {
-  font-size: 10px;
+  font-size: 8.5px;
   font-weight: 700;
-  letter-spacing: 1.2px;
-  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
 }

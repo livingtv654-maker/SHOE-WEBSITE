@@ -1,89 +1,89 @@
-/* Luxury Frosted Glass Product Card on the Right Side */
+/* Compact Swiss-Grid Product Card on the Right Side */
 .glassCard {
   position: absolute;
-  right: 6%;
-  bottom: 18%;
+  right: 4.5%;
+  bottom: 15%;
   left: auto;
   top: auto;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  width: clamp(300px, 25cqw, 380px);
-  padding: clamp(18px, 1.4cqw, 24px);
-  background: rgba(12, 13, 16, 0.72);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 20px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  width: clamp(230px, 18cqw, 280px);
+  padding: clamp(14px, 1cqw, 18px);
+  background: rgba(10, 11, 14, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
   pointer-events: auto;
   font-family: var(--font-poppins), sans-serif;
   color: #ffffff;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .glassCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .headerRow {
   display: flex;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .editionPill {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(10px, 0.68cqw, 11px);
+  font-size: clamp(9px, 0.62cqw, 10px);
   font-weight: 700;
-  letter-spacing: 1.8px;
-  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
 }
 
 .shoeTitle {
-  margin: 0 0 14px 0;
-  font-size: clamp(20px, 1.5cqw, 26px);
+  margin: 0 0 10px 0;
+  font-size: clamp(16px, 1.2cqw, 20px);
   font-weight: 900;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
   line-height: 1.15;
   color: #ffffff;
   text-transform: uppercase;
 }
 
-/* Size Selector */
+/* Compact Size Selector */
 .sizeSection {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
+  gap: 4px;
+  margin-bottom: 10px;
 }
 
 .sizeHeading {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 700;
-  letter-spacing: 1.2px;
-  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .sizeList {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .sizePill {
   flex: 1;
-  padding: 6px 0;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
+  padding: 4px 0;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(10px, 0.7cqw, 12px);
+  font-size: clamp(9px, 0.65cqw, 10.5px);
   font-weight: 700;
   cursor: pointer;
   text-align: center;
@@ -91,75 +91,75 @@
 }
 
 .sizePill:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .activeSize {
   background: #ffffff !important;
   color: #0b0c0e !important;
   border-color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
 }
 
-/* Price & Action Row */
+/* Compact Action Row */
 .actionRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 8px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .priceWrap {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0;
 }
 
 .priceVal {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(18px, 1.35cqw, 22px);
+  font-size: clamp(15px, 1.1cqw, 18px);
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .taxTag {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: 9px;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.45);
 }
 
-/* Visually Appealing Clean CTA Button */
+/* Sleek Minimal CTA Button */
 .cartBtn {
   position: relative;
   overflow: hidden;
-  padding: clamp(10px, 0.8cqw, 13px) clamp(18px, 1.3cqw, 24px);
+  padding: clamp(8px, 0.65cqw, 11px) clamp(14px, 1cqw, 18px);
   background: #ffffff;
   color: #0b0c0e;
   border: none;
-  border-radius: 50px;
+  border-radius: 40px;
   font-family: var(--font-poppins), sans-serif;
   font-weight: 800;
-  font-size: clamp(11.5px, 0.8cqw, 13px);
-  letter-spacing: 1.2px;
+  font-size: clamp(10.5px, 0.72cqw, 12px);
+  letter-spacing: 1px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .cartBtn:hover {
   background: #f0f0f2;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
 }
 
 .cartBtn:active {
@@ -169,7 +169,7 @@
 .defaultState {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .arrowIcon {
@@ -178,13 +178,13 @@
 }
 
 .cartBtn:hover .arrowIcon {
-  transform: translateX(3px);
+  transform: translateX(2px);
 }
 
 .addedState {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: #ffffff;
   animation: checkPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -197,5 +197,5 @@
 .addedBtn {
   background: #00c853 !important;
   color: #ffffff !important;
-  box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4) !important;
+  box-shadow: 0 6px 18px rgba(0, 200, 83, 0.35) !important;
 }
