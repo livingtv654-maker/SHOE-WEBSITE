@@ -17,7 +17,7 @@ export default function ProductSectionLime() {
       <ProductCard
         edition="PULSE AIR 01 // ED-03"
         name="NEO PULSE"
-        price="$240"
+        price="₹5,499"
         rating="4.8"
         reviews="115"
         description="Features 3D-sculpted bio-foam cushioning, luminescent pulse glow trim, and high-visibility nighttime reflective accents."

@@ -17,7 +17,7 @@ export default function ProductSectionRed() {
       <ProductCard
         edition="RED AIR 01 // ED-01"
         name="HERITAGE RED"
-        price="$220"
+        price="₹4,999"
         rating="4.9"
         reviews="142"
         description="Crafted with hand-burnished crimson full-grain leather, dual-nitrogen air cushioning, and street-tested high-traction outsoles."

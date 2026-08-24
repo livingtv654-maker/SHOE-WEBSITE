@@ -17,7 +17,7 @@ export default function ProductSectionYellow() {
       <ProductCard
         edition="THUNDER AIR 01 // ED-02"
         name="VOLT THUNDER"
-        price="$235"
+        price="₹5,299"
         rating="5.0"
         reviews="98"
         description="High-voltage neon volt accents fused with an ultralight carbon-fiber shank and energy-returning nitro foam sole."

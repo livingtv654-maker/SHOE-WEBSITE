@@ -17,7 +17,7 @@ export default function ProductSectionBeige() {
       <ProductCard
         edition="SAND AIR 01 // ED-04"
         name="RAW SAND"
-        price="$250"
+        price="₹4,999"
         rating="4.9"
         reviews="164"
         description="Crafted with premium Italian nubuck suede, natural earth-tone hues, and an ergonomic memory-foam collar for luxury comfort."
