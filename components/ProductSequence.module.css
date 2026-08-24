@@ -73,7 +73,7 @@
   object-fit: contain;
 }
 
-/* Centered dot container locked translate(-50%, -50%) */
+/* Uniform base dimensions so Left & Right dots match 100% in pixel size */
 .itemRedSlot,
 .itemYellowSlot,
 .itemLimeSlot,
@@ -82,8 +82,8 @@
 .itemYellowSlotWrapped,
 .itemBeigeSlotWrapped {
   position: absolute;
-  width: clamp(40px, 3.5cqw, 60px);
-  height: clamp(40px, 3.5cqw, 60px);
+  width: clamp(42px, 3.2cqw, 54px);
+  height: clamp(42px, 3.2cqw, 54px);
   z-index: 9;
   container-type: inline-size;
   transform: translate(-50%, -50%);
@@ -109,22 +109,18 @@
 }
 
 /* =========================================================================
-   PERFECT SYMMETRICAL 3 ANCHOR SLOTS ON BLACK LINE ARC:
-   - Slot A (Left Circle): 18.2%, 92.4%, scale(0.7)
-   - Slot B (Center Apex - ACTIVE): 50.0%, 84.0%, scale(1.3)
-   - Slot C (Right Circle): 83.5%, 92.0%, scale(0.7)
+   PERFECT MATCHING LEFT & RIGHT DOT SIZES:
+   - Slot A (Left Circle): 18.2%, 92.4%, scale(0.7) -> EXACT 33.6px
+   - Slot B (Center Apex - ACTIVE): 50.0%, 84.0%, scale(1.25) -> EXACT 60px
+   - Slot C (Right Circle): 83.5%, 92.0%, scale(0.7) -> EXACT 33.6px MATCH!
    ========================================================================= */
 
 /* ============================= RED ============================= */
-/* State 0: Slot B (Center Active: 50.0%, 84.0%)
-   State 1: Slot C (Right Circle: 83.5%, 92.0%)
-   State 2: Off right tip (92.0%, 94.5%) & vanishes
-   State 3: Reappears at Slot A (Left: 18.2%, 92.4%) via Wrapped */
 
 .itemRedSlot {
   left: calc(50.0% * (1 - var(--entrance-1, 0)) + 83.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 92.0% * var(--entrance-2, 0));
   top: calc(84.0% * (1 - var(--entrance-1, 0)) + 92.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 94.5% * var(--entrance-2, 0));
-  transform: translate(-50%, -50%) scale(calc(1.3 * (1 - var(--entrance-1, 0)) + 0.7 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.35 * var(--entrance-2, 0)));
+  transform: translate(-50%, -50%) scale(calc(1.25 * (1 - var(--entrance-1, 0)) + 0.7 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.35 * var(--entrance-2, 0)));
   opacity: calc(1 - var(--entrance-2, 0));
 }
 
@@ -148,15 +144,11 @@
 }
 
 /* ============================= YELLOW ============================= */
-/* State 0: Slot C (Right Circle: 83.5%, 92.0%)
-   State 1: Slot B (Center Active: 50.0%, 84.0%)
-   State 2: Slot A (Left: 18.2%, 92.4%)
-   State 3: Off left tip (8.0%, 94.5%) & vanishes */
 
 .itemYellowSlot {
   left: calc(83.5% * (1 - var(--entrance-1, 0)) + 50.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 18.2% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 8.0% * var(--entrance-3, 0));
   top: calc(92.0% * (1 - var(--entrance-1, 0)) + 84.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 92.4% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 94.5% * var(--entrance-3, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 1.3 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.7 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.35 * var(--entrance-3, 0)));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 1.25 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 0.7 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.35 * var(--entrance-3, 0)));
   opacity: calc(1 - var(--entrance-3, 0));
 }
 
@@ -180,15 +172,11 @@
 }
 
 /* ============================= LIME ============================= */
-/* State 0: Slot A (Left: 18.2%, 92.4%)
-   State 1: Off left tip (8.0%, 94.5%) & vanishes
-   State 2: Slot B (Center Active: 50.0%, 84.0%)
-   State 3: Slot C (Right Circle: 83.5%, 92.0%) */
 
 .itemLimeSlot {
   left: calc(18.2% * (1 - var(--entrance-1, 0)) + 8.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 50.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 83.5% * var(--entrance-3, 0));
   top: calc(92.4% * (1 - var(--entrance-1, 0)) + 94.5% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 84.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 92.0% * var(--entrance-3, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 0.35 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 1.3 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.7 * var(--entrance-3, 0)));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-1, 0)) + 0.35 * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 1.25 * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 0.7 * var(--entrance-3, 0)));
   opacity: calc((1 - var(--entrance-1, 0)) + var(--entrance-2, 0));
 }
 
@@ -199,15 +187,11 @@
 }
 
 /* ============================= BEIGE ============================= */
-/* State 0: Hidden offscreen
-   State 1: Slot A (Left: 18.2%, 92.4%) via Wrapped
-   State 2: Slot C (Right Circle: 83.5%, 92.0%)
-   State 3: Slot B (Center Active: 50.0%, 84.0%) */
 
 .itemBeigeSlot {
   left: calc(83.5% * (1 - var(--entrance-3, 0)) + 50.0% * var(--entrance-3, 0));
   top: calc(92.0% * (1 - var(--entrance-3, 0)) + 84.0% * var(--entrance-3, 0));
-  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-3, 0)) + 1.3 * var(--entrance-3, 0)));
+  transform: translate(-50%, -50%) scale(calc(0.7 * (1 - var(--entrance-3, 0)) + 1.25 * var(--entrance-3, 0)));
   opacity: var(--entrance-2, 0);
 }
 
