@@ -71,14 +71,12 @@
 
 .shoeLeft {
   position: absolute;
-  left: calc(31.983% - var(--hero-scroll, 0) * 40%);
-  top: calc(16.738% + var(--hero-scroll, 0) * 30%);
+  left: 31.983%;
+  top: 16.738%;
   width: 19.988%;
   height: 45.653%;
   object-fit: contain;
   z-index: 3;
-  opacity: calc(1 - var(--hero-scroll, 0) * 1.5);
-  transition: opacity 0.2s ease;
 }
 
 .shoeRight {
