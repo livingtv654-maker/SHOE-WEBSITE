@@ -53,30 +53,28 @@
   width: 43.062%;
   height: 56.909%;
   object-fit: contain;
-  z-index: 2;
+  z-index: 3;
   transform-origin: top left;
-  transform: translate(
-      calc((1 - var(--entrance-1, 0)) * 70% - var(--exit-1, 0) * 70%),
-      calc((1 - var(--entrance-1, 0)) * 70% + var(--exit-1, 0) * 70%)
-    )
-    rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3 - var(--exit-1, 0) * 0.3)))
+  transform: translate(calc(var(--entrance-1, 0) * -70% + 70%), calc(var(--entrance-1, 0) * 70% - 70%))
+    rotate(calc(8deg * (0.7 + var(--entrance-1, 0) * 0.3)))
     scale(calc(0.55 + var(--entrance-1, 0) * 0.45 - var(--exit-1, 0) * 0.55));
 }
 
 .bgShoeName {
   position: absolute;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%, -50%) scale(2.35, 2.2);
-  transform-origin: center center;
+  top: 36%;
+  transform: translate(-50%, -50%);
   margin: 0;
-  z-index: 1;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
   font-family: var(--font-antonio), Antonio, var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-size: clamp(380px, 52cqw, 980px);
-  letter-spacing: clamp(4px, 0.6cqw, 24px);
-  line-height: 0.72;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.03) 100%);
+  font-size: clamp(240px, 34cqw, 620px);
+  letter-spacing: clamp(-4px, -0.2cqw, -14px);
+  line-height: 0.78;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.05) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
