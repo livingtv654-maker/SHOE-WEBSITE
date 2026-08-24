@@ -26,8 +26,7 @@ export default function Navbar() {
 
   const scrollToProducts = (e: React.MouseEvent) => {
     e.preventDefault();
-    const viewportH = window.innerHeight;
-    window.scrollTo({ top: viewportH + 50, behavior: "smooth" });
+    window.scrollTo({ top: window.innerHeight + 50, behavior: "smooth" });
   };
 
   return (
@@ -38,31 +37,18 @@ export default function Navbar() {
     >
       <div className={styles.container}>
         {/* Brand Logo */}
-        <a href="#home" onClick={scrollToTop} className={styles.logoLink} aria-label="SONIC RED Shoes Home">
+        <a href="#home" onClick={scrollToTop} className={styles.logoLink} aria-label="RED Shoes Home">
           <span className={styles.logoText}>RED</span>
           <span className={styles.logoStar} aria-hidden="true">★</span>
         </a>
 
-        {/* Center Nav Links */}
+        {/* Center Nav — only essential links */}
         <nav className={styles.navLinks} aria-label="Main Navigation">
-          <a href="#home" onClick={scrollToTop} className={`${styles.navLink} ${styles.active}`}>
-            HOME
-          </a>
-          <a href="#products" onClick={scrollToProducts} className={styles.navLink}>
-            PRODUCTS
-          </a>
-          <a href="#collection" onClick={scrollToProducts} className={styles.navLink}>
-            COLLECTION
-          </a>
-          <a href="#products" onClick={scrollToProducts} className={styles.navLink}>
-            JOURNAL
-          </a>
-          <a href="#products" onClick={scrollToProducts} className={styles.navLink}>
-            ABOUT
-          </a>
+          <a href="#home" onClick={scrollToTop} className={styles.navLink}>HOME</a>
+          <a href="#products" onClick={scrollToProducts} className={styles.navLink}>COLLECTION</a>
         </nav>
 
-        {/* Right Actions: Interactive Cart Pill Button */}
+        {/* Cart Button */}
         <div className={styles.actions}>
           <button
             type="button"
@@ -76,7 +62,9 @@ export default function Navbar() {
               <path d="M16 10a4 4 0 0 1-8 0" />
             </svg>
             <span className={styles.cartText}>CART</span>
-            <span className={styles.cartBadge}>{cartCount}</span>
+            {cartCount > 0 && (
+              <span className={styles.cartBadge}>{cartCount}</span>
+            )}
           </button>
         </div>
       </div>
