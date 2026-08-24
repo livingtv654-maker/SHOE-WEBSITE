@@ -46,6 +46,7 @@ export default function Navbar() {
         <nav className={styles.navLinks} aria-label="Main Navigation">
           <a href="#home" onClick={scrollToTop} className={styles.navLink}>HOME</a>
           <a href="#products" onClick={scrollToProducts} className={styles.navLink}>COLLECTION</a>
+          <a href="/story" className={styles.navLink}>STORY</a>
         </nav>
 
         {/* Cart Button */}
