@@ -56,3 +56,13 @@
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 }
+
+@media (max-width: 768px) {
+  .travelShoe {
+    left: calc(40vw * (1 - var(--hero-travel, 0)) + 8vw * var(--hero-travel, 0));
+    top: calc(24vh * (1 - var(--hero-travel, 0)) + 14vh * var(--hero-travel, 0));
+    width: calc(56vw * (1 - var(--hero-travel, 0)) + 84vw * var(--hero-travel, 0));
+    height: calc(40vh * (1 - var(--hero-travel, 0)) + 38vh * var(--hero-travel, 0));
+  }
+}
+

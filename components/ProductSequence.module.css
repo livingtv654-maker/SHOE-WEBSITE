@@ -218,3 +218,59 @@
   top: 90.0%;
   opacity: 0;
 }
+
+/* =========================================================================
+   Mobile Optimization (@media max-width: 768px) - Pixel Replica of Image 1
+   ========================================================================= */
+@media (max-width: 768px) {
+  .arc {
+    left: 4vw;
+    width: 92vw;
+    top: auto;
+    bottom: 12px;
+    height: 42px;
+  }
+
+  .itemRedSlot,
+  .itemYellowSlot,
+  .itemLimeSlot,
+  .itemBeigeSlot,
+  .itemRedSlotWrapped,
+  .itemYellowSlotWrapped,
+  .itemBeigeSlotWrapped {
+    width: 32px;
+    height: 32px;
+  }
+
+  .itemRedLabel,
+  .itemYellowLabel,
+  .itemLimeLabel,
+  .itemBeigeLabel,
+  .itemRedLabelWrapped,
+  .itemYellowLabelWrapped,
+  .itemBeigeLabelWrapped {
+    font-size: 13px;
+    letter-spacing: 1.2px;
+  }
+
+  .itemRedSlot {
+    top: calc(90.0% * (1 - var(--entrance-1, 0)) + 94.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 96.0% * var(--entrance-2, 0));
+  }
+  .itemYellowSlot {
+    top: calc(94.0% * (1 - var(--entrance-1, 0)) + 90.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 94.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 96.0% * var(--entrance-3, 0));
+  }
+  .itemLimeSlot {
+    top: calc(94.0% * (1 - var(--entrance-1, 0)) + 96.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 90.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 94.0% * var(--entrance-3, 0));
+  }
+  .itemBeigeSlot {
+    top: calc(94.0% * (1 - var(--entrance-3, 0)) + 90.0% * var(--entrance-3, 0));
+  }
+
+  .itemRedLabel,
+  .itemYellowLabel,
+  .itemLimeLabel,
+  .itemBeigeLabel {
+    top: 94.0%;
+  }
+}
+

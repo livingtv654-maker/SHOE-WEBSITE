@@ -187,3 +187,36 @@
   color: #ffffff;
   white-space: nowrap;
 }
+
+/* =========================================================================
+   Mobile Optimization (@media max-width: 768px) - Pixel Replica of Image 1
+   ========================================================================= */
+@media (max-width: 768px) {
+  .wrap {
+    height: 100dvh;
+    width: 100vw;
+    position: absolute;
+    inset: 0;
+  }
+
+  .bgShoeName {
+    top: 8vh;
+    font-size: 130px;
+    padding-bottom: 0;
+  }
+
+  .shadow {
+    left: 12vw;
+    top: 41vh;
+    width: 76vw;
+    height: 5vh;
+  }
+
+  .shoe {
+    left: 8vw;
+    top: 14vh;
+    width: 84vw;
+    height: 38vh;
+  }
+}
+

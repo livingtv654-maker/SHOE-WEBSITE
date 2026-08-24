@@ -5,6 +5,8 @@ import { useCart } from "@/context/CartContext";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
+  return null;
+
   const [scrolled, setScrolled] = useState(false);
   const [inProductSection, setInProductSection] = useState(false);
   const { cartCount, setIsCartOpen } = useCart();

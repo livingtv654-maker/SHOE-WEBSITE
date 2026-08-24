@@ -611,4 +611,156 @@
   }
 }
 
+/* =========================================================================
+   Mobile Optimization (@media max-width: 768px) - Pixel Replica of Image 2
+   ========================================================================= */
+@media (max-width: 768px) {
+  .wrap {
+    height: 100dvh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fearless {
+    left: 3vw;
+    top: 5vh;
+    width: 11vw;
+    height: 48vh;
+    object-fit: contain;
+    z-index: 4;
+  }
+
+  .plusDark {
+    left: auto;
+    right: 32vw;
+    top: 4vh;
+    width: 12px;
+    height: 12px;
+  }
+
+  .coords {
+    left: auto;
+    right: 5vw;
+    top: 4vh;
+    font-size: 10px;
+    align-items: flex-end;
+    gap: 1px;
+  }
+
+  .plusRed1 {
+    left: auto;
+    right: 5vw;
+    top: 9vh;
+    width: 12px;
+    height: 12px;
+  }
+
+  .circle {
+    left: 18vw;
+    top: 10vh;
+    width: 76vw;
+    height: 40vh;
+    object-fit: contain;
+  }
+
+  .grid {
+    left: auto;
+    right: 6vw;
+    top: 10vh;
+    width: 32vw;
+    height: 20vh;
+    object-fit: contain;
+  }
+
+  .shoeLeft {
+    left: 20vw;
+    top: 13vh;
+    width: 52vw;
+    height: 32vh;
+    object-fit: contain;
+    z-index: 3;
+  }
+
+  .shadow1 {
+    left: 20vw;
+    top: 36vh;
+    width: 36vw;
+    height: 6vh;
+  }
+
+  .shadow2 {
+    left: 45vw;
+    top: 46vh;
+    width: 44vw;
+    height: 8vh;
+  }
+
+  .headline {
+    left: 6vw;
+    top: 54vh;
+    width: 72vw;
+    gap: 2px;
+  }
+
+  .tagBadge {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  .headline p {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .dashes {
+    left: 6vw;
+    top: 65vh;
+    width: 50px;
+    height: 14px;
+  }
+
+  .paragraph {
+    left: 6vw;
+    top: 68vh;
+    width: 68vw;
+    gap: 2px;
+  }
+
+  .paragraph p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .cta {
+    left: 5vw;
+    top: auto;
+    bottom: 25px;
+    width: clamp(200px, 68vw, 280px);
+    min-width: auto;
+    height: 44px;
+    padding: 0 16px;
+  }
+
+  .ctaText {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .feel {
+    left: auto;
+    right: 2vw;
+    top: auto;
+    bottom: 30px;
+    transform: none;
+    writing-mode: vertical-rl;
+    font-size: 64px;
+    letter-spacing: 2px;
+    line-height: 0.85;
+    z-index: 3;
+  }
+}
+
+
 
