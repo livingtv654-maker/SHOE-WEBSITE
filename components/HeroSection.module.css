@@ -87,9 +87,8 @@
   height: 53.666%;
   object-fit: contain;
   z-index: 4;
-  /* Scale up and tilt as you scroll, matching the carousel shoe's pose */
-  transform: scale(calc(1 + var(--hero-scroll, 0) * 0.6)) rotate(calc(var(--hero-scroll, 0) * 8deg));
-  transform-origin: center center;
+  /* Instantly hide when scroll starts — FloatingShoe takes over at the exact same position */
+  filter: opacity(calc((1 - var(--hero-scroll, 0) * 100) * 100%));
 }
 
 .plusDark {

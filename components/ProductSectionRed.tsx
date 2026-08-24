@@ -12,8 +12,6 @@ export default function ProductSectionRed() {
       {/* Giant Shoe Name Text BEHIND the Shoe */}
       <h2 className={styles.bgShoeName}>RED</h2>
 
-      <Image src="/product-red/shoe.png" alt="Red Shoe" width={720} height={536} priority className={styles.shoe} />
-
       <ProductCard
         edition="RED AIR 01 // ED-01"
         name="HERITAGE RED"
