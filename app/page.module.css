@@ -1,5 +1,10 @@
 .heroSlot {
   position: relative;
+  width: 100vw;
   height: 100dvh;
   overflow: hidden;
+  background: #f4f3f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

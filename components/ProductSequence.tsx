@@ -93,7 +93,6 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
             boundary within these 4 states, so it stays a single sliding instance. See
             ProductSequence.module.css for the exact per-item blend math. */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
-        <Image src="/product-red/triangle.png" alt="" width={40} height={60} priority className={styles.triangle} />
 
         {/* Each circle + its number share one positioned box (.itemXSlot) so the number is centered
             with `inset: 0` + flex instead of being separately hand-placed. */}

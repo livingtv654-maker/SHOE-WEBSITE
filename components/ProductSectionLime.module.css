@@ -21,6 +21,16 @@
   z-index: 0;
 }
 
+.splash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .shadow {
   position: absolute;
   left: 33.792%;
@@ -50,77 +60,34 @@
     scale(calc(0.55 + var(--entrance-2, 0) * 0.45 - var(--exit-2, 0) * 0.55));
 }
 
-.headlineBlock {
+.bgShoeName {
   position: absolute;
-  left: 9.569%;
-  top: 13.072%;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2px, 0.6cqw, 10px);
-}
-
-.headlineBlock p {
+  left: 45%;
+  top: 37%;
+  transform: translate(-50%, -50%);
   margin: 0;
-  font-family: var(--font-antonio), Antonio, sans-serif;
-  font-weight: 700;
+  z-index: 1;
+  font-family: var(--font-antonio), Antonio, var(--font-poppins), sans-serif;
+  font-weight: 900;
+  font-size: clamp(140px, 19.5cqw, 320px);
+  letter-spacing: clamp(-2px, -0.2cqw, -8px);
+  line-height: 0.82;
+  color: rgba(255, 255, 255, 0.48);
+  text-transform: uppercase;
   white-space: nowrap;
-}
-
-.builtTo {
-  font-size: clamp(20px, 2.632cqw, 44px);
-  line-height: 1.1;
-  color: #111111;
-}
-
-.stand,
-.out {
-  font-size: clamp(90px, 11.962cqw, 200px);
-  letter-spacing: clamp(-1.4px, -0.179cqw, -3px);
-  line-height: 0.85;
-  color: #ffffff;
-}
-
-.airLabel {
-  position: absolute;
-  margin: 0;
-  left: 9.569%;
-  top: 61.8%;
-  z-index: 4;
-  font-family: var(--font-antonio), Antonio, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1.316cqw, 22px);
-  color: #ffffff;
-  white-space: nowrap;
-}
-
-.paragraph {
-  position: absolute;
-  left: 9.569%;
-  top: 66.3%;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1px, 0.32cqw, 5.6px);
-}
-
-.paragraph p {
-  margin: 0;
-  font-weight: 400;
-  font-size: clamp(11px, 1.196cqw, 20px);
-  line-height: 1.4;
-  color: #111111;
-  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .cta {
+  display: none;
   position: absolute;
   left: 9.569%;
   top: 77%;
   width: 19.079%;
   height: 8.395%;
   z-index: 4;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   container-type: inline-size;
@@ -161,6 +128,7 @@
 }
 
 .vlineTop {
+  display: none;
   position: absolute;
   left: 2.691%;
   top: 21.891%;
@@ -171,6 +139,7 @@
 }
 
 .vlineBottom {
+  display: none;
   position: absolute;
   left: 2.392%;
   top: 64.081%;
@@ -181,6 +150,7 @@
 }
 
 .verticalText {
+  display: none;
   position: absolute;
   left: 1.854%;
   top: 61.637%;
@@ -188,7 +158,6 @@
   height: 2.657%;
   transform-origin: top left;
   transform: rotate(-90deg);
-  display: flex;
   align-items: center;
   z-index: 4;
   font-weight: 400;

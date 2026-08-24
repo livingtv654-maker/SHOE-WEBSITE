@@ -1,90 +1,89 @@
-/*
-  This is the ORIGINAL hero navbar (transparent, dark text, red logo/star, hover-underline nav
-  items) — ported 1:1 from what used to live only inside HeroSection.module.css. It's now the
-  single page-level navbar (`position: fixed`) instead of being duplicated: once here (which
-  scrolled away with the hero) and once more, in a completely different visual style (solid black
-  bar, white text), inside ProductSequence for the product-color sections. There is exactly one
-  navbar now, and it's this one.
-*/
-
-.navbar {
+.header {
   position: fixed;
-  inset: 0;
-  height: 100dvh;
-  z-index: 100;
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100vw;
+  padding: 1.15rem 3rem;
+  background: rgba(244, 243, 241, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(25, 27, 31, 0.07);
+  transition: padding 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-.logo {
-  position: absolute;
-  left: 4.486%;
-  top: 3.507%;
-  z-index: 5;
+.scrolled {
+  padding: 0.8rem 3rem;
+  background: rgba(244, 243, 241, 0.94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.container {
+  max-width: 1650px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Brand Logo (RED ★) */
+.logoLink {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 4px;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.logoLink:hover {
+  transform: scale(1.04);
+}
+
+.logoText {
   font-family: var(--font-poppins), Poppins, sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   font-style: italic;
-  font-size: clamp(20px, 2.99cqw, 50px);
-  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
-  color: #e31e24;
-  pointer-events: auto;
-  transition: color 0.3s ease;
-}
-
-.star {
-  position: absolute;
-  left: 10.526%;
-  top: 4.251%;
-  z-index: 5;
-  font-family: var(--font-poppins), Poppins, sans-serif;
-  font-weight: 700;
-  font-size: clamp(14px, 1.675cqw, 28px);
+  font-size: 1.95rem;
+  letter-spacing: 0.5px;
   color: #e31e24;
   line-height: 1;
-  pointer-events: none;
-  transition: color 0.3s ease;
 }
 
-/* Once the colored product sections are behind the fixed navbar (past one viewport height), dark
-   text on a dark/saturated background stops being legible — logo, star, and nav items all switch to
-   white. Hovering a nav item then inverts to black instead of the hero's red, since red would clash
-   with (or vanish into) whichever product color is currently showing through. */
-.inProductSection .logo,
-.inProductSection .star,
-.inProductSection .navItem {
-  color: #ffffff;
-}
-
-.inProductSection .navItem:hover {
-  color: #111111;
-}
-
-.inProductSection .navItem::after {
-  background: #111111;
-}
-
-.nav {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-}
-
-.navItem {
-  position: absolute;
-  top: 4.038%;
+.logoStar {
   font-family: var(--font-poppins), Poppins, sans-serif;
-  font-size: clamp(12px, 1.495cqw, 25px);
-  letter-spacing: clamp(0.2px, 0.03cqw, 0.5px);
-  color: #191b1f;
-  white-space: nowrap;
-  pointer-events: auto;
-  transition: color 0.25s ease, transform 0.25s ease;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #e31e24;
+  line-height: 1;
+  margin-top: 1px;
 }
 
-.navItem::after {
+/* Center Nav Links */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.navLink {
+  position: relative;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #191b1f;
+  text-decoration: none;
+  padding: 0.35rem 0;
+  transition: color 0.25s ease;
+}
+
+.navLink::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -8px;
+  bottom: -2px;
   width: 100%;
   height: 2px;
   background: #e31e24;
@@ -93,31 +92,118 @@
   transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.navItem:hover {
+.navLink:hover,
+.active {
   color: #e31e24;
-  transform: translateY(-1px);
 }
 
-.navItem:hover::after {
+.navLink:hover::after,
+.active::after {
   transform: scaleX(1);
 }
 
-.navHome {
-  left: 30.681%;
+/* Right Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Cart Pill Button (Styled like Shop Now CTA) */
+.cartPillBtn {
+  background: #191b1f;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.8125rem;
   font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 0.55rem 1.25rem;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
 }
 
-.navProducts {
-  left: 38.935%;
-  font-weight: 400;
+.cartIcon {
+  width: 17px;
+  height: 17px;
 }
 
-.navJournal {
-  left: 50.718%;
-  font-weight: 400;
+.cartText {
+  white-space: nowrap;
 }
 
-.navAbout {
-  left: 61.244%;
-  font-weight: 400;
+.cartBadge {
+  background: #e31e24;
+  color: #ffffff;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.cartPillBtn:hover {
+  background: #e31e24;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(227, 30, 36, 0.35);
+}
+
+/* In Colored Product Sections (Past 100vh) */
+.inProductSection {
+  background: rgba(18, 19, 22, 0.88);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inProductSection .logoText,
+.inProductSection .logoStar {
+  color: #ffffff;
+}
+
+.inProductSection .navLink {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.inProductSection .navLink:hover,
+.inProductSection .active {
+  color: #ffffff;
+}
+
+.inProductSection .navLink::after {
+  background: #ffffff;
+}
+
+.inProductSection .cartPillBtn {
+  background: #e31e24;
+  color: #ffffff;
+}
+
+.inProductSection .cartPillBtn:hover {
+  background: #ffffff;
+  color: #111111;
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+}
+
+.inProductSection .cartPillBtn:hover .cartBadge {
+  background: #111111;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .header {
+    padding: 0.85rem 1.25rem;
+  }
+  .navLinks {
+    display: none;
+  }
 }

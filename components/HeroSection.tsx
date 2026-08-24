@@ -1,9 +1,13 @@
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  isLoaded?: boolean;
+}
+
+export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
   return (
-    <div className={styles.wrap}>
+    <div className={`${styles.wrap} ${isLoaded ? styles.loaded : ""}`}>
       <Image src="/hero/background.png" alt="" fill priority className={styles.bg} sizes="100vw" />
 
       <Image src="/hero/circle.png" alt="" width={650} height={648} priority className={styles.circle} />
@@ -28,37 +32,36 @@ export default function HeroSection() {
       <Image src="/hero/fearless.png" alt="Fearless" width={326} height={1754} priority className={styles.fearless} />
 
       <div className={styles.headline}>
-        <p>FROM THE STREETS</p>
-        <p>TO THE TOP,</p>
-        <p className={styles.headlineRed}>WE MOVE DIFFERENT.</p>
+        <span className={styles.tagBadge}>SERIES // 01</span>
+        <p>PRECISION BUILT.</p>
+        <p className={styles.headlineRed}>FEARLESSLY RED.</p>
       </div>
 
       <Image src="/hero/dashes.png" alt="" width={108} height={27} priority className={styles.dashes} />
 
       <div className={styles.paragraph}>
-        <p>Engineered for those</p>
-        <p>who break the pattern.</p>
-        <p>This is not just a shoe.</p>
-        <p>This is a movement.</p>
+        <p>Full-grain leather frame.</p>
+        <p>Responsive air cushioning.</p>
+        <p>Street-tested traction.</p>
       </div>
 
-      <a href="#" className={styles.cta}>
+      <a href="#products" className={styles.cta}>
         <span className={styles.ctaBracketTL} aria-hidden="true" />
         <span className={styles.ctaBracketBR} aria-hidden="true" />
         <span className={styles.ctaBg} aria-hidden="true" />
-        <span className={styles.ctaText}>EXPLORE COLLECTION</span>
-        <svg className={styles.ctaArrow} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 12h15.5M14 5.5 21 12l-7 6.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <span className={styles.ctaText}>DISCOVER THE AIR 01</span>
+        <span className={styles.ctaArrowWrap}>
+          <svg className={styles.ctaArrow} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
       </a>
 
       <span className={styles.feel} aria-hidden="true">
-        FEEL
+        FEET
       </span>
 
-      <Image src="/hero/barcode.png" alt="" width={138} height={51} priority className={styles.barcode} />
-      <span className={styles.rbd}>RBD - 2024</span>
-      <Image src="/hero/plus-red-2.png" alt="" width={24} height={24} priority className={styles.plusRed2} />
+
     </div>
   );
 }

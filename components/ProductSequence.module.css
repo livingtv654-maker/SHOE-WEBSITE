@@ -101,6 +101,7 @@
 /* The pointer always sits above the active/center slot — that slot's screen position never moves
    (only which color occupies it does), so the pointer itself needs no animation. */
 .triangle {
+  display: none;
   position: absolute;
   left: 49.582%;
   top: 74.495%;
