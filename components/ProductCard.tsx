@@ -1,34 +1,46 @@
 "use client";
 
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
   edition?: string;
   name?: string;
-  price: string;
+  price?: string;
   rating?: string;
   reviews?: string;
   description?: string;
   accentColor?: string;
   accentRgb?: string;
+  image?: string;
 }
 
 export default function ProductCard({
-  price,
+  edition = "SONIC RED 01",
+  name = "RED AIR EDITION",
+  price = "$250",
   accentColor = "#e31e24",
-  accentRgb = "227, 30, 36",
+  image = "/product-red/shoe.png",
 }: ProductCardProps) {
+  const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
     setAdded(true);
+    addToCart({
+      id: edition.toLowerCase().replace(/[^a-z0-9]/g, "-"),
+      name: name,
+      edition: edition,
+      price: parseInt(price.replace(/[^0-9]/g, "")) || 250,
+      color: accentColor,
+      image: image,
+    });
     setTimeout(() => setAdded(false), 2000);
   };
 
   const cardStyle = {
     "--accent": accentColor,
-    "--accent-rgb": accentRgb,
   } as React.CSSProperties;
 
   return (

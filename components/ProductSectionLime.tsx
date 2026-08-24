@@ -23,6 +23,7 @@ export default function ProductSectionLime() {
         description="Features 3D-sculpted bio-foam cushioning, luminescent pulse glow trim, and high-visibility nighttime reflective accents."
         accentColor="#76ff03"
         accentRgb="118, 255, 3"
+        image="/product-lime/shoe.png"
       />
     </div>
   );

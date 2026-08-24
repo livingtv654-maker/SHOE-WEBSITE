@@ -23,6 +23,7 @@ export default function ProductSectionYellow() {
         description="High-voltage neon volt accents fused with an ultralight carbon-fiber shank and energy-returning nitro foam sole."
         accentColor="#ffb800"
         accentRgb="255, 184, 0"
+        image="/product-yellow/shoe.png"
       />
     </div>
   );

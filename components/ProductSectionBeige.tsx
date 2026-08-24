@@ -23,6 +23,7 @@ export default function ProductSectionBeige() {
         description="Crafted with premium Italian nubuck suede, natural earth-tone hues, and an ergonomic memory-foam collar for luxury comfort."
         accentColor="#d4a373"
         accentRgb="212, 163, 115"
+        image="/product-beige/shoe.png"
       />
     </div>
   );

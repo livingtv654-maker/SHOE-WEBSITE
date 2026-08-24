@@ -23,6 +23,7 @@ export default function ProductSectionRed() {
         description="Crafted with hand-burnished crimson full-grain leather, dual-nitrogen air cushioning, and street-tested high-traction outsoles."
         accentColor="#e31e24"
         accentRgb="227, 30, 36"
+        image="/product-red/shoe.png"
       />
     </div>
   );

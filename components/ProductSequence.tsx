@@ -20,6 +20,15 @@ export default function ProductSequence({
   const stateCount = states.length;
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const scrollToState = (index: number) => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const viewportH = window.innerHeight;
+    const scrubDistance = wrapper.offsetHeight - viewportH;
+    const targetTop = wrapper.offsetTop + (index / (stateCount - 1)) * scrubDistance;
+    window.scrollTo({ top: targetTop, behavior: "smooth" });
+  };
+
   useEffect(() => {
     let ticking = false;
 
@@ -81,35 +90,67 @@ export default function ProductSequence({
         {/* Clean Black Arc Line Track spanning the bottom */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
 
-        {/* Clean Black Circle Dots (Unified 100% identical pure CSS circles) */}
-        <div className={styles.itemRedSlot}>
+        {/* Clean Black Circle Dots (Clickable to jump directly to edition) */}
+        <div
+          className={styles.itemRedSlot}
+          onClick={() => scrollToState(0)}
+          style={{ cursor: "pointer" }}
+          title="Jump to RED Edition"
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemRedLabel}>RED</span>
-        <div className={styles.itemRedSlotWrapped}>
+        <div
+          className={styles.itemRedSlotWrapped}
+          onClick={() => scrollToState(0)}
+          style={{ cursor: "pointer" }}
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemRedLabelWrapped}>RED</span>
 
-        <div className={styles.itemYellowSlot}>
+        <div
+          className={styles.itemYellowSlot}
+          onClick={() => scrollToState(1)}
+          style={{ cursor: "pointer" }}
+          title="Jump to YELLOW Edition"
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemYellowLabel}>YELLOW</span>
-        <div className={styles.itemYellowSlotWrapped}>
+        <div
+          className={styles.itemYellowSlotWrapped}
+          onClick={() => scrollToState(1)}
+          style={{ cursor: "pointer" }}
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemYellowLabelWrapped}>YELLOW</span>
 
-        <div className={styles.itemLimeSlot}>
+        <div
+          className={styles.itemLimeSlot}
+          onClick={() => scrollToState(2)}
+          style={{ cursor: "pointer" }}
+          title="Jump to LIME Edition"
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemLimeLabel}>LIME</span>
 
-        <div className={styles.itemBeigeSlot}>
+        <div
+          className={styles.itemBeigeSlot}
+          onClick={() => scrollToState(3)}
+          style={{ cursor: "pointer" }}
+          title="Jump to BEIGE Edition"
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemBeigeLabel}>BEIGE</span>
-        <div className={styles.itemBeigeSlotWrapped}>
+        <div
+          className={styles.itemBeigeSlotWrapped}
+          onClick={() => scrollToState(3)}
+          style={{ cursor: "pointer" }}
+        >
           <div className={styles.blackDot} />
         </div>
         <span className={styles.itemBeigeLabelWrapped}>BEIGE</span>
