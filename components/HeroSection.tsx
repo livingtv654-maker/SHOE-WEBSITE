@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
@@ -6,19 +9,32 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onScroll() {
+      if (!wrapRef.current) return;
+      const viewportH = window.innerHeight;
+      if (viewportH <= 0) return;
+      const progress = Math.min(Math.max(window.scrollY / (viewportH * 0.85), 0), 1);
+      wrapRef.current.style.setProperty("--hero-scroll", String(progress));
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className={`${styles.wrap} ${isLoaded ? styles.loaded : ""}`}>
+    <div ref={wrapRef} className={`${styles.wrap} ${isLoaded ? styles.loaded : ""}`}>
       <Image src="/hero/background.png" alt="" fill priority className={styles.bg} sizes="100vw" />
 
       <Image src="/hero/circle.png" alt="" width={650} height={648} priority className={styles.circle} />
       <Image src="/hero/grid.png" alt="" width={260} height={238} priority className={styles.grid} />
       <Image src="/hero/shadow-1.png" alt="" width={210} height={84} priority className={styles.shadow1} />
       <Image src="/hero/shadow-2.png" alt="" width={340} height={99} priority className={styles.shadow2} />
-      <Image src="/hero/shoe-1.png" alt="Shoe" width={1314} height={1696} priority className={styles.shoeLeft} />
-      <Image src="/hero/shoe-2.png" alt="Shoe" width={1488} height={2020} priority className={styles.shoeRight} />
-
-      {/* Navbar now lives once, page-level, in <Navbar /> (position: fixed) — it used to be
-          duplicated here and again in ProductSequence, which read as a flicker/swap on scroll. */}
+      <Image src="/hero/shoe-1.png" alt="Shoe Left" width={1314} height={1696} priority className={styles.shoeLeft} />
+      <Image src="/hero/shoe-2.png" alt="Shoe Right" width={1488} height={2020} priority className={styles.shoeRight} />
 
       <Image src="/hero/plus-dark.png" alt="" width={24} height={24} priority className={styles.plusDark} />
 
@@ -60,8 +76,6 @@ export default function HeroSection({ isLoaded = true }: HeroSectionProps) {
       <span className={styles.feel} aria-hidden="true">
         FEET
       </span>
-
-
     </div>
   );
 }
