@@ -8,9 +8,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: #0b0c0e;
 }
 
-/* Dual Shutter Panels */
+/* Dual Shutter Curtain Panels */
 .shutter {
   position: absolute;
   left: 0;
@@ -18,7 +19,7 @@
   height: 50.5%;
   background: #0b0c0e;
   z-index: 1;
-  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .shutterTop {
@@ -37,173 +38,56 @@
   transform: translateY(100%);
 }
 
-.exit .hudBox {
+.exit .brandCenter {
   opacity: 0;
-  transform: scale(0.9) translateY(-20px);
+  transform: scale(0.92);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* HUD Box Container */
-.hudBox {
+/* Center Brand Identity */
+.brandCenter {
   position: relative;
   z-index: 2;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: min(380px, 88vw);
-  padding: 3rem 2rem;
-  background: rgba(18, 19, 23, 0.7);
-  border: 1px solid rgba(227, 30, 36, 0.25);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(227, 30, 36, 0.08);
-}
-
-/* HUD Outer Rotating Rings */
-.hudRingOuter {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  border: 1px dashed rgba(227, 30, 36, 0.3);
-  border-radius: 50%;
-  animation: hudSpin 20s linear infinite;
-  pointer-events: none;
-}
-
-.hudRingInner {
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top-color: #e31e24;
-  border-bottom-color: #e31e24;
-  border-radius: 50%;
-  animation: hudSpinReverse 12s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes hudSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes hudSpinReverse {
-  0% { transform: rotate(360deg); }
-  100% { transform: rotate(0deg); }
-}
-
-/* Brand Identity */
-.brandGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
+  animation: brandPulse 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .logoRow {
   display: flex;
-  align-items: flex-start;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 }
 
-.logoLetter {
-  font-family: var(--font-poppins), Poppins, sans-serif;
+.logoText {
+  font-family: var(--font-unbounded), var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-style: italic;
-  font-size: 3.5rem;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 6px;
   color: #ffffff;
   line-height: 1;
-  text-shadow: 0 0 25px rgba(227, 30, 36, 0.8);
-  animation: letterGlow 2s ease-in-out infinite alternate;
-}
-
-.logoLetter:nth-child(2) {
-  color: #e31e24;
-  animation-delay: 0.2s;
-}
-
-.logoLetter:nth-child(3) {
-  animation-delay: 0.4s;
+  text-shadow: 0 0 40px rgba(227, 30, 36, 0.6);
 }
 
 .logoStar {
   font-family: var(--font-poppins), sans-serif;
-  font-weight: 700;
-  font-size: 2rem;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 4rem);
   color: #e31e24;
   line-height: 1;
-  text-shadow: 0 0 20px rgba(227, 30, 36, 0.9);
+  text-shadow: 0 0 30px rgba(227, 30, 36, 0.9);
 }
 
-@keyframes letterGlow {
-  0% { text-shadow: 0 0 15px rgba(227, 30, 36, 0.5); }
-  100% { text-shadow: 0 0 35px rgba(227, 30, 36, 1); }
-}
-
-.subTag {
-  font-family: var(--font-roboto-mono), monospace;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 0.5rem;
-  text-transform: uppercase;
-}
-
-/* Progress Block */
-.progressBlock {
-  width: 100%;
-}
-
-.track {
-  position: relative;
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 0.85rem;
-}
-
-.fill {
-  height: 100%;
-  background: linear-gradient(90deg, #e31e24 0%, #ff4d52 100%);
-  box-shadow: 0 0 15px rgba(227, 30, 36, 0.9);
-  border-radius: 4px;
-  transition: width 0.1s linear;
-}
-
-.laserSweep {
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-  animation: laser 1.5s ease-in-out infinite;
-}
-
-@keyframes laser {
-  0% { left: -50%; }
-  100% { left: 150%; }
-}
-
-.telemetryRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-roboto-mono), monospace;
-  font-size: 0.6875rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.statusText {
-  letter-spacing: 1px;
-}
-
-.percentText {
-  color: #e31e24;
-  font-weight: 700;
-  font-size: 0.8125rem;
+@keyframes brandPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }

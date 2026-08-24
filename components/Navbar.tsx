@@ -42,11 +42,11 @@ export default function Navbar() {
           <span className={styles.logoStar} aria-hidden="true">★</span>
         </a>
 
-        {/* Center Nav — only essential links */}
+        {/* Center Nav */}
         <nav className={styles.navLinks} aria-label="Main Navigation">
           <a href="#home" onClick={scrollToTop} className={styles.navLink}>HOME</a>
           <a href="#products" onClick={scrollToProducts} className={styles.navLink}>COLLECTION</a>
-          <a href="/story" className={styles.navLink}>STORY</a>
+          <a href="#products" onClick={scrollToProducts} className={styles.navLink}>STORY</a>
         </nav>
 
         {/* Cart Button */}
