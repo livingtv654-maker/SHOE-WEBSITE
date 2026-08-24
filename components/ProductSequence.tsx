@@ -54,9 +54,13 @@ export default function ProductSequence({
       sticky.style.setProperty("--p12", String(p12));
       sticky.style.setProperty("--p23", String(p23));
 
+      // Continuous entrance & exit variables for real-time 60fps shoe animations
+      const entrances = [1, p01, p12, p23];
+      const exits = [p01, p12, p23, 0];
+
       for (let i = 0; i < stateCount; i++) {
-        const entrance = targetIndex >= i ? 1 : 0;
-        const exit = targetIndex >= i + 1 ? 1 : 0;
+        const entrance = entrances[i] ?? 0;
+        const exit = exits[i] ?? 0;
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
         document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
