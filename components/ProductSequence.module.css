@@ -1,75 +1,6 @@
-/*
-  Ported from the SONIC headphone site's ProductSequence.module.css — same sticky-pin + snap-to-state
-  + CSS-custom-property crossfade technique, generalized to 4 states (Red -> Yellow -> Lime -> Beige).
-
-  ---- How the 4-state carousel works ----
-  Every item cycles through the same 4 fixed arc slots (A, B, C-center/active, D) in the same
-  rotation, one slot per transition: Red starts at C, Yellow at B, Lime at A, Beige at D; each
-  subsequent transition shifts every item one slot along A->B->C->D. Three of the four items' paths
-  cross the D->A boundary within this 4-state sequence (Beige immediately, at the very first
-  transition; Red in the middle; Yellow at the end) — sliding an item all the way across the arc for
-  that specific jump read as it "flying to the other side" rather than genuinely wrapping around a
-  loop, so each of those three items is rendered as TWO instances instead of one: a "before" instance
-  that's fixed at D and shrinks/fades out, and an "after" instance that appears already-small at A and
-  grows/fades in — exactly like a real corner circle disappearing off one edge and a new one growing
-  in from the other, never traveling the distance between. Lime's path (A->B->C->D) never crosses that
-  boundary within these 4 states, so it stays a single continuously-sliding instance.
-
-  Every other (non-wrap) segment is a genuine slide between adjacent slots, using pure-CSS weighted
-  blends of known endpoint values — weight_i = entrance_i - entrance_(i+1) telescopes correctly since
-  exit_i and entrance_(i+1) are literally the same flag (see ProductSequence.tsx's loop). No JS-side
-  per-item math.
-
-  Every label is positioned at its circle's own precomputed CENTER-X (left + width/2, per slot, since
-  each item's own asset gives it a slightly different width) with `transform: translateX(-50%)`, so it
-  stays exactly centered under the circle regardless of the label text's own width — independent of
-  the circle's current position/size, both driven by the same entrance values.
-*/
-
-@property --entrance-0 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-@property --entrance-1 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --entrance-2 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --entrance-3 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --exit-0 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --exit-1 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --exit-2 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --exit-3 {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
 .wrapper {
   position: relative;
-  height: 300dvh; /* fallback for the instant before JS measures window.innerHeight (4 states) */
+  height: 300dvh;
 }
 
 .sticky {
@@ -79,242 +10,116 @@
   overflow: hidden;
   container-type: inline-size;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  transition: --entrance-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --entrance-1 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    --entrance-2 0.7s cubic-bezier(0.65, 0, 0.35, 1), --entrance-3 0.7s cubic-bezier(0.65, 0, 0.35, 1),
-    --exit-0 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.7s cubic-bezier(0.65, 0, 0.35, 1), --exit-2 0.7s
-      cubic-bezier(0.65, 0, 0.35, 1), --exit-3 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* ---- Shared arc + color carousel ---- */
-/* The navbar lives in its own page-level, `position: fixed` component — see Navbar.tsx / Navbar.module.css. */
-
-.arc {
+.laserArcDock {
   position: absolute;
-  left: 8.971%;
-  top: 82.891%;
-  width: 84.593%;
-  height: 12.539%;
-  object-fit: contain;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
   z-index: 8;
 }
 
-/* The pointer always sits above the active/center slot — that slot's screen position never moves
-   (only which color occupies it does), so the pointer itself needs no animation. */
-.triangle {
-  display: none;
+.svgTrack {
   position: absolute;
-  left: 49.582%;
-  top: 74.495%;
-  width: 2.392%;
-  height: 6.376%;
-  object-fit: contain;
+  left: 5%;
+  top: 72%;
+  width: 90%;
+  height: 22%;
+  overflow: visible;
+}
+
+.activeLaserLine {
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.nodeBox {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+  cursor: pointer;
   z-index: 9;
-  filter: brightness(0.55);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Every circle uses just its own "circle-big" image (a plain filled black circle — same asset as
-   when it's active), scaled DOWN via the slot's own interpolated width/height when inactive, instead
-   of swapping to a separate small-circle asset. */
-.slotCircleImg {
-  object-fit: contain;
-}
-
-.itemRedSlot,
-.itemYellowSlot,
-.itemLimeSlot,
-.itemBeigeSlot,
-.itemRedSlotWrapped,
-.itemYellowSlotWrapped,
-.itemBeigeSlotWrapped {
-  position: absolute;
-  z-index: 9;
-  container-type: inline-size;
-}
-
-.itemRedNum,
-.itemYellowNum,
-.itemLimeNum,
-.itemBeigeNum {
-  position: absolute;
-  inset: 0;
+.nodeCircle {
+  width: clamp(32px, 2.4cqw, 42px);
+  height: clamp(32px, 2.4cqw, 42px);
+  border-radius: 50%;
+  background: rgba(14, 15, 18, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  line-height: 1;
-  font-size: 34cqw;
-  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.itemRedLabel,
-.itemYellowLabel,
-.itemLimeLabel,
-.itemBeigeLabel,
-.itemRedLabelWrapped,
-.itemYellowLabelWrapped,
-.itemBeigeLabelWrapped {
-  position: absolute;
-  z-index: 9;
+.nodeNum {
+  font-weight: 800;
+  font-size: clamp(10px, 0.8cqw, 13px);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.35s ease;
+}
+
+.nodeLabel {
   font-weight: 700;
+  font-size: clamp(10px, 0.75cqw, 12px);
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.5);
   white-space: nowrap;
-  transform: translateX(-50%);
+  transition: all 0.35s ease;
 }
 
-/* ============================= RED ============================= */
-/* Path: C(active) -> D -> [Shrink & Fly off Right Tip] -> [Appear & Grow from Left Tip] -> A -> B.
-   As Red moves to the end of the arc line (Lime taking over, --entrance-2 going 0 -> 1), redSlot
-   shrinks down to scale(0.3) at the right tip and vanishes; redSlotWrapped starts tiny scale(0.3) at
-   the far-left line tip and sweeps onto Slot A growing to full scale. */
-
-.itemRedSlot {
-  left: calc(47.01% * (1 - var(--entrance-1, 0)) + 72.368% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 81% * var(--entrance-2, 0));
-  top: calc(78.746% * (1 - var(--entrance-1, 0)) + 83.847% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 86% * var(--entrance-2, 0));
-  width: calc(5.981% * (1 - var(--entrance-1, 0)) + 4.785% * var(--entrance-1, 0));
-  height: calc(10.521% * (1 - var(--entrance-1, 0)) + 6.376% * var(--entrance-1, 0));
-  transform: scale(calc(1 - var(--entrance-2, 0) * 0.7));
-  opacity: calc(1 - var(--entrance-2, 0));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+.nodeBox:hover .nodeCircle {
+  border-color: #ffffff;
+  transform: scale(1.1);
 }
 
-.itemRedLabel {
-  left: calc(50.001% * (1 - var(--entrance-1, 0)) + 74.761% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 83% * var(--entrance-2, 0));
-  top: calc(88.417% * (1 - var(--entrance-1, 0)) + 89.585% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 91% * var(--entrance-2, 0));
-  font-size: calc(30px * (1 - var(--entrance-1, 0)) + 20px * var(--entrance-1, 0));
-  color: color-mix(in srgb, #ffffff calc((1 - var(--entrance-1, 0)) * 100%), #111111 calc(var(--entrance-1, 0) * 100%));
-  opacity: calc(1 - var(--entrance-2, 0));
+.activeNode .nodeCircle {
+  background: var(--node-color, #e31e24);
+  border-color: var(--node-color, #e31e24);
+  transform: scale(1.22);
+  box-shadow: 0 0 25px var(--node-color, #e31e24), 0 0 50px rgba(var(--node-rgb, 227, 30, 36), 0.5);
 }
 
-.itemRedSlotWrapped {
-  left: calc((12% * (1 - var(--entrance-2, 0)) + 18.24% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 31.1% * var(--entrance-3, 0));
-  top: calc((88% * (1 - var(--entrance-2, 0)) + 85.548% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 83.528% * var(--entrance-3, 0));
-  width: 4.785%;
-  height: 6.376%;
-  transform: scale(calc(0.3 + var(--entrance-2, 0) * 0.7));
-  opacity: var(--entrance-2, 0);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+.activeNode .nodeNum {
+  color: #0b0c0e;
 }
 
-.itemRedLabelWrapped {
-  left: calc((14% * (1 - var(--entrance-2, 0)) + 20.633% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 33.493% * var(--entrance-3, 0));
-  top: calc((95% * (1 - var(--entrance-2, 0)) + 92.986% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 90.329% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 20px * var(--entrance-3, 0));
-  color: #111111;
-  opacity: var(--entrance-2, 0);
+.activeNode .nodeLabel {
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: 0 0 12px var(--node-color, #e31e24);
+  transform: translateY(2px);
 }
 
-/* ============================= YELLOW ============================= */
-/* Path: B -> C(active) -> D -> [Shrink & Fly off Right Tip] -> [Appear & Grow from Left Tip] -> A. */
-
-.itemYellowSlot {
-  left: calc(31.1% * (1 - var(--entrance-1, 0)) + 47.01% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 72.368% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 81% * var(--entrance-3, 0));
-  top: calc(83.528% * (1 - var(--entrance-1, 0)) + 78.746% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 83.847% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 86% * var(--entrance-3, 0));
-  width: calc(3.589% * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 5.981% *
-        (var(--entrance-1, 0) - var(--entrance-2, 0)));
-  height: calc(6.271% * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 8.395% *
-        (var(--entrance-1, 0) - var(--entrance-2, 0)));
-  transform: scale(calc(1 - var(--entrance-3, 0) * 0.7));
-  opacity: calc(1 - var(--entrance-3, 0));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+.glowingBead {
+  position: absolute;
+  width: clamp(18px, 1.4cqw, 26px);
+  height: clamp(18px, 1.4cqw, 26px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  transition: left 0.15s linear, top 0.15s linear, background 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.itemYellowLabel {
-  left: calc(32.895% * (1 - var(--entrance-1, 0)) + 50.001% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 74.163% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 83% * var(--entrance-3, 0));
-  top: calc(90.329% * (1 - var(--entrance-1, 0)) + 88.417% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 89.585% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 91% * var(--entrance-3, 0));
-  font-size: calc(20px * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 28px *
-        (var(--entrance-1, 0) - var(--entrance-2, 0)));
-  color: color-mix(
-    in srgb,
-    #111111 calc((1 - var(--entrance-1, 0) + var(--entrance-2, 0)) * 100%),
-    #ffffff calc((var(--entrance-1, 0) - var(--entrance-2, 0)) * 100%)
-  );
-  opacity: calc(1 - var(--entrance-3, 0));
-}
-
-.itemYellowSlotWrapped {
-  left: calc(12% * (1 - var(--entrance-3, 0)) + 18.24% * var(--entrance-3, 0));
-  top: calc(88% * (1 - var(--entrance-3, 0)) + 85.548% * var(--entrance-3, 0));
-  width: 3.589%;
-  height: 6.271%;
-  transform: scale(calc(0.3 + var(--entrance-3, 0) * 0.7));
-  opacity: var(--entrance-3, 0);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-}
-
-.itemYellowLabelWrapped {
-  left: calc(14% * (1 - var(--entrance-3, 0)) + 20.035% * var(--entrance-3, 0));
-  top: calc(95% * (1 - var(--entrance-3, 0)) + 92.986% * var(--entrance-3, 0));
-  font-size: 18px;
-  color: #111111;
-  opacity: var(--entrance-3, 0);
-}
-
-/* ============================= LIME ============================= */
-/* Path: A -> B -> C(active) -> D. Continuous line movement along the arc. */
-
-.itemLimeSlot {
-  left: calc(18.24% * (1 - var(--entrance-1, 0)) + 31.1% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 47.01% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 72.368% * var(--entrance-3, 0));
-  top: calc(85.548% * (1 - var(--entrance-1, 0)) + 83.528% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 78.746% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 83.847% * var(--entrance-3, 0));
-  width: calc(3.649% * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 5.981% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)));
-  height: calc(6.271% * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 8.395% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)));
-}
-
-.itemLimeLabel {
-  left: calc(20.065% * (1 - var(--entrance-1, 0)) + 32.925% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 50.001% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 74.193% * var(--entrance-3, 0));
-  top: calc(92.986% * (1 - var(--entrance-1, 0)) + 90.329% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 88.417% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 89.585% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 28px *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)));
-  color: color-mix(
-    in srgb,
-    #111111 calc((1 - var(--entrance-2, 0) + var(--entrance-3, 0)) * 100%),
-    #ffffff calc((var(--entrance-2, 0) - var(--entrance-3, 0)) * 100%)
-  );
-}
-
-/* ============================= BEIGE ============================= */
-/* Path: D -> [Shrink & Fly off Right Tip] -> [Appear & Grow from Left Tip] -> A -> B -> C(active). */
-
-.itemBeigeSlot {
-  left: calc(72.368% * (1 - var(--entrance-1, 0)) + 81% * var(--entrance-1, 0));
-  top: calc(83.847% * (1 - var(--entrance-1, 0)) + 86% * var(--entrance-1, 0));
-  width: 4.845%;
-  height: 6.376%;
-  transform: scale(calc(1 - var(--entrance-1, 0) * 0.7));
-  opacity: calc(1 - var(--entrance-1, 0));
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-}
-
-.itemBeigeLabel {
-  left: calc(74.791% * (1 - var(--entrance-1, 0)) + 83% * var(--entrance-1, 0));
-  top: calc(89.585% * (1 - var(--entrance-1, 0)) + 91% * var(--entrance-1, 0));
-  font-size: 20px;
-  color: #111111;
-  opacity: calc(1 - var(--entrance-1, 0));
-}
-
-.itemBeigeSlotWrapped {
-  left: calc((12% * (1 - var(--entrance-1, 0)) + 18.24% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 31.1% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 47.01% * var(--entrance-3, 0));
-  top: calc((88% * (1 - var(--entrance-1, 0)) + 85.548% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 83.528% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 78.746% * var(--entrance-3, 0));
-  width: calc(4.845% * (1 - var(--entrance-3, 0)) + 4.785% * var(--entrance-3, 0));
-  height: calc(6.376% * (1 - var(--entrance-3, 0)) + 8.395% * var(--entrance-3, 0));
-  transform: scale(calc(0.3 + var(--entrance-1, 0) * 0.7));
-  opacity: var(--entrance-1, 0);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-}
-
-.itemBeigeLabelWrapped {
-  left: calc((14% * (1 - var(--entrance-1, 0)) + 20.663% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 33.523% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 49.403% * var(--entrance-3, 0));
-  top: calc((95% * (1 - var(--entrance-1, 0)) + 92.986% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 90.329% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 88.417% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 28px * var(--entrance-3, 0));
-  color: color-mix(in srgb, #111111 calc((1 - var(--entrance-3, 0)) * 100%), #ffffff calc(var(--entrance-3, 0) * 100%));
-  opacity: var(--entrance-1, 0);
+.beadCore {
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px #ffffff;
 }

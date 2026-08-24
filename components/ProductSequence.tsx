@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import Image from "next/image";
 import styles from "./ProductSequence.module.css";
 
 type Props = {
@@ -10,12 +9,23 @@ type Props = {
   scrubViewportsPerTransition?: number;
 };
 
-export default function ProductSequence({ states, scrubViewportsPerTransition = 0.5 }: Props) {
+const editions = [
+  { id: 0, num: "01", name: "RED", color: "#e31e24", rgb: "227, 30, 36" },
+  { id: 1, num: "02", name: "YELLOW", color: "#ffb800", rgb: "255, 184, 0" },
+  { id: 2, num: "03", name: "LIME", color: "#76ff03", rgb: "118, 255, 3" },
+  { id: 3, num: "04", name: "BEIGE", color: "#d4a373", rgb: "212, 163, 115" },
+];
+
+export default function ProductSequence({
+  states,
+  scrubViewportsPerTransition = 0.5,
+}: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const lastTargetIndex = useRef(-1);
   const stateCount = states.length;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -37,19 +47,19 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
       const normalized = scrubDistance > 0 ? Math.min(Math.max(-rect.top / scrubDistance, 0), 1) : 0;
       const rawProgress = normalized * (stateCount - 1);
 
+      setProgress(rawProgress);
+
       const targetIndex = Math.round(rawProgress);
-      if (targetIndex === lastTargetIndex.current) return;
-      lastTargetIndex.current = targetIndex;
-      setActiveIndex(targetIndex);
+      if (targetIndex !== lastTargetIndex.current) {
+        lastTargetIndex.current = targetIndex;
+        setActiveIndex(targetIndex);
+      }
 
       for (let i = 0; i < stateCount; i++) {
         const entrance = targetIndex >= i ? 1 : 0;
         const exit = targetIndex >= i + 1 ? 1 : 0;
         sticky.style.setProperty(`--entrance-${i}`, String(entrance));
         sticky.style.setProperty(`--exit-${i}`, String(exit));
-        // Also published on <html> so the page-level, always-fixed <Navbar /> (which lives
-        // outside this component and isn't a descendant of `.sticky`) can read these too, for its
-        // color-blended underline as the sequence advances through all four colors.
         document.documentElement.style.setProperty(`--entrance-${i}`, String(entrance));
         document.documentElement.style.setProperty(`--exit-${i}`, String(exit));
       }
@@ -72,68 +82,113 @@ export default function ProductSequence({ states, scrubViewportsPerTransition = 
     };
   }, [stateCount, scrubViewportsPerTransition]);
 
+  // Compute 3D Laser Bead position along arc curve
+  // Curve: P0 (16%, 86%) -> P1 (50%, 74%) -> P2 (84%, 86%)
+  const t = Math.min(Math.max(progress / (stateCount - 1), 0), 1);
+  const beadX = (1 - t) * (1 - t) * 16 + 2 * (1 - t) * t * 50 + t * t * 84;
+  const beadY = (1 - t) * (1 - t) * 86 + 2 * (1 - t) * t * 74 + t * t * 86;
+
+  // Active theme color
+  const activeColor = editions[activeIndex]?.color || "#e31e24";
+  const activeRgb = editions[activeIndex]?.rgb || "227, 30, 36";
+
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
-      <div ref={stickyRef} className={styles.sticky} data-active-index={activeIndex}>
+      <div
+        ref={stickyRef}
+        className={styles.sticky}
+        data-active-index={activeIndex}
+        style={{
+          "--active-accent": activeColor,
+          "--active-accent-rgb": activeRgb,
+        } as React.CSSProperties}
+      >
         {states}
 
-        {/* ---- Shared horizontal color carousel: the arc background never changes, and all four
-            color dots cycle through the same 4 fixed slots (each arriving at the big/active center
-            slot during its own turn) driven by the --entrance-N progress values above — so scrolling
-            reads as a genuine left-to-right carousel, not a page-style up/down swap. Each item uses
-            only its own "circle-big" image (a plain filled circle), scaled down via the slot's own
-            interpolated width/height when inactive rather than swapping to a separate small asset.
+        {/* ---- Laser Arc Track & 3D Glowing Bead Ride ---- */}
+        <div className={styles.laserArcDock}>
+          {/* Glowing SVG Arc Track Line */}
+          <svg className={styles.svgTrack} viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="laserGlowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#e31e24" stopOpacity="0.8" />
+                <stop offset="33%" stopColor="#ffb800" stopOpacity="0.8" />
+                <stop offset="66%" stopColor="#76ff03" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#d4a373" stopOpacity="0.8" />
+              </linearGradient>
+              <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            {/* Background Track Arc */}
+            <path
+              d="M 120 95 Q 500 20 880 95"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.15)"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            {/* Active Filled Laser Track */}
+            <path
+              d="M 120 95 Q 500 20 880 95"
+              fill="none"
+              stroke="url(#laserGlowGrad)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray="900"
+              strokeDashoffset={900 * (1 - t)}
+              filter="url(#neonGlow)"
+              className={styles.activeLaserLine}
+            />
+          </svg>
 
-            Red, Yellow, and Beige each cross the arc's right-to-left wrap boundary once within this
-            4-state sequence — rather than sliding all the way across (which read as "flying to the
-            other side"), each renders as two instances: one that's fixed at the rightmost slot and
-            shrinks/fades out, and a second that appears already-small at the leftmost slot and
-            grows/fades in — a real corner circle disappearing off one edge while a new one grows in
-            from the other, never traveling the distance between. Lime's path never crosses that
-            boundary within these 4 states, so it stays a single sliding instance. See
-            ProductSequence.module.css for the exact per-item blend math. */}
-        <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
+          {/* 4 Fixed Edition Nodes on Arc Track */}
+          {editions.map((ed, idx) => {
+            const nodePositions = [
+              { x: 16, y: 86 },
+              { x: 38.3, y: 78.5 },
+              { x: 61.7, y: 78.5 },
+              { x: 84, y: 86 },
+            ];
+            const pos = nodePositions[idx];
+            const isActive = activeIndex === idx;
 
-        {/* Each circle + its number share one positioned box (.itemXSlot) so the number is centered
-            with `inset: 0` + flex instead of being separately hand-placed. */}
-        <div className={styles.itemRedSlot}>
-          <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemRedNum}>01</span>
-        </div>
-        <span className={styles.itemRedLabel}>RED</span>
-        <div className={styles.itemRedSlotWrapped}>
-          <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemRedNum}>01</span>
-        </div>
-        <span className={styles.itemRedLabelWrapped}>RED</span>
+            return (
+              <div
+                key={ed.id}
+                className={`${styles.nodeBox} ${isActive ? styles.activeNode : ""}`}
+                style={{
+                  left: `${pos.x}%`,
+                  top: `${pos.y}%`,
+                  "--node-color": ed.color,
+                  "--node-rgb": ed.rgb,
+                } as React.CSSProperties}
+              >
+                <div className={styles.nodeCircle}>
+                  <span className={styles.nodeNum}>{ed.num}</span>
+                </div>
+                <span className={styles.nodeLabel}>{ed.name}</span>
+              </div>
+            );
+          })}
 
-        <div className={styles.itemYellowSlot}>
-          <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemYellowNum}>02</span>
+          {/* 3D Glowing Bead gliding along the laser arc path */}
+          <div
+            className={styles.glowingBead}
+            style={{
+              left: `${beadX}%`,
+              top: `${beadY}%`,
+              background: activeColor,
+              boxShadow: `0 0 20px ${activeColor}, 0 0 40px rgba(${activeRgb}, 0.7)`,
+            }}
+          >
+            <span className={styles.beadCore} />
+          </div>
         </div>
-        <span className={styles.itemYellowLabel}>YELLOW</span>
-        <div className={styles.itemYellowSlotWrapped}>
-          <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemYellowNum}>02</span>
-        </div>
-        <span className={styles.itemYellowLabelWrapped}>YELLOW</span>
-
-        <div className={styles.itemLimeSlot}>
-          <Image src="/product-lime/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemLimeNum}>03</span>
-        </div>
-        <span className={styles.itemLimeLabel}>LIME GREEN</span>
-
-        <div className={styles.itemBeigeSlot}>
-          <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemBeigeNum}>04</span>
-        </div>
-        <span className={styles.itemBeigeLabel}>BEIGE</span>
-        <div className={styles.itemBeigeSlotWrapped}>
-          <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemBeigeNum}>04</span>
-        </div>
-        <span className={styles.itemBeigeLabelWrapped}>BEIGE</span>
       </div>
     </div>
   );
