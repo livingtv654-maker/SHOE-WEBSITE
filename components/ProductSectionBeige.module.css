@@ -51,8 +51,8 @@
   object-fit: contain;
   z-index: 3;
   transform-origin: top left;
-  transform: translate(calc((1 - var(--entrance-3, 0)) * 70%), calc((1 - var(--entrance-3, 0)) * 70%))
-    rotate(calc(8deg * (0.7 + var(--entrance-3, 0) * 0.3))) scale(calc(0.55 + var(--entrance-3, 0) * 0.45));
+  transform: translate(calc((1 - var(--entrance-3, 0)) * -70%), calc((1 - var(--entrance-3, 0)) * 70%))
+    rotate(calc(8deg * (0.7 + var(--entrance-3, 0) * 0.3))) scale(calc(0.45 + var(--entrance-3, 0) * 0.55));
 }
 
 .bgShoeName {
