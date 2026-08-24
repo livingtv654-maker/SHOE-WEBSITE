@@ -81,43 +81,36 @@ export default function ProductSequence({
         {/* Clean Black Arc Line Track spanning the bottom */}
         <Image src="/product-red/arc.png" alt="" width={1414} height={118} priority className={styles.arc} />
 
-        {/* Black Numbered Circle Dots traveling the full length of the black line */}
+        {/* Clean Black Circle Dots (numbers removed; label shown ONLY when selected) */}
         <div className={styles.itemRedSlot}>
           <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemRedNum}>01</span>
         </div>
         <span className={styles.itemRedLabel}>RED</span>
         <div className={styles.itemRedSlotWrapped}>
           <Image src="/product-red/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemRedNum}>01</span>
         </div>
         <span className={styles.itemRedLabelWrapped}>RED</span>
 
         <div className={styles.itemYellowSlot}>
           <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemYellowNum}>02</span>
         </div>
         <span className={styles.itemYellowLabel}>YELLOW</span>
         <div className={styles.itemYellowSlotWrapped}>
           <Image src="/product-yellow/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemYellowNum}>02</span>
         </div>
         <span className={styles.itemYellowLabelWrapped}>YELLOW</span>
 
         <div className={styles.itemLimeSlot}>
           <Image src="/product-lime/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemLimeNum}>03</span>
         </div>
         <span className={styles.itemLimeLabel}>LIME</span>
 
         <div className={styles.itemBeigeSlot}>
           <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemBeigeNum}>04</span>
         </div>
         <span className={styles.itemBeigeLabel}>BEIGE</span>
         <div className={styles.itemBeigeSlotWrapped}>
           <Image src="/product-beige/circle-big.png" alt="" fill priority sizes="80px" className={styles.slotCircleImg} />
-          <span className={styles.itemBeigeNum}>04</span>
         </div>
         <span className={styles.itemBeigeLabelWrapped}>BEIGE</span>
       </div>

@@ -85,21 +85,6 @@
   container-type: inline-size;
 }
 
-.itemRedNum,
-.itemYellowNum,
-.itemLimeNum,
-.itemBeigeNum {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  line-height: 1;
-  font-size: 34cqw;
-  color: #ffffff;
-}
-
 .itemRedLabel,
 .itemYellowLabel,
 .itemLimeLabel,
@@ -109,17 +94,17 @@
 .itemBeigeLabelWrapped {
   position: absolute;
   z-index: 9;
-  font-weight: 700;
+  font-weight: 900;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: #ffffff;
   white-space: nowrap;
   transform: translateX(-50%);
+  transition: opacity 0.35s ease;
 }
 
 /* ============================= RED ============================= */
-/* Exact coordinates locked to the black arc line:
-   Slot C (active center): 47.01%, 78.746%
-   Slot D (right): 72.368%, 83.847%
-   Exit (off right tip along black line slope): 82.0%, 86.5%
-   Entrance (on left tip along black line slope): 12.0%, 87.5% -> Slot A: 18.24%, 85.548% */
+/* Active during state 0 (when RED shoe is active at center Slot C: 47.01%, 78.746%) */
 
 .itemRedSlot {
   left: calc(47.01% * (1 - var(--entrance-1, 0)) + 72.368% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 82% * var(--entrance-2, 0));
@@ -132,11 +117,9 @@
 }
 
 .itemRedLabel {
-  left: calc(50.001% * (1 - var(--entrance-1, 0)) + 74.761% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 84% * var(--entrance-2, 0));
-  top: calc(88.417% * (1 - var(--entrance-1, 0)) + 89.585% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 93% * var(--entrance-2, 0));
-  font-size: calc(30px * (1 - var(--entrance-1, 0)) + 20px * var(--entrance-1, 0));
-  color: color-mix(in srgb, #ffffff calc((1 - var(--entrance-1, 0)) * 100%), #111111 calc(var(--entrance-1, 0) * 100%));
-  opacity: calc(1 - var(--entrance-2, 0));
+  left: 50.001%;
+  top: 88.417%;
+  opacity: calc(1 - var(--entrance-1, 0));
 }
 
 .itemRedSlotWrapped {
@@ -150,15 +133,13 @@
 }
 
 .itemRedLabelWrapped {
-  left: calc((14% * (1 - var(--entrance-2, 0)) + 20.633% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 33.493% * var(--entrance-3, 0));
-  top: calc((94% * (1 - var(--entrance-2, 0)) + 92.986% * var(--entrance-2, 0)) * (1 - var(--entrance-3, 0)) + 90.329% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 20px * var(--entrance-3, 0));
-  color: #111111;
-  opacity: var(--entrance-2, 0);
+  left: 20.633%;
+  top: 92.986%;
+  opacity: 0; /* Wrapped instance is inactive */
 }
 
 /* ============================= YELLOW ============================= */
-/* Slot B: 31.1%, 83.528% -> Slot C: 47.01%, 78.746% -> Slot D: 72.368%, 83.847% */
+/* Active during state 1 (when YELLOW shoe is active at center Slot C: 47.01%, 78.746%) */
 
 .itemYellowSlot {
   left: calc(31.1% * (1 - var(--entrance-1, 0)) + 47.01% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 72.368% *
@@ -175,18 +156,9 @@
 }
 
 .itemYellowLabel {
-  left: calc(32.895% * (1 - var(--entrance-1, 0)) + 50.001% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 74.163% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 84% * var(--entrance-3, 0));
-  top: calc(90.329% * (1 - var(--entrance-1, 0)) + 88.417% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 89.585% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 93% * var(--entrance-3, 0));
-  font-size: calc(20px * (1 - var(--entrance-1, 0) + var(--entrance-2, 0)) + 28px *
-        (var(--entrance-1, 0) - var(--entrance-2, 0)));
-  color: color-mix(
-    in srgb,
-    #111111 calc((1 - var(--entrance-1, 0) + var(--entrance-2, 0)) * 100%),
-    #ffffff calc((var(--entrance-1, 0) - var(--entrance-2, 0)) * 100%)
-  );
-  opacity: calc(1 - var(--entrance-3, 0));
+  left: 50.001%;
+  top: 88.417%;
+  opacity: calc(var(--entrance-1, 0) - var(--entrance-2, 0));
 }
 
 .itemYellowSlotWrapped {
@@ -200,15 +172,13 @@
 }
 
 .itemYellowLabelWrapped {
-  left: calc(14% * (1 - var(--entrance-3, 0)) + 20.035% * var(--entrance-3, 0));
-  top: calc(94% * (1 - var(--entrance-3, 0)) + 92.986% * var(--entrance-3, 0));
-  font-size: 18px;
-  color: #111111;
-  opacity: var(--entrance-3, 0);
+  left: 20.035%;
+  top: 92.986%;
+  opacity: 0; /* Wrapped instance is inactive */
 }
 
 /* ============================= LIME ============================= */
-/* Slot A: 18.24%, 85.548% -> Slot B: 31.1%, 83.528% -> Slot C: 47.01%, 78.746% -> Slot D: 72.368%, 83.847% */
+/* Active during state 2 (when LIME shoe is active at center Slot C: 47.01%, 78.746%) */
 
 .itemLimeSlot {
   left: calc(18.24% * (1 - var(--entrance-1, 0)) + 31.1% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 47.01% *
@@ -222,21 +192,13 @@
 }
 
 .itemLimeLabel {
-  left: calc(20.065% * (1 - var(--entrance-1, 0)) + 32.925% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 50.001% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 74.193% * var(--entrance-3, 0));
-  top: calc(92.986% * (1 - var(--entrance-1, 0)) + 90.329% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 88.417% *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)) + 89.585% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-2, 0) + var(--entrance-3, 0)) + 28px *
-        (var(--entrance-2, 0) - var(--entrance-3, 0)));
-  color: color-mix(
-    in srgb,
-    #111111 calc((1 - var(--entrance-2, 0) + var(--entrance-3, 0)) * 100%),
-    #ffffff calc((var(--entrance-2, 0) - var(--entrance-3, 0)) * 100%)
-  );
+  left: 50.001%;
+  top: 88.417%;
+  opacity: calc(var(--entrance-2, 0) - var(--entrance-3, 0));
 }
 
 /* ============================= BEIGE ============================= */
-/* Starts at D: 72.368%, 83.847% -> Exit right tip -> Entrance left tip -> Slot A -> Slot B -> Slot C */
+/* Active during state 3 (when BEIGE shoe is active at center Slot C: 47.01%, 78.746%) */
 
 .itemBeigeSlot {
   left: calc(72.368% * (1 - var(--entrance-1, 0)) + 82% * var(--entrance-1, 0));
@@ -249,11 +211,9 @@
 }
 
 .itemBeigeLabel {
-  left: calc(74.791% * (1 - var(--entrance-1, 0)) + 84% * var(--entrance-1, 0));
-  top: calc(89.585% * (1 - var(--entrance-1, 0)) + 93% * var(--entrance-1, 0));
-  font-size: 20px;
-  color: #111111;
-  opacity: calc(1 - var(--entrance-1, 0));
+  left: 74.791%;
+  top: 89.585%;
+  opacity: 0; /* Inactive at Slot D */
 }
 
 .itemBeigeSlotWrapped {
@@ -267,9 +227,7 @@
 }
 
 .itemBeigeLabelWrapped {
-  left: calc((14% * (1 - var(--entrance-1, 0)) + 20.663% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 33.523% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 49.403% * var(--entrance-3, 0));
-  top: calc((94% * (1 - var(--entrance-1, 0)) + 92.986% * var(--entrance-1, 0)) * (1 - var(--entrance-2, 0)) + 90.329% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 88.417% * var(--entrance-3, 0));
-  font-size: calc(18px * (1 - var(--entrance-3, 0)) + 28px * var(--entrance-3, 0));
-  color: color-mix(in srgb, #111111 calc((1 - var(--entrance-3, 0)) * 100%), #ffffff calc(var(--entrance-3, 0) * 100%));
-  opacity: var(--entrance-1, 0);
+  left: 50.001%;
+  top: 88.417%;
+  opacity: var(--entrance-3, 0); /* Active ONLY when Beige arrives at active center Slot C */
 }
