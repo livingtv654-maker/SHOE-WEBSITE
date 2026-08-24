@@ -10,10 +10,9 @@
   inset: 0;
   container-type: inline-size;
   overflow: hidden;
-  background: #d1ba95;
+  background: #d9c6a3;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
-  opacity: var(--entrance-3, 0);
-  transition: opacity 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  opacity: calc(var(--entrance-3, 0));
 }
 
 .bg {
@@ -52,9 +51,8 @@
   object-fit: contain;
   z-index: 3;
   transform-origin: top left;
-  transform: translate(calc((1 - var(--entrance-3, 0)) * 70%), calc((1 - var(--entrance-3, 0)) * 70%))
+  transform: translate(calc((1 - var(--entrance-3, 0)) * 70%), calc((1 - var(--entrance-3, 0)) * -70%))
     rotate(calc(8deg * (0.7 + var(--entrance-3, 0) * 0.3))) scale(calc(0.55 + var(--entrance-3, 0) * 0.45));
-  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .bgShoeName {
@@ -87,7 +85,6 @@
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
-  transition: opacity 0.7s cubic-bezier(0.65, 0, 0.35, 1), transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .cta {
