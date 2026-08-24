@@ -45,15 +45,13 @@ export default function ProductCard({
 
   return (
     <div className={styles.card} style={cardStyle}>
-      {/* Compact Clean Add to Cart Pill Button */}
+      {/* Clean Minimal Add to Cart Button (Price Removed) */}
       <button
         type="button"
         className={`${styles.addBtn} ${added ? styles.addedBtn : ""}`}
         onClick={handleAddToCart}
       >
         <span className={styles.shimmer} />
-        <span className={styles.btnPrice}>{price}</span>
-        <span className={styles.dash}>—</span>
         <span className={styles.btnLabel}>
           {added ? (
             <span className={styles.addedState}>
