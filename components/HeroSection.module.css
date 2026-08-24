@@ -139,22 +139,19 @@
 
 .feel {
   position: absolute;
-  left: 78.828%;
-  top: 76%;
-  width: 22.488%;
-  height: 32.943%;
-  transform-origin: top left;
-  transform: rotate(-90deg);
+  right: 5.5%;
+  bottom: 4.5%;
+  left: auto;
+  top: auto;
+  transform: none;
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: visible;
   font-family: var(--font-antonio), var(--font-poppins), sans-serif;
-  font-weight: 700;
-  font-size: clamp(40px, 13.5cqw, 220px);
-  letter-spacing: clamp(-0.4px, -0.04cqw, -1px);
+  font-weight: 800;
+  font-size: clamp(16px, 1.8cqw, 30px);
+  letter-spacing: clamp(3px, 0.35cqw, 6px);
   color: #191b1f;
-  line-height: 0.9;
+  line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
   z-index: 3;
