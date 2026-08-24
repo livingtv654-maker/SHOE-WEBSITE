@@ -1,125 +1,139 @@
-/* Editorial Product Details & Action Block placed on the right side and elevated */
-.editorialCard {
+/* Luxury Frosted Glass Product Card on the Right Side */
+.glassCard {
   position: absolute;
-  right: 6.5%;
+  right: 6%;
   bottom: 18%;
   left: auto;
   top: auto;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 400px;
+  width: clamp(280px, 24cqw, 360px);
+  padding: clamp(18px, 1.4cqw, 24px);
+  background: rgba(12, 13, 16, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
   pointer-events: auto;
   font-family: var(--font-poppins), sans-serif;
   color: #ffffff;
-  /* Deep text shadow ensures 100% crystal-clear legibility across Yellow, Lime, Red, Beige */
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-.metaRow {
+.glassCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.headerRow {
   display: flex;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 4px;
 }
 
-.editionTag {
+.editionPill {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(12px, 0.85cqw, 15px);
-  font-weight: 800;
-  letter-spacing: 2.5px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(10px, 0.68cqw, 11px);
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
 }
 
-.productTitle {
-  margin: 6px 0 8px 0;
-  font-size: clamp(26px, 2.2cqw, 38px);
+.shoeTitle {
+  margin: 0 0 16px 0;
+  font-size: clamp(20px, 1.5cqw, 26px);
   font-weight: 900;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
   color: #ffffff;
   text-transform: uppercase;
 }
 
-.priceRow {
+.actionRow {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.priceWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .priceVal {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: clamp(22px, 1.6cqw, 30px);
+  font-size: clamp(18px, 1.35cqw, 22px);
   font-weight: 800;
   color: #ffffff;
+  letter-spacing: -0.5px;
 }
 
-.taxNotice {
+.taxTag {
   font-family: var(--font-roboto-mono), monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-/* High-Contrast Solid Minimal Button (Larger & More Visible) */
-.addBtn {
+/* Visually Appealing Clean CTA Button */
+.cartBtn {
   position: relative;
   overflow: hidden;
-  padding: clamp(14px, 1.05cqw, 18px) clamp(28px, 2.2cqw, 40px);
-  background: #0b0c0e;
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  padding: clamp(10px, 0.8cqw, 13px) clamp(18px, 1.3cqw, 24px);
+  background: #ffffff;
+  color: #0b0c0e;
+  border: none;
   border-radius: 50px;
   font-family: var(--font-poppins), sans-serif;
   font-weight: 800;
-  font-size: clamp(13px, 0.95cqw, 16px);
-  letter-spacing: 1.6px;
+  font-size: clamp(11.5px, 0.8cqw, 13px);
+  letter-spacing: 1.2px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  text-shadow: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
-.addBtn:hover {
-  background: #ffffff;
-  color: #0b0c0e;
-  border-color: #ffffff;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55);
+.cartBtn:hover {
+  background: #f0f0f2;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
 }
 
-.addBtn:active {
+.cartBtn:active {
   transform: scale(0.97);
 }
 
 .defaultState {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
-.bagIcon {
+.arrowIcon {
   flex-shrink: 0;
-  width: 17px;
-  height: 17px;
   transition: transform 0.2s ease;
 }
 
-.addBtn:hover .bagIcon {
-  transform: scale(1.1);
+.cartBtn:hover .arrowIcon {
+  transform: translateX(3px);
 }
 
 .addedState {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: #ffffff;
   animation: checkPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -132,6 +146,5 @@
 .addedBtn {
   background: #00c853 !important;
   color: #ffffff !important;
-  border-color: #00c853 !important;
-  box-shadow: 0 10px 30px rgba(0, 200, 83, 0.5) !important;
+  box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4) !important;
 }
