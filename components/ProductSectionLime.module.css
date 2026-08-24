@@ -63,8 +63,9 @@
 .bgShoeName {
   position: absolute;
   left: 45%;
-  top: 37%;
-  transform: translate(-50%, -50%);
+  top: 36%;
+  transform: translate(-50%, -50%) scaleY(1.42);
+  transform-origin: center center;
   margin: 0;
   z-index: 1;
   font-family: var(--font-antonio), Antonio, var(--font-poppins), sans-serif;
@@ -72,12 +73,15 @@
   font-size: clamp(140px, 19.5cqw, 320px);
   letter-spacing: clamp(-2px, -0.2cqw, -8px);
   line-height: 0.82;
-  color: rgba(255, 255, 255, 0.48);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.08) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
-  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .cta {
