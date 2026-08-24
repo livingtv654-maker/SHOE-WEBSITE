@@ -36,14 +36,16 @@ export default function RedShoeTravel({ isLoaded = true }: RedShoeTravelProps) {
       ref={shoeRef}
       className={`${styles.travelShoe} ${isLoaded ? styles.loaded : ""}`}
     >
-      <Image
-        src="/product-red/shoe.png"
-        alt="Red Sneaker"
-        fill
-        priority
-        sizes="(max-width: 1200px) 50vw, 43vw"
-        className={styles.shoeImg}
-      />
+      <div className={styles.shoeInner}>
+        <Image
+          src="/product-red/shoe.png"
+          alt="Red Sneaker"
+          fill
+          priority
+          sizes="(max-width: 1200px) 50vw, 43vw"
+          className={styles.shoeImg}
+        />
+      </div>
     </div>
   );
 }
