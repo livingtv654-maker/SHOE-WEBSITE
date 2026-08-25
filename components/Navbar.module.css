@@ -199,11 +199,31 @@
   color: #ffffff;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .header {
-    padding: 0.85rem 1.25rem;
+    padding: 0.6rem 1rem;
   }
+
+  .logoText {
+    font-size: 1.5rem;
+  }
+
   .navLinks {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .navLink {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+  }
+
+  .cartPillBtn {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .cartText {
     display: none;
   }
 }

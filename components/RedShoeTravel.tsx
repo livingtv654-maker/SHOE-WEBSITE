@@ -14,7 +14,8 @@ export default function RedShoeTravel({ isLoaded = true }: RedShoeTravelProps) {
   useEffect(() => {
     function onScroll() {
       if (!shoeRef.current) return;
-      const viewportH = window.innerHeight;
+      const isMobile = window.innerWidth <= 768;
+      const viewportH = isMobile ? window.innerWidth * (16 / 9) : window.innerHeight;
       if (viewportH <= 0) return;
 
       // Scroll progress from top of page (0) to start of carousel (1)

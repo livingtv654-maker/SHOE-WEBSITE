@@ -139,16 +139,16 @@
 
 .feel {
   position: absolute;
-  right: 4.5%;
-  bottom: 20%;
-  left: auto;
+  right: 3.5%;
+  bottom: 6%;
   top: auto;
-  transform: none;
+  left: auto;
+  writing-mode: vertical-rl;
   display: flex;
   align-items: center;
   font-family: var(--font-antonio), var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-size: clamp(56px, 8.5cqw, 140px);
+  font-size: clamp(56px, 5.5cqw, 110px);
   letter-spacing: clamp(2px, 0.3cqw, 6px);
   color: #111215;
   line-height: 0.85;
@@ -616,17 +616,18 @@
    ========================================================================= */
 @media (max-width: 768px) {
   .wrap {
-    height: 100dvh;
     width: 100vw;
+    height: auto;
+    aspect-ratio: 9 / 16;
     position: relative;
     overflow: hidden;
   }
 
   .fearless {
     left: 3vw;
-    top: 5vh;
+    top: 5%;
     width: 11vw;
-    height: 48vh;
+    height: 48%;
     object-fit: contain;
     z-index: 4;
   }
@@ -634,7 +635,7 @@
   .plusDark {
     left: auto;
     right: 32vw;
-    top: 4vh;
+    top: 4%;
     width: 12px;
     height: 12px;
   }
@@ -642,7 +643,7 @@
   .coords {
     left: auto;
     right: 5vw;
-    top: 4vh;
+    top: 4%;
     font-size: 10px;
     align-items: flex-end;
     gap: 1px;
@@ -651,54 +652,54 @@
   .plusRed1 {
     left: auto;
     right: 5vw;
-    top: 9vh;
+    top: 9%;
     width: 12px;
     height: 12px;
   }
 
   .circle {
     left: 18vw;
-    top: 10vh;
+    top: 10%;
     width: 76vw;
-    height: 40vh;
+    height: 40%;
     object-fit: contain;
   }
 
   .grid {
     left: auto;
     right: 6vw;
-    top: 10vh;
+    top: 10%;
     width: 32vw;
-    height: 20vh;
+    height: 20%;
     object-fit: contain;
   }
 
   .shoeLeft {
     left: 20vw;
-    top: 13vh;
+    top: 13%;
     width: 52vw;
-    height: 32vh;
+    height: 32%;
     object-fit: contain;
     z-index: 3;
   }
 
   .shadow1 {
     left: 20vw;
-    top: 36vh;
+    top: 36%;
     width: 36vw;
-    height: 6vh;
+    height: 6%;
   }
 
   .shadow2 {
     left: 45vw;
-    top: 46vh;
+    top: 46%;
     width: 44vw;
-    height: 8vh;
+    height: 8%;
   }
 
   .headline {
     left: 6vw;
-    top: 54vh;
+    top: 54%;
     width: 72vw;
     gap: 2px;
   }
@@ -716,14 +717,14 @@
 
   .dashes {
     left: 6vw;
-    top: 65vh;
+    top: 65%;
     width: 50px;
     height: 14px;
   }
 
   .paragraph {
     left: 6vw;
-    top: 68vh;
+    top: 68%;
     width: 68vw;
     gap: 2px;
   }
@@ -734,9 +735,9 @@
   }
 
   .cta {
-    left: 5vw;
-    top: auto;
-    bottom: 25px;
+    left: 6vw;
+    top: 80%;
+    bottom: auto;
     width: clamp(200px, 68vw, 280px);
     min-width: auto;
     height: 44px;
@@ -750,17 +751,14 @@
 
   .feel {
     left: auto;
-    right: 2vw;
-    top: auto;
-    bottom: 30px;
+    right: 3vw;
+    top: 55%;
+    bottom: auto;
     transform: none;
     writing-mode: vertical-rl;
-    font-size: 64px;
+    font-size: 56px;
     letter-spacing: 2px;
     line-height: 0.85;
     z-index: 3;
   }
 }
-
-
-

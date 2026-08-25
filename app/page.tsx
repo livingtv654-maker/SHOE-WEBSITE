@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import MarqueeBanner from "@/components/MarqueeBanner";
 import ProductSequence from "@/components/ProductSequence";
 import ProductSectionRed from "@/components/ProductSectionRed";
 import ProductSectionYellow from "@/components/ProductSectionYellow";
@@ -18,6 +19,15 @@ import styles from "./page.module.css";
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <CartProvider>
       <LoadingScreen onComplete={() => setIsLoaded(true)} />
@@ -27,6 +37,7 @@ export default function Home() {
         <div id="home" className={styles.heroSlot}>
           <HeroSection isLoaded={isLoaded} />
         </div>
+        <MarqueeBanner />
         <div id="products">
           <ProductSequence
             states={[

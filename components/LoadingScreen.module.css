@@ -3,91 +3,186 @@
   inset: 0;
   z-index: 9999;
   width: 100vw;
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #0b0c0e;
+  background: #060709;
+  font-family: var(--font-roboto-mono), monospace;
 }
 
-/* Dual Shutter Curtain Panels */
-.shutter {
+/* Ambient Crimson Void Glow */
+.ambientGlow {
   position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50.5%;
-  background: #0b0c0e;
+  width: 120vw;
+  height: 120vh;
+  background: radial-gradient(circle at 50% 50%, rgba(227, 30, 36, 0.16) 0%, rgba(6, 7, 9, 0) 65%);
+  pointer-events: none;
+  z-index: 0;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+/* 4 Corner Quad-Warp Exit Panes */
+.quadPane {
+  position: absolute;
+  width: 50.5vw;
+  height: 50.5vh;
+  background: #060709;
   z-index: 1;
-  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform 0.85s cubic-bezier(0.85, 0, 0.15, 1);
+  will-change: transform;
 }
 
-.shutterTop {
-  top: 0;
-}
+.quadTL { top: 0; left: 0; }
+.quadTR { top: 0; right: 0; }
+.quadBL { bottom: 0; left: 0; }
+.quadBR { bottom: 0; right: 0; }
 
-.shutterBottom {
-  bottom: 0;
-}
+.exit .quadTL { transform: translate3d(-100%, -100%, 0) rotate(-3deg); }
+.exit .quadTR { transform: translate3d(100%, -100%, 0) rotate(3deg); }
+.exit .quadBL { transform: translate3d(-100%, 100%, 0) rotate(3deg); }
+.exit .quadBR { transform: translate3d(100%, 100%, 0) rotate(-3deg); }
 
-.exit .shutterTop {
-  transform: translateY(-100%);
-}
-
-.exit .shutterBottom {
-  transform: translateY(100%);
-}
-
-.exit .brandCenter {
-  opacity: 0;
-  transform: scale(0.92);
+/* Center Stage Container */
+.centerStage {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(88vw, 380px);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Center Brand Identity */
-.brandCenter {
+.exit .centerStage {
+  opacity: 0;
+  transform: scale(1.15) translateZ(0);
+}
+
+/* Shoe Neon Contour Trace */
+.shoeContourWrap {
+  width: 240px;
+  height: 140px;
   position: relative;
-  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: brandPulse 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.logoRow {
+.shoeSvg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 16px rgba(227, 30, 36, 0.7));
+}
+
+.neonPath {
+  transition: stroke-dashoffset 0.08s linear;
+}
+
+/* Brand Title */
+.brandRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  margin-top: 4px;
 }
 
-.logoText {
-  font-family: var(--font-unbounded), var(--font-poppins), sans-serif;
+.brandText {
+  font-family: var(--font-antonio), sans-serif;
   font-weight: 900;
-  font-size: clamp(3rem, 8vw, 6rem);
-  letter-spacing: 6px;
+  font-size: clamp(3rem, 7vw, 4.2rem);
+  letter-spacing: 4px;
   color: #ffffff;
   line-height: 1;
-  text-shadow: 0 0 40px rgba(227, 30, 36, 0.6);
 }
 
-.logoStar {
+.brandStar {
   font-family: var(--font-poppins), sans-serif;
   font-weight: 900;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   color: #e31e24;
   line-height: 1;
-  text-shadow: 0 0 30px rgba(227, 30, 36, 0.9);
+  text-shadow: 0 0 20px #e31e24;
 }
 
-@keyframes brandPulse {
-  0% {
-    opacity: 0;
-    transform: scale(0.85);
-    filter: blur(10px);
+/* Meta Box &tabular Counter */
+.metaBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.statusLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.pctCounter {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #e31e24;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Orbital Pulse Line */
+.orbitalRing {
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  border: 1px dashed rgba(227, 30, 36, 0.15);
+  pointer-events: none;
+  animation: spin 18s linear infinite;
+}
+
+@keyframes glowPulse {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .centerStage {
+    gap: 16px;
+    width: 85vw;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
+
+  .shoeContourWrap {
+    width: 200px;
+    height: 120px;
+  }
+
+  .brandText {
+    font-size: 3.2rem;
+  }
+
+  .brandStar {
+    font-size: 2rem;
+  }
+
+  .metaBox {
+    padding: 8px 14px;
+  }
+
+  .statusLabel {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .pctCounter {
+    font-size: 12px;
   }
 }

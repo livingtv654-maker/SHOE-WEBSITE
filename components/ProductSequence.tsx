@@ -12,7 +12,7 @@ type Props = {
 
 export default function ProductSequence({
   states,
-  scrubViewportsPerTransition = 0.5,
+  scrubViewportsPerTransition = 0.18,
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -23,9 +23,11 @@ export default function ProductSequence({
   const scrollToState = (index: number) => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
-    const viewportH = window.innerHeight;
-    const scrubDistance = wrapper.offsetHeight - viewportH;
-    const targetTop = wrapper.offsetTop + (index / (stateCount - 1)) * scrubDistance;
+    const isMobile = window.innerWidth <= 768;
+    const effectiveScrub = isMobile ? 0.65 : 0.35;
+    const viewportH = isMobile ? window.innerWidth * (16 / 9) : window.innerHeight;
+    const activeScrubDistance = viewportH * (stateCount - 1) * effectiveScrub;
+    const targetTop = wrapper.offsetTop + (index / (stateCount - 1)) * activeScrubDistance;
     window.scrollTo({ top: targetTop, behavior: "smooth" });
   };
 
@@ -38,15 +40,20 @@ export default function ProductSequence({
       const sticky = stickyRef.current;
       if (!wrapper || !sticky) return;
 
-      const viewportH = window.innerHeight;
+      const isMobile = window.innerWidth <= 768;
+      const effectiveScrub = isMobile ? 0.65 : 0.35;
+      const viewportH = isMobile ? window.innerWidth * (16 / 9) : window.innerHeight;
       if (viewportH <= 0) return;
 
-      const totalScrubViewports = (stateCount - 1) * scrubViewportsPerTransition;
+      const terminalHoldViewports = 0.5;
+      const totalScrubViewports = (stateCount - 1) * effectiveScrub + terminalHoldViewports;
       wrapper.style.height = `${viewportH * (1 + totalScrubViewports)}px`;
 
       const rect = wrapper.getBoundingClientRect();
-      const scrubDistance = wrapper.offsetHeight - viewportH;
-      const normalized = scrubDistance > 0 ? Math.min(Math.max(-rect.top / scrubDistance, 0), 1) : 0;
+      const totalScrubDistance = wrapper.offsetHeight - viewportH;
+      const activeScrubDistance = totalScrubDistance > 0 ? (viewportH * (stateCount - 1) * effectiveScrub) : 1;
+      const currentScroll = Math.max(-rect.top, 0);
+      const normalized = Math.min(Math.max(currentScroll / activeScrubDistance, 0), 1);
       const rawProgress = normalized * (stateCount - 1);
 
       const targetIndex = Math.round(rawProgress);

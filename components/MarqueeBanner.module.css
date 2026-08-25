@@ -1,0 +1,83 @@
+.bannerWrap {
+  position: relative;
+  width: 100vw;
+  background: #111215;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(227, 30, 36, 0.3);
+  padding: 14px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: scrollMarquee 22s linear infinite;
+  will-change: transform;
+}
+
+.bannerWrap:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+.marqueeGroup {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+  flex-shrink: 0;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+}
+
+.text {
+  font-family: var(--font-roboto-mono), monospace;
+  font-size: clamp(12px, 1.2vw, 15px);
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.star {
+  color: #e31e24;
+  font-size: clamp(12px, 1.2vw, 16px);
+  text-shadow: 0 0 10px rgba(227, 30, 36, 0.8);
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .bannerWrap {
+    padding: 10px 0;
+  }
+
+  .text {
+    font-size: 11px;
+    letter-spacing: 1.8px;
+  }
+
+  .marqueeGroup {
+    gap: 20px;
+    padding-right: 20px;
+  }
+
+  .item {
+    gap: 20px;
+  }
+}

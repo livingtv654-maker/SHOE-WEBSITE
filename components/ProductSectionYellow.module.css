@@ -184,30 +184,33 @@
 
 @media (max-width: 768px) {
   .wrap {
-    height: 100dvh;
     width: 100vw;
+    height: 100vh;
     position: absolute;
     inset: 0;
+    overflow: hidden;
   }
 
   .bgShoeName {
-    top: 8vh;
-    font-size: 130px;
+    top: 130px;
+    font-size: 140px;
     padding-bottom: 0;
   }
 
   .shadow {
-    left: 12vw;
-    top: 41vh;
-    width: 76vw;
-    height: 5vh;
+    left: calc(50% - 130px);
+    top: 420px;
+    width: 260px;
+    height: 35px;
+    object-fit: contain;
   }
 
   .shoe {
-    left: 8vw;
-    top: 14vh;
-    width: 84vw;
-    height: 38vh;
+    left: calc(50% - 150px);
+    top: 200px;
+    width: 300px;
+    height: 250px;
+    object-fit: contain;
   }
 }
 

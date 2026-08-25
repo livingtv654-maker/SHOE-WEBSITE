@@ -8,3 +8,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .heroSlot {
+    height: auto;
+    aspect-ratio: 9 / 16;
+  }
+}

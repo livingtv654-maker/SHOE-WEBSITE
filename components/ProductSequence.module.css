@@ -47,7 +47,8 @@
 .sticky {
   position: sticky;
   top: 0;
-  height: 100dvh;
+  height: 100vh;
+  width: 100%;
   overflow: hidden;
   container-type: inline-size;
   font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
@@ -55,6 +56,15 @@
     --entrance-2 0.65s cubic-bezier(0.65, 0, 0.35, 1), --entrance-3 0.65s cubic-bezier(0.65, 0, 0.35, 1),
     --exit-0 0.65s cubic-bezier(0.65, 0, 0.35, 1), --exit-1 0.65s cubic-bezier(0.65, 0, 0.35, 1), --exit-2 0.65s
       cubic-bezier(0.65, 0, 0.35, 1), --exit-3 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (max-width: 768px) {
+  .sticky {
+    height: 100vh;
+    max-height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
 }
 
 /* ---- Shared Arc Background Line ---- */
@@ -223,25 +233,14 @@
    Mobile Optimization (@media max-width: 768px) - Pixel Replica of Image 1
    ========================================================================= */
 @media (max-width: 768px) {
-  .arc {
-    left: 4vw;
-    width: 92vw;
-    top: auto;
-    bottom: 12px;
-    height: 42px;
-  }
-
+  .arc,
   .itemRedSlot,
   .itemYellowSlot,
   .itemLimeSlot,
   .itemBeigeSlot,
   .itemRedSlotWrapped,
   .itemYellowSlotWrapped,
-  .itemBeigeSlotWrapped {
-    width: 32px;
-    height: 32px;
-  }
-
+  .itemBeigeSlotWrapped,
   .itemRedLabel,
   .itemYellowLabel,
   .itemLimeLabel,
@@ -249,28 +248,7 @@
   .itemRedLabelWrapped,
   .itemYellowLabelWrapped,
   .itemBeigeLabelWrapped {
-    font-size: 13px;
-    letter-spacing: 1.2px;
-  }
-
-  .itemRedSlot {
-    top: calc(90.0% * (1 - var(--entrance-1, 0)) + 94.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 96.0% * var(--entrance-2, 0));
-  }
-  .itemYellowSlot {
-    top: calc(94.0% * (1 - var(--entrance-1, 0)) + 90.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 94.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 96.0% * var(--entrance-3, 0));
-  }
-  .itemLimeSlot {
-    top: calc(94.0% * (1 - var(--entrance-1, 0)) + 96.0% * (var(--entrance-1, 0) - var(--entrance-2, 0)) + 90.0% * (var(--entrance-2, 0) - var(--entrance-3, 0)) + 94.0% * var(--entrance-3, 0));
-  }
-  .itemBeigeSlot {
-    top: calc(94.0% * (1 - var(--entrance-3, 0)) + 90.0% * var(--entrance-3, 0));
-  }
-
-  .itemRedLabel,
-  .itemYellowLabel,
-  .itemLimeLabel,
-  .itemBeigeLabel {
-    top: 94.0%;
+    display: none !important;
   }
 }
 
