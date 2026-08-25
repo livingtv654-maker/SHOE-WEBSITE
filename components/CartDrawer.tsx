@@ -20,12 +20,31 @@ export default function CartDrawer() {
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
 
   const handleCheckout = () => {
+    const itemsText = cart
+      .map(
+        (item) =>
+          `• ${item.name} (${item.edition}) - Quantity: ${item.quantity} - Total: ₹${(
+            item.price * item.quantity
+          ).toLocaleString("en-IN")}`
+      )
+      .join("\n");
+
+    const body = `Hello AEVUM Team,\n\nI visited your web showcase and would like to place an order inquiry for the following selected items:\n\n${itemsText}\n\nCalculated Order Subtotal: ₹${subtotal.toLocaleString(
+      "en-IN"
+    )}\n\nPlease contact me regarding order processing and availability.\n\nThank you!`;
+
+    const mailtoUrl = `mailto:aevumofficial26@gmail.com?subject=AEVUM%20Order%20Inquiry&body=${encodeURIComponent(
+      body
+    )}`;
+
     setCheckoutSuccess(true);
+    window.location.href = mailtoUrl;
+
     setTimeout(() => {
       clearCart();
       setCheckoutSuccess(false);
       setIsCartOpen(false);
-    }, 2800);
+    }, 3000);
   };
 
   if (!isCartOpen) return null;

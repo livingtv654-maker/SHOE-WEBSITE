@@ -47,6 +47,12 @@ export default function Navbar() {
           <a href="#home" onClick={scrollToTop} className={styles.navLink}>HOME</a>
           <a href="#products" onClick={scrollToProducts} className={styles.navLink}>COLLECTION</a>
           <a href="#products" onClick={scrollToProducts} className={styles.navLink}>STORY</a>
+          <a
+            href="mailto:aevumofficial26@gmail.com?subject=Inquiry%20for%20AEVUM%20Agency"
+            className={styles.navLink}
+          >
+            CONTACT
+          </a>
         </nav>
 
         {/* Cart Button */}

@@ -1,124 +1,166 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const [visitorEmail, setVisitorEmail] = useState("");
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollToProducts = (e: React.MouseEvent) => {
+  const handleInquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const viewportH = window.innerHeight;
-    window.scrollTo({ top: viewportH + 50, behavior: "smooth" });
+    const emailValue = visitorEmail.trim() || "[Visitor Email]";
+    const subject = "Project Inquiry for AEVUM";
+    const body = `Hello AEVUM Team,\n\nI visited your web showcase and would like to get in touch regarding a web development / design project.\n\nMy Email: ${emailValue}`;
+    const mailtoUrl = `mailto:aevumofficial26@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
   };
 
   return (
     <footer className={styles.footer}>
       {/* Background Watermark */}
       <div className={styles.watermark} aria-hidden="true">
-        RED
+        AEVUM°
       </div>
 
       <div className={styles.container}>
-        {/* Top Header Row */}
+        {/* Top Brand Header Row */}
         <div className={styles.brandRow}>
           <div className={styles.logoWrap}>
-            <span className={styles.logoText}>RED</span>
-            <span className={styles.logoStar}>★</span>
+            <span className={styles.logoText}>AEVUM°</span>
+            <span className={styles.logoDivider}>|</span>
+            <span className={styles.agencyRole}>UI/UX &amp; Web Agency</span>
           </div>
+
           <div className={styles.headerRight}>
-            <span className={styles.coordsBadge}>
-              <span className={styles.greenDot} />
-              18.975&deg; N, 72.825&deg; E &bull; MUMBAI
-            </span>
-            <span className={styles.badgeText}>PORTFOLIO SHOWCASE</span>
-          </div>
-        </div>
+            <a
+              href="mailto:aevumofficial26@gmail.com?subject=Inquiry%20for%20AEVUM%20Agency"
+              className={styles.directEmailBadge}
+              aria-label="Direct Email Badge to aevumofficial26@gmail.com"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={styles.emailIcon}
+              >
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span>aevumofficial26@gmail.com</span>
+            </a>
 
-        {/* Hero Banner Statement */}
-        <div className={styles.statementBox}>
-          <div className={styles.titleWrap}>
-            <h2 className={styles.headline}>FEET WITHOUT LIMITS.</h2>
-            <p className={styles.subtext}>
-              Interactive 3D footwear showcase built as a personal portfolio project demonstrating high-performance web animations, scroll-locked sequence scrubbing, and responsive physics.
-            </p>
-          </div>
-
-          <div className={styles.ctaBox}>
-            <button type="button" onClick={scrollToTop} className={styles.primaryBtn}>
-              <span>BACK TO TOP</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className={styles.backTopBtn}
+              aria-label="Scroll back to top"
+            >
+              <span>TOP</span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
             </button>
-            <a href="#products" onClick={scrollToProducts} className={styles.secondaryBtn}>
-              EXPLORE COLLECTION
-            </a>
           </div>
         </div>
 
-        {/* 4 Color Edition Badges */}
-        <div className={styles.editionsGrid}>
-          <div className={`${styles.editionCard} ${styles.redCard}`}>
-            <span className={styles.editionDot} style={{ background: "#c21a1f" }} />
-            <div className={styles.editionInfo}>
-              <span className={styles.editionTitle}>RED EDITION</span>
-              <span className={styles.editionSpec}>NITROGEN FOAM / 340G</span>
-            </div>
-          </div>
-
-          <div className={`${styles.editionCard} ${styles.yellowCard}`}>
-            <span className={styles.editionDot} style={{ background: "#e8b400" }} />
-            <div className={styles.editionInfo}>
-              <span className={styles.editionTitle}>YELLOW EDITION</span>
-              <span className={styles.editionSpec}>LIMITED RELEASE 01</span>
-            </div>
-          </div>
-
-          <div className={`${styles.editionCard} ${styles.limeCard}`}>
-            <span className={styles.editionDot} style={{ background: "#c4e23a" }} />
-            <div className={styles.editionInfo}>
-              <span className={styles.editionTitle}>LIME EDITION</span>
-              <span className={styles.editionSpec}>STREET PERFORMANCE</span>
-            </div>
-          </div>
-
-          <div className={`${styles.editionCard} ${styles.beigeCard}`}>
-            <span className={styles.editionDot} style={{ background: "#d9c6a3" }} />
-            <div className={styles.editionInfo}>
-              <span className={styles.editionTitle}>BEIGE EDITION</span>
-              <span className={styles.editionSpec}>ITALIAN LEATHER</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Tech Stack Specs */}
-        <div className={styles.specsGrid}>
-          <div className={styles.specItem}>
-            <span className={styles.specKey}>FRAMEWORK</span>
-            <span className={styles.specVal}>NEXT.JS 14 (APP ROUTER)</span>
-          </div>
-          <div className={styles.specItem}>
-            <span className={styles.specKey}>STYLING SYSTEM</span>
-            <span className={styles.specVal}>VANILLA CSS MODULES</span>
-          </div>
-          <div className={styles.specItem}>
-            <span className={styles.specKey}>ANIMATIONS</span>
-            <span className={styles.specVal}>SCROLL SCRUB + GSAP BEZIER</span>
-          </div>
-          <div className={styles.specItem}>
-            <span className={styles.specKey}>TYPOGRAPHY</span>
-            <span className={styles.specVal}>ANTONIO &bull; ROBOTO MONO</span>
-          </div>
-        </div>
-
-        {/* Bottom Copyright Bar */}
-        <div className={styles.bottomRow}>
-          <p className={styles.copyright}>
-            &copy; {new Date().getFullYear()} RED FOOTWEAR &bull; DESIGNED & DEVELOPED AS A PORTFOLIO SHOWCASE
+        {/* Agency Tagline */}
+        <div className={styles.taglineBox}>
+          <p className={styles.taglineText}>
+            An immersive, high-performance web experience engineered by AEVUM. Designed with Next.js 14, Framer Motion, and custom CSS design systems.
           </p>
-          <span className={styles.taglineText}>ALL RIGHTS RESERVED</span>
+        </div>
+
+        {/* Main Grid: Work Inquiry + Tech Stack Pills + Agency Craft Highlights */}
+        <div className={styles.mainGrid}>
+          {/* Work Inquiry Section */}
+          <div className={styles.inquiryCard}>
+            <h3 className={styles.gridTitle}>Work With AEVUM</h3>
+            <p className={styles.inquirySubtext}>
+              Initiate a high-impact web project with our engineering &amp; UI/UX team.
+            </p>
+            <form onSubmit={handleInquirySubmit} className={styles.inquiryForm}>
+              <div className={styles.inputGroup}>
+                <input
+                  type="email"
+                  placeholder="Your email address..."
+                  value={visitorEmail}
+                  onChange={(e) => setVisitorEmail(e.target.value)}
+                  className={styles.emailInput}
+                />
+                <button type="submit" className={styles.submitBtn}>
+                  <span>Submit Inquiry &rarr;</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Tech Stack Pills */}
+          <div className={styles.gridCard}>
+            <h3 className={styles.gridTitle}>Tech Stack</h3>
+            <div className={styles.pillsGrid}>
+              <span className={styles.stackPill}>Next.js 14</span>
+              <span className={styles.stackPill}>Framer Motion</span>
+              <span className={styles.stackPill}>TypeScript</span>
+              <span className={styles.stackPill}>CSS Modules</span>
+            </div>
+          </div>
+
+          {/* Agency Craft Highlights */}
+          <div className={styles.gridCard}>
+            <h3 className={styles.gridTitle}>Agency Craft</h3>
+            <ul className={styles.craftList}>
+              <li className={styles.craftItem}>
+                <span className={styles.craftDot} />
+                60 FPS Scroll Physics
+              </li>
+              <li className={styles.craftItem}>
+                <span className={styles.craftDot} />
+                Responsive &amp; Mobile Optimized
+              </li>
+              <li className={styles.craftItem}>
+                <span className={styles.craftDot} />
+                Zero Layout Shift (CLS)
+              </li>
+              <li className={styles.craftItem}>
+                <span className={styles.craftDot} />
+                Custom Component System
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Copyright Bar & Bottom Disclaimer Note */}
+        <div className={styles.bottomSection}>
+          <div className={styles.copyrightRow}>
+            <p className={styles.copyrightText}>
+              &copy; {new Date().getFullYear()} AEVUM Agency. All Rights Reserved. Engineered to showcase web design &amp; development excellence.
+            </p>
+          </div>
+          <div className={styles.disclaimerRow}>
+            <p className={styles.bottomDisclaimer}>
+              Note: Concept Showcase by AEVUM &mdash; Designed for web development &amp; UI/UX portfolio presentation. All product assets are for demonstration purposes.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -10,6 +10,7 @@ import ProductSectionYellow from "@/components/ProductSectionYellow";
 import ProductSectionLime from "@/components/ProductSectionLime";
 import ProductSectionBeige from "@/components/ProductSectionBeige";
 import LoadingScreen from "@/components/LoadingScreen";
+import DisclaimerGate from "@/components/DisclaimerGate";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import RedShoeTravel from "@/components/RedShoeTravel";
@@ -18,6 +19,7 @@ import styles from "./page.module.css";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,12 +27,25 @@ export default function Home() {
         window.history.scrollRestoration = "manual";
       }
       window.scrollTo(0, 0);
+
+      const accepted = sessionStorage.getItem("aevum_disclaimer_accepted") === "true";
+      setShowDisclaimer(!accepted);
     }
   }, []);
 
+  const handleAcceptDisclaimer = () => {
+    sessionStorage.setItem("aevum_disclaimer_accepted", "true");
+    setShowDisclaimer(false);
+  };
+
   return (
     <CartProvider>
-      <LoadingScreen onComplete={() => setIsLoaded(true)} />
+      {showDisclaimer === true && (
+        <DisclaimerGate onAccept={handleAcceptDisclaimer} />
+      )}
+      {showDisclaimer === false && (
+        <LoadingScreen onComplete={() => setIsLoaded(true)} />
+      )}
       <Navbar />
       <RedShoeTravel isLoaded={isLoaded} />
       <main>

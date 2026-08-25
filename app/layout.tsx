@@ -96,8 +96,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "RED — Fearless. Feet.",
-  description: "From the streets to the top, we move different.",
+  title: "AEVUM — Premium Web Engineering & Design Showcase",
+  description: "Immersive interactive web experience engineered by AEVUM.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
